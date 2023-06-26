@@ -2,26 +2,42 @@ grammar miniJava;
 
 program : classDeclaration* EOF;
 
-classDeclaration: 'class' ID '{' field* method* '}';
+classDeclaration: 'class' ID '{' field* constructorDecl* method* '}';
 
-field: type ID ';';
+constructorDecl: accessModifier? ID '(' paramList? ')' block;
 
-method: type ID '(' paramList? ')' block;
+field: accessModifier? type ID ';';
+
+method: mainMethodDecl block                  #MainMethod
+      | accessModifier? type ID '(' paramList? ')' block #StandardMethod
+      ;
+
+mainMethodDecl: 'public static void main(String[] args)';
 
 paramList: param (',' param)*;
 param: type ID;
 
 block: '{' statement* '}';
 
-statement: localVarDecl                     #LocalVarDeclaration
+statement: localVarDecl ';'                   #LocalVarDeclaration
          | 'if' '(' expr ')' block ('else' block)? #If
          | 'while' '(' expr ')' block       #WhileStmt
+         | 'for' '(' stmtExpr ';' expr ';' stmtExpr ')' block #ForStmt
          | expr ';'                         #StatementExpr
          | 'return' expr? ';'               #Return
          ;
 
+localVarDecl: type ID '=' expr;
 
-localVarDecl: type ID;
+stmtExpr: ID '=' expr                       #AssignStmt
+        | 'new' ID '(' exprList? ')'        #ObjectCreationStmt
+        | methodCall                         #MethodCallStmt
+        | incrementExpr                      #IncrementExpression
+        | decrementExpr                      #DecrementExpression
+        ;
+
+incrementExpr: '++' ID | ID '++';
+decrementExpr: '--' ID | ID '--';
 
 expr: expr binaryOp expr                   #BinaryExpr
     | '-' expr                             #UnaryExpr
@@ -36,10 +52,12 @@ expr: expr binaryOp expr                   #BinaryExpr
     | 'super'                              #SuperExpr
     | ID                                   #IdExpr
     | expr '.' ID                          #FieldAccess
-    | expr '.' ID '(' exprList? ')'        #MethodCall
+    | expr '.' ID '(' exprList? ')'        #MethodCalls
     | 'new' ID '(' exprList? ')'           #ObjectCreation
     | expr '[' expr ']'                    #ArrayAccess
     ;
+
+methodCall: expr '.' ID '(' exprList? ')';
 
 exprList: expr (',' expr)*;
 
@@ -52,6 +70,8 @@ type: 'int' '[' ']'   #ArrayType
     | 'void'          #VoidType
     | ID              #IdType
     ;
+
+accessModifier: 'public' | 'private' | 'protected';
 
 BOOLEAN: 'true' | 'false';
 

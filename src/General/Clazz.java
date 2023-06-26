@@ -1,11 +1,16 @@
+package General;
+
+import Expr.LocalOrFieldVar;
+import statementExpressions.MethodCallStmt;
+
 import java.util.List;
 
 public class Clazz {
     String name;
-    List<Field> fields;
-    List<Method> methods;
+    List<LocalOrFieldVar> fields;
+    List<MethodCallStmt> methods;
 
-    public Clazz(String name, List<Field> fields, List<Method> methods) {
+    public Clazz(String name, List<LocalOrFieldVar> fields, List<MethodCallStmt> methods) {
         this.name = name;
         this.fields = fields;
         this.methods = methods;

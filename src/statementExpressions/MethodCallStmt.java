@@ -4,13 +4,19 @@ import Expr.Expression;
 
 import java.util.List;
 
-public class New implements StatementExpression {
+public class MethodCallStmt implements StatementExpression {
+    private final Expression expr;
     private final String id;
     private final List<Expression> exprList;
 
-    public New(String id, List<Expression> exprList) {
+    public MethodCallStmt(Expression expr, String id, List<Expression> exprList) {
+        this.expr = expr;
         this.id = id;
         this.exprList = exprList;
+    }
+
+    public Expression getExpr() {
+        return this.expr;
     }
 
     public String getId() {

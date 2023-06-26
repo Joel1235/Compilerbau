@@ -1,13 +1,15 @@
+import General.AType;
+
 public class Parameter {
-    private Type t;
+    private AType t;
     private String s;
 
-    public Parameter(Type t, String s) {
+    public Parameter(AType t, String s) {
         this.t = t;
         this.s = s;
     }
 
-    public Type getT() {
+    public AType getT() {
         return t;
     }
 

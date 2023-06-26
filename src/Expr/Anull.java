@@ -1,4 +1,4 @@
 package Expr;
 
-public class Anull implements Expression{
+public class Anull implements Expression {
 }
