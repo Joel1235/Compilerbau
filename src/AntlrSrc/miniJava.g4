@@ -2,58 +2,65 @@ grammar miniJava;
 
 program : classDeclaration* EOF;
 
-classDeclaration : 'class' ID '{' fieldDeclaration* methodDeclaration* '}';
+classDeclaration: 'class' ID '{' field* method* '}';
 
-fieldDeclaration : type ID ';';
+field: type ID ';';
 
-methodDeclaration : type ID '(' params ')' block;
+method: type ID '(' paramList? ')' block;
 
-params : (param (',' param)*)? ;
+paramList: param (',' param)*;
+param: type ID;
 
-param : type ID;
+block: '{' statement* '}';
 
-block : '{' stmt* '}';
+statement: localVarDecl                     #LocalVarDeclaration
+         | 'if' '(' expr ')' block ('else' block)? #If
+         | 'while' '(' expr ')' block       #WhileStmt
+         | expr ';'                         #StatementExpr
+         | 'return' expr? ';'               #Return
+         ;
 
-stmt : 'return' expr ';'
-     | 'while' '(' expr ')' stmt
-     | localVarDeclaration ';'
-     | 'if' '(' expr ')' stmt ('else' stmt)?
-     | stmtExprStmt
-     | block;
 
-localVarDeclaration : type ID;
+localVarDecl: type ID;
 
-stmtExprStmt : stmtExpr ';';
+expr: expr binaryOp expr                   #BinaryExpr
+    | '-' expr                             #UnaryExpr
+    | '!' expr                             #NotExpr
+    | '(' expr ')'                         #ParenExpr
+    | INT                                  #IntLiteral
+    | BOOLEAN                              #BooleanLiteral
+    | CHAR                                 #CharLiteral
+    | STRING                               #StringLiteral
+    | 'null'                               #NullLiteral
+    | 'this'                               #ThisExpr
+    | 'super'                              #SuperExpr
+    | ID                                   #IdExpr
+    | expr '.' ID                          #FieldAccess
+    | expr '.' ID '(' exprList? ')'        #MethodCall
+    | 'new' ID '(' exprList? ')'           #ObjectCreation
+    | expr '[' expr ']'                    #ArrayAccess
+    ;
 
-stmtExpr : ID '=' expr
-         | 'new' type '(' expr (',' expr)* ')'
-         | expr '.' ID '(' expr (',' expr)* ')';
+exprList: expr (',' expr)*;
 
-expr : 'this'
-     | 'super'
-     | localVar
-     | expr '.' ID
-     | unaryOp expr
-     | expr binaryOp expr
-     | INT
-     | BOOL
-     | CHAR
-     | STRING
-     | 'null';                  //stmtExprExpr;
+binaryOp: '+' | '-' | '*' | '/' | '%' | '==' | '!=' | '<' | '<=' | '>' | '>=' | '&&' | '||';
 
-localVar : ID;
+type: 'int' '[' ']'   #ArrayType
+    | 'boolean'       #BooleanType
+    | 'int'           #IntType
+    | 'char'          #CharType
+    | 'void'          #VoidType
+    | ID              #IdType
+    ;
 
-unaryOp : '-' | '!';
+BOOLEAN: 'true' | 'false';
 
-binaryOp : '*' | '/' | '%' | '+' | '-' | '<' | '>' | '==' | '!=' | '&&' | '||';
+CHAR: '\'' ~'\\' '\'';
 
-//stmtExprExpr : stmtExpr;
+STRING: '"' ~'"'* '"';
 
-type : 'int' | 'boolean' | 'char' | 'String' | ID;
+INT: [0-9]+;
 
-ID : [a-zA-Z][a-zA-Z0-9]*;
-INT : [0-9]+;
-BOOL : 'true' | 'false';
-CHAR : '\'' [a-zA-Z] '\'';
-STRING : '"' .*? '"';
-WS : [ \t\r\n]+ -> skip;
+ID: [a-zA-Z_][a-zA-Z_0-9]*;
+
+WS: [ \t\r\n] -> skip;

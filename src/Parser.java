@@ -1,5 +1,3 @@
-import AntlrSrc.Progam;
-
 public class Parser {
     public Parser() {
     }
