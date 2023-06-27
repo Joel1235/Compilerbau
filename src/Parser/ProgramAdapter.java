@@ -1,6 +1,5 @@
 package Parser;
 
-import AntlrOut.miniJavaParser;
 import General.Clazz;
 import General.Program;
 

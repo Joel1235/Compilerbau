@@ -1,6 +1,5 @@
 package Parser;
 
-import AntlrOut.miniJavaParser;
 import Expr.AInteger;
 
 public class IntegerAdapter {

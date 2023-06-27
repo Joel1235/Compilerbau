@@ -8,9 +8,11 @@ constructorDecl: accessModifier? ID '(' paramList? ')' block;
 
 field: accessModifier? type ID ';';
 
-method: accessModifier? type ID '(' paramList? ')' block
+method: mainMethodDecl block                  #MainMethod
+      | accessModifier? type ID '(' paramList? ')' block #StandardMethod
       ;
 
+mainMethodDecl: 'public static void main(String[] args)';
 
 paramList: param (',' param)*;
 param: type ID;

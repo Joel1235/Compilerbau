@@ -1,15 +1,22 @@
 package statements;
 
-import statementExpressions.StatementExpression;
+import Expr.Expression;
 
 public class StmtExprStmt implements Statement {
-    private final StatementExpression stmtExpr;
 
-    public StmtExprStmt(StatementExpression stmtExpr) {
-        this.stmtExpr = stmtExpr;
+    private String variableName;
+    private Expression expression;
+
+    public StmtExprStmt(String variableName, Expression expression) {
+        this.variableName = variableName;
+        this.expression = expression;
     }
 
-    public StatementExpression getStmtExpr() {
-        return this.stmtExpr;
+    public String getVariableName() {
+        return variableName;
+    }
+
+    public Expression getExpression() {
+        return expression;
     }
 }

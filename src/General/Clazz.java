@@ -1,26 +1,26 @@
 package General;
 
 import Expr.LocalOrFieldVar;
-import statementExpressions.MethodCallStmt;
+import statementExpressions.Method;
 
 import java.util.List;
 
 public class Clazz {
     String name;
     List<LocalOrFieldVar> fields;
-    List<MethodCallStmt> methods;
+    List<Method> methods;
 
-    public Clazz(String name, List<LocalOrFieldVar> fields, List<MethodCallStmt> methods) {
+    public Clazz(String name, List<LocalOrFieldVar> fields, List<Method> methods) {
         this.name = name;
         this.fields = fields;
         this.methods = methods;
     }
 
     public void typeCheck() {
-        // Implementierung der Typüberprüfung
+        // Implementation of tzpe check
     }
 
     public void codeGen() {
-        // Implementierung der Codegenerierung
+        // Implementation of code generation
     }
 }

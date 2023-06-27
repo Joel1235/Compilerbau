@@ -1,9 +1,9 @@
 package Parser;
 
 public class Parser {
-    public Parser() {
-    }
-    public Progam generateAST(String program){
-        return null;
-    }
+    //public Parser() {
+    //}
+    //public General.Program generateAST(String program){
+      //  return program.adap;
+    //}
 }

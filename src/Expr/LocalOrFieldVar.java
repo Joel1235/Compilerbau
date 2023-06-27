@@ -4,13 +4,19 @@ package Expr;
 import General.AType;
 
 public class LocalOrFieldVar implements Expression {
-    private final AType id;
+    private final AType type;
+    private final String id;
 
-    public LocalOrFieldVar(AType id) {
+    public LocalOrFieldVar(AType type, String id) {
+        this.type = type;
         this.id = id;
     }
 
-    public AType getId() {
-        return this.id;
+    public AType getType() {
+        return type;
+    }
+
+    public String getId() {
+        return id;
     }
 }

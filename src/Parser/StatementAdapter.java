@@ -1,6 +1,7 @@
 package Parser;
 
 import AntlrOut.miniJavaParser;
+import statements.Statement;
 
 public class StatementAdapter {
     public static Statement adapt(miniJavaParser.StatementContext ctx) {

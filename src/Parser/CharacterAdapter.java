@@ -1,6 +1,5 @@
 package Parser;
 
-import AntlrOut.miniJavaParser;
 import Expr.ACharacter;
 
 public class CharacterAdapter {

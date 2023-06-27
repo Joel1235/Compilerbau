@@ -1,21 +1,10 @@
 package TreeGeneration;
 
-import AntlrOut.miniJavaLexer;
-import AntlrOut.miniJavaParser;
-import Expr.*;
-import General.AType;
-import General.Clazz;
 import General.Program;
 import Parser.ProgramAdapter;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
-import statementExpressions.AssignStmt;
-import statementExpressions.MethodCallStmt;
-import statements.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ASTGenerator {
 
