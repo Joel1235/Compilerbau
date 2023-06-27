@@ -8,9 +8,7 @@ constructorDecl: accessModifier? ID '(' paramList? ')' block;
 
 field: accessModifier? type ID ';';
 
-method: accessModifier? type ID '(' paramList? ')' block
-      ;
-
+method: accessModifier? type ID '(' paramList? ')' block;
 
 paramList: param (',' param)*;
 param: type ID;
@@ -37,8 +35,8 @@ stmtExpr: ID '=' expr                       #AssignStmt
 incrementExpr: '++' ID | ID '++';
 decrementExpr: '--' ID | ID '--';
 
-expr: expr binaryOp expr                   #BinaryExpr
-    | '-' expr                             #UnaryExpr
+subExpr
+    : '-' expr                             #UnaryExpr
     | '!' expr                             #NotExpr
     | '(' expr ')'                         #ParenExpr
     | INT                                  #IntLiteral
@@ -55,11 +53,17 @@ expr: expr binaryOp expr                   #BinaryExpr
     | expr '[' expr ']'                    #ArrayAccess
     ;
 
+binaryExpr: subExpr binaryExprTail*;       #BinaryExpr
+
+binaryExprTail: binaryOp subExpr;
+
+expr: subExpr | binaryExpr;
+
+binaryOp: '+' | '-' | '*' | '/' | '%' | '==' | '!=' | '<' | '<=' | '>' | '>=' | '&&' | '||';
+
 methodCall: expr '.' ID '(' exprList? ')';
 
 exprList: expr (',' expr)*;
-
-binaryOp: '+' | '-' | '*' | '/' | '%' | '==' | '!=' | '<' | '<=' | '>' | '>=' | '&&' | '||';
 
 type: 'int' '[' ']'   #ArrayType
     | 'boolean'       #BooleanType
