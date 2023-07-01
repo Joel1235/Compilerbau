@@ -6,21 +6,38 @@ import statementExpressions.Method;
 import java.util.List;
 
 public class Clazz {
-    String name;
-    List<LocalOrFieldVar> fields;
-    List<Method> methods;
+    private AccessModifier accessModifier;
+    private String name;
+    private List<LocalOrFieldVar> fields;
+    private List<Method> methods;
 
     public Clazz(String name, List<LocalOrFieldVar> fields, List<Method> methods) {
+        accessModifier = AccessModifier.PUBLIC; //default
         this.name = name;
         this.fields = fields;
         this.methods = methods;
     }
 
-    public void typeCheck() {
-        // Implementation of tzpe check
+    public Clazz(AccessModifier accessModifier, String name, List<LocalOrFieldVar> fields, List<Method> methods) {
+        this.accessModifier = accessModifier;
+        this.name = name;
+        this.fields = fields;
+        this.methods = methods;
     }
 
-    public void codeGen() {
-        // Implementation of code generation
+    public AccessModifier getAccessModifier() {
+        return accessModifier;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<LocalOrFieldVar> getFields() {
+        return fields;
+    }
+
+    public List<Method> getMethods() {
+        return methods;
     }
 }

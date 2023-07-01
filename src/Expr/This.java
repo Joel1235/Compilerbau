@@ -1,5 +1,5 @@
 package Expr;
 
-public class This implements Expression{
+public class This implements PointableExpression{
 
 }

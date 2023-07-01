@@ -1,4 +1,4 @@
 package Expr;
 
-public class Super implements Expression{
+public class Super implements PointableExpression{
 }

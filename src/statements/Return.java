@@ -8,6 +8,9 @@ public class Return implements Statement {
     public Return(Expression expr) {
         this.expr = expr;
     }
+    public Return() {
+        this.expr = null;//default
+    }
 
     public Expression getExpr() {
         return this.expr;

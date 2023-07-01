@@ -2,75 +2,87 @@ grammar miniJava;
 
 program : classDeclaration* EOF;
 
-classDeclaration: 'class' ID '{' field* constructorDecl* method* '}';
+classDeclaration: accessModifier? 'class' ID '{' field* constructorDecl* method* '}';
 
 constructorDecl: accessModifier? ID '(' paramList? ')' block;
 
 field: accessModifier? type ID ';';
 
-method: accessModifier? type ID '(' paramList? ')' block;
+method: accessModifier? (type | 'void') ID '(' paramList? ')' block;
 
 paramList: param (',' param)*;
 param: type ID;
 
 block: '{' statement* '}';
 
-statement: localVarDecl ';'                   #LocalVarDeclaration
-         | 'if' '(' expr ')' block ('else' block)? #If
-         | 'while' '(' expr ')' block       #WhileStmt
-         | 'for' '(' stmtExpr ';' expr ';' stmtExpr ')' block #ForStmt
-         | expr ';'                         #StatementExpr
-         | 'return' expr? ';'               #Return
+statement: localVarDecl ';'
+         |stmtExpr ';'
+         | block
+         | ifStatement
+         | whileStatement
+         | forStatement
+         | returnStatement
+         | methodCall ';'
          ;
+
+ifStatement:'if' '(' condition ')' block ('else' block)?;
+
+whileStatement: 'while' '(' condition ')' block;
+
+forStatement: 'for' '(' initialization? ';' condition? ';' iteration? ')'  block;
+
+initialization: type ID '=' expr | ID '=' expr;
+
+returnStatement:'return' expr? ';';
+
+condition: expr;
+
+iteration: stmtExpr;
 
 localVarDecl: type ID '=' expr;
 
-stmtExpr: ID '=' expr                       #AssignStmt
-        | 'new' ID '(' exprList? ')'        #ObjectCreationStmt
-        | methodCall                         #MethodCallStmt
-        | incrementExpr                      #IncrementExpression
-        | decrementExpr                      #DecrementExpression
+stmtExpr: ID '=' expr
+        | 'new' ID '(' exprList? ')'
+        | methodCall
+        | incrementExpr
+        | decrementExpr
         ;
 
 incrementExpr: '++' ID | ID '++';
 decrementExpr: '--' ID | ID '--';
 
-subExpr
-    : '-' expr                             #UnaryExpr
-    | '!' expr                             #NotExpr
-    | '(' expr ')'                         #ParenExpr
-    | INT                                  #IntLiteral
-    | BOOLEAN                              #BooleanLiteral
-    | CHAR                                 #CharLiteral
-    | STRING                               #StringLiteral
-    | 'null'                               #NullLiteral
-    | 'this'                               #ThisExpr
-    | 'super'                              #SuperExpr
-    | ID                                   #IdExpr
-    | expr '.' ID                          #FieldAccess
-    | expr '.' ID '(' exprList? ')'        #MethodCalls
-    | 'new' ID '(' exprList? ')'           #ObjectCreation
-    | expr '[' expr ']'                    #ArrayAccess
+pointableExpr:
+    'this'
+    | 'super'
+    | ID
+    | pointableExpr '.' ID
+    | pointableExpr '.' ID '(' exprList? ')'
+    | 'new' ID '(' exprList? ')'
     ;
 
-binaryExpr: subExpr binaryExprTail*;       #BinaryExpr
+expr: expr binaryOp expr
+    | pointableExpr
+    | '-' expr
+    | '!' expr
+    | '(' expr ')'
+    | INT
+    | BOOLEAN
+    | CHAR
+    | STRING
+    | 'null'
+    ;
 
-binaryExprTail: binaryOp subExpr;
-
-expr: subExpr | binaryExpr;
-
-binaryOp: '+' | '-' | '*' | '/' | '%' | '==' | '!=' | '<' | '<=' | '>' | '>=' | '&&' | '||';
-
-methodCall: expr '.' ID '(' exprList? ')';
+methodCall: (pointableExpr '.')*? ID '(' exprList? ')';
 
 exprList: expr (',' expr)*;
 
-type: 'int' '[' ']'   #ArrayType
-    | 'boolean'       #BooleanType
-    | 'int'           #IntType
-    | 'char'          #CharType
-    | 'void'          #VoidType
-    | ID              #IdType
+binaryOp: '+' | '-' | '*' | '/' | '%' | '==' | '!=' | '<' | '<=' | '>' | '>=' | '&&' | '||';
+
+type: 'int'
+    | 'boolean'
+    | 'int'
+    | 'char'
+    | ID ('.' ID)*?
     ;
 
 accessModifier: 'public' | 'private' | 'protected';

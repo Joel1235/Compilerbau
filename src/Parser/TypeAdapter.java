@@ -5,20 +5,20 @@ import General.AType;
 
 public class TypeAdapter {
     public static AType adapt(miniJavaParser.TypeContext ctx) {
-        if (ctx instanceof miniJavaParser.ArrayTypeContext) {
-            return AType.ARRAY;
-        } else if (ctx instanceof miniJavaParser.BooleanTypeContext) {
-            return AType.BOOLEAN;
-        } else if (ctx instanceof miniJavaParser.IntTypeContext) {
-            return AType.INT;
-        } else if (ctx instanceof miniJavaParser.CharTypeContext) {
-            return AType.CHAR;
-        } else if (ctx instanceof miniJavaParser.VoidTypeContext) {
-            return AType.VOID;
-        } else if (ctx instanceof miniJavaParser.IdTypeContext) {
-            return AType.ID;
-        } else {
-            throw new RuntimeException("Unsupported type context type");
+        String typeName = ctx.getText();
+
+        switch (typeName) {
+            case "int":
+                return AType.INT;
+            case "boolean":
+                return AType.BOOLEAN;
+            case "char":
+                return AType.CHAR;
+            case "void":
+                return AType.VOID;
+            default:
+                // defined by user
+                return new AType(typeName);
         }
     }
 }

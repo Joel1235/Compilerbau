@@ -1,14 +1,13 @@
 package General;
 
-public class AType {
+public class ReturnType {
     private final String typeName;
 
-    public static final AType INT = new AType("int");
-    public static final AType BOOLEAN = new AType("boolean");
-    public static final AType CHAR = new AType("char");
-    public static final AType VOID = new AType("void");
+    public static final ReturnType INT = new ReturnType("int");
+    public static final ReturnType BOOLEAN = new ReturnType("boolean");
+    public static final ReturnType CHAR = new ReturnType("char");
 
-    public AType(String typeName) {
+    public ReturnType(String typeName) {
         this.typeName = typeName;
     }
 
@@ -25,7 +24,7 @@ public class AType {
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
-        AType type = (AType) obj;
+        ReturnType type = (ReturnType) obj;
         return typeName.equals(type.typeName);
     }
 
@@ -34,4 +33,3 @@ public class AType {
         return typeName.hashCode();
     }
 }
-
