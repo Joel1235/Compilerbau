@@ -28,4 +28,4 @@ public class ClazzAdapter {
         return new Clazz(accessModifier, name, fields, methods);
     }
     }
-}
+

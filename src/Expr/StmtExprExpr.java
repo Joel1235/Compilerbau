@@ -1,5 +1,7 @@
 package Expr;
 
+import Codegenerierung.Codegenerierung;
+
 public class StmtExprExpr implements Expression{
     private String id;
     private Expression expression;
@@ -15,5 +17,10 @@ public class StmtExprExpr implements Expression{
 
     public Expression getExpression() {
         return expression;
+    }
+
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+
     }
 }

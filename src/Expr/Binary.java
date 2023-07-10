@@ -1,5 +1,6 @@
 package Expr;
 
+import Codegenerierung.Codegenerierung;
 import General.BinaryOperator;
 
 public class Binary implements Expression {
@@ -23,5 +24,10 @@ public class Binary implements Expression {
 
     public BinaryOperator getOperator() {
         return this.operator;
+    }
+
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+
     }
 }

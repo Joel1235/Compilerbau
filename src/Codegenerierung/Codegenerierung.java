@@ -1,27 +1,60 @@
 package Codegenerierung;
 
 
-import Syntaxcollection.Expressions.Binary;
-import Syntaxcollection.Operator;
+import Expr.*;
+
+import org.antlr.runtime.LegacyCommonTokenStream;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
+import java.util.List;
 
 public class Codegenerierung {
 
     private MethodVisitor methodvisitor;
+    private List<LocalOrFieldVar> localVars;
+    private String currentClass;
 
     private void visitArithmetic(Binary binary) {
-        binary.getlExpression().bevisited(this);
-        binary.getrExpression().bevisited(this);
+        binary.getLeft().bevisited(this);
+        binary.getRight().bevisited(this);
 
         switch (binary.getOperator()) {
             case PLUS -> methodvisitor.visitInsn(Opcodes.IADD);
             case MINUS -> methodvisitor.visitInsn(Opcodes.ISUB);
-            case MULT -> methodvisitor.visitInsn(Opcodes.IMUL);
-            case DIV -> methodvisitor.visitInsn(Opcodes.IDIV);
-            case MOD -> methodvisitor.visitInsn(Opcodes.IREM);
-            default -> throw new IllegalArgumentException("Unexpected value: " + binary.getOperator());
+            case MULTIPLY -> methodvisitor.visitInsn(Opcodes.IMUL);
+            case DIVIDE -> methodvisitor.visitInsn(Opcodes.IDIV);
+            case MODULUS -> methodvisitor.visitInsn(Opcodes.IREM);
+
         }
     }
+
+    public void visit(InstVar instVar) {
+        Expression expression = instVar.getExpr();
+        expression.bevisited(this);
+        //this.lastClass = ((ReferenceType) expression.getType()).getIdentifier();
+
+        methodvisitor.visitFieldInsn(Opcodes.GETFIELD, this.currentClass, instVar.getId(),
+                instVar.getAtype().toString());// V I C Z benötigt
+
+    }
+
+    public void visit(Anull nullExpr) {
+        methodvisitor.visitInsn(Opcodes.ACONST_NULL);
+    }
+
+
+    public void visit(AInteger aInteger) {
+        int value = aInteger.getValue();
+
+        if (value >= Byte.MIN_VALUE && value <= Byte.MAX_VALUE) {
+            methodvisitor.visitIntInsn(Opcodes.BIPUSH, value);
+        } else if (value >= Short.MIN_VALUE && value <= Short.MAX_VALUE) {
+            methodvisitor.visitIntInsn(Opcodes.SIPUSH, value);
+        } else {
+            methodvisitor.visitLdcInsn(value);
+        }
+    }
+
+
 }

@@ -1,5 +1,7 @@
 package Expr;
 
+import Codegenerierung.Codegenerierung;
+
 public class AString implements Expression {
     private final String value;
 
@@ -9,5 +11,10 @@ public class AString implements Expression {
 
     public String getValue() {
         return this.value;
+    }
+
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+
     }
 }

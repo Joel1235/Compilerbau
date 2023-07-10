@@ -1,5 +1,7 @@
 package Expr;
 
+import Codegenerierung.Codegenerierung;
+
 public class ACharacter implements Expression {
     private final char value;
 
@@ -9,5 +11,10 @@ public class ACharacter implements Expression {
 
     public char getValue() {
         return this.value;
+    }
+
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+
     }
 }

@@ -1,6 +1,7 @@
 package Expr;
 
 
+import Codegenerierung.Codegenerierung;
 import General.AType;
 import General.AccessModifier;
 
@@ -31,5 +32,10 @@ public class LocalOrFieldVar implements Expression {
 
     public AccessModifier getAccessModifier() {
         return accessModifier;
+    }
+
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+
     }
 }

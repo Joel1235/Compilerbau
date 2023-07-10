@@ -1,5 +1,7 @@
 package Expr;
 
+import Codegenerierung.Codegenerierung;
+
 public class Unary implements Expression {
     private final Expression expr;
     private final String operator;
@@ -15,5 +17,10 @@ public class Unary implements Expression {
 
     public String getOperator() {
         return this.operator;
+    }
+
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+
     }
 }
