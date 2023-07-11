@@ -15,10 +15,10 @@ public class InstVar implements Expression {
         this.id = id;
     }
 
-    public InstVar(Expression expr, String id, ReturnType returnType) {
+    public InstVar(Expression expr, String id, AType aType) {
         this.expr = expr;
         this.id = id;
-        this.AType = returnType;
+        this.Atype = aType;
     }
 
     public Expression getExpr() {
@@ -29,8 +29,8 @@ public class InstVar implements Expression {
         return this.id;
     }
 
-    public ReturnType getAtype() {
-        return AType;
+    public AType getAtype() {
+        return Atype;
     }
 
     @Override
