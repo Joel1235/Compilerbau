@@ -3,19 +3,80 @@ package Codegenerierung;
 
 import Expr.*;
 
-import org.objectweb.asm.Label;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
+import General.AType;
+import org.objectweb.asm.*;
 import statementExpressions.*;
 import statements.*;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 public class Codegenerierung {
 
     private MethodVisitor methodvisitor;
-    private List<LocalOrFieldVar> localVars;
+    private List<String> localVars;
     private String currentClass;
+
+    //Method to start Codegen
+    public void Start() throws IOException {
+        ClassWriter cw = new ClassWriter( ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+
+        cw.visit(Opcodes.V1_8,                  //Version
+                Opcodes.ACC_PUBLIC,            //Access
+                "Bytecode",                    //Name
+                null,                          //Signatur
+                "java/lang/Object",            //Superklasse
+                null);                         //implemntierte Interfaces
+
+        MethodVisitor constructor =
+                cw.visitMethod(Opcodes.ACC_PUBLIC,
+                        "<init>",        //Name
+                        "()V",           //Typ (Descriptor)
+                        null,            //Signatur
+                        null);           //Exceptions
+
+         this.methodvisitor =
+                cw.visitMethod(Opcodes.ACC_PUBLIC, "m", "()V", null, null);
+
+        //Konstruktor erstellen Start
+        constructor.visitCode();               //Start-Initialisierung
+        // aload_0
+        constructor.visitVarInsn(Opcodes.ALOAD, 0);
+        // invokespecial
+        constructor.visitMethodInsn(Opcodes.INVOKESPECIAL,  //invoke-Befehl
+                "java/lang/Object",     //Owner-Klasse
+                "<init>",               //Name
+                "()V",                  //Typ (Descriptor)
+                false);                 //is interface?
+        // return
+        constructor.visitInsn(Opcodes.RETURN);
+
+        constructor.visitMaxs(0, 0);          //maximale Anzahl des Stacks bzw. der lokalen Veriablen
+
+        constructor.visitEnd();               //Ende-Initialisierung
+        //Konstruktor erstellen Ende
+
+        //Methode m erstellen Start
+        methodvisitor.visitCode();
+
+        // Hier dann das eingegebene Objekt abarbeiten
+
+        // return
+        methodvisitor.visitInsn(Opcodes.RETURN);
+
+        methodvisitor.visitMaxs(0, 0);
+
+        methodvisitor.visitEnd();
+        //Methode m erstellen Ende
+
+        cw.visitEnd();
+        System.out.println(cw.toByteArray());
+        writeClassfile(cw);
+        //return cw.toByteArray();
+    }
 
 
     //Expressions
@@ -44,7 +105,7 @@ public class Codegenerierung {
     }
 
     public void visit(AString aString){
-
+        methodvisitor.visitLdcInsn(aString.getValue());
     }
 
     public void visit(Binary binary){
@@ -123,21 +184,24 @@ public class Codegenerierung {
     }
 
 
-    public void visit(IdExpr idExpr){
-
-    }
-
     public void visit(LocalOrFieldVar localOrFieldVar){
 
+        int index = localVars.indexOf(localOrFieldVar.getId());
+        if(index>-1){ //local var, because found in localvars
+            if (localOrFieldVar.getType() instanceof AType) {
+                methodvisitor.visitVarInsn(Opcodes.ILOAD, index);
+            } else {
+                methodvisitor.visitVarInsn(Opcodes.ALOAD, index);
+            }
+        }else  { // fieldvar, because not found in localvars
+            methodvisitor.visitVarInsn(Opcodes.ALOAD, 0);
+            methodvisitor.visitFieldInsn(Opcodes.GETFIELD, currentClass, localOrFieldVar.getId(),
+                    makeDescriptor(localOrFieldVar.getType()));
+        }
+
     }
 
-    public void visit(StmtExprExpr stmtExprExpr){
 
-    }
-
-    public void visit(Super superVar){
-
-    }
 
     public void visit(Unary unary){ //accepts only Not as an unary input
 
@@ -163,7 +227,7 @@ public class Codegenerierung {
         //this.lastClass = ((ReferenceType) expression.getType()).getIdentifier();
 
         methodvisitor.visitFieldInsn(Opcodes.GETFIELD, this.currentClass, instVar.getId(),
-                instVar.getAtype().toString());// V I C Z benötigt
+                makeDescriptor(instVar.getAtype()));
 
     }
 
@@ -229,5 +293,22 @@ public class Codegenerierung {
 
 
     //Helpers
+     void writeClassfile(ClassWriter cw) throws IOException {
+        byte[] bytes = cw.toByteArray();
+        String className = new ClassReader(bytes).getClassName();
+        File outputFile = new File("./", className + ".class");
+        FileOutputStream output = new FileOutputStream(outputFile);
+        output.write(bytes);
+        output.close();
+    }
+
+    public String makeDescriptor(AType aType){
+        return switch (aType.getTypeName()) {
+            case "void" -> "V";
+            case "int" -> "I";
+            case "char" -> "C";
+            case "boolean" -> "Z";
+        };
+    }
 
 }
