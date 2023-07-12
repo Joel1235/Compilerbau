@@ -5,6 +5,7 @@ import General.Program;
 
 import java.util.ArrayList;
 import java.util.List;
+import AntlrOut.miniJavaParser;
 
 public class ProgramAdapter {
     public static Program adapt(miniJavaParser.ProgramContext ctx) {

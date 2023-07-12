@@ -3,6 +3,7 @@ package Parser;
 import AntlrOut.miniJavaParser;
 import statements.Statement;
 
+
 public class StatementAdapter {
     public static Statement adapt(miniJavaParser.StatementContext ctx) {
 
@@ -10,9 +11,8 @@ public class StatementAdapter {
             return LocalVarDeclAdapter.adapt(ctx.localVarDecl());
 
             //TODO
-        //} else if (ctx.stmtExpr() != null) {
-            //return StatementExprAdapter.adapt(ctx.stmtExpr());
-
+        // } else if (ctx.stmtExpr() != null) {
+            // return StatementExprAdapter.adapt(ctx.stmtExpr());
 
         } else if (ctx.block() != null) {
             return BlockAdapter.adapt(ctx.block());
@@ -20,12 +20,9 @@ public class StatementAdapter {
 
         else if (ctx.ifStatement() != null) {
                 return IfStatementAdapter.adapt(ctx);
-            }
+        }
 
-
-
-
-        } else if (ctx.whileStatement() != null) {
+        else if (ctx.whileStatement() != null) {
             return WhileStatementAdapter.adapt(ctx.whileStatement());
 
         } else if (ctx.forStatement() != null) {

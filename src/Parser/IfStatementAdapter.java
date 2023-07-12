@@ -12,6 +12,6 @@ public class IfStatementAdapter {
         Block thenBranch = BlockAdapter.adapt(ctx.block());
         //Block elseBranch = BlockAdapter.adapt(ctx.block());
 
-        //return new If(condition, thenBranch, elseBranch);
+        // return new If(condition, thenBranch, elseBranch);
     }
 }

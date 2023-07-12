@@ -1,6 +1,7 @@
 package Parser;
 
 import General.ReturnType;
+import AntlrOut.miniJavaParser;
 
 public class ReturnTypeAdapter {
     public static ReturnType adapt(miniJavaParser.TypeContext ctx) {

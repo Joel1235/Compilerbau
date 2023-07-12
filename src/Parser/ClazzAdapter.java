@@ -4,6 +4,7 @@ import Expr.LocalOrFieldVar;
 import General.Clazz;
 import General.AccessModifier;
 import statementExpressions.Method;
+import AntlrOut.miniJavaParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,5 @@ public class ClazzAdapter {
         }
 
         return new Clazz(accessModifier, name, fields, methods);
-    }
     }
 }
