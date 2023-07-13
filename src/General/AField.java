@@ -1,10 +1,11 @@
-import Expr.Expression;
+package General;
+
 import General.AType;
 
-public class Field {
+public class AField {
        private String name;
     private AType type;
-    public Field(String name, AType type){
+    public AField(AType type, String name){
         this.name = name;
         this.type = type;
     }
