@@ -1,12 +1,10 @@
 //import TreeGeneration.ASTGenerator;
 
 import Codegenerierung.Codegenerierung;
-import Expr.AInteger;
-import Expr.Anull;
-import Expr.Binary;
-import Expr.LocalOrFieldVar;
+import Expr.*;
 import General.AType;
 import General.BinaryOperator;
+import statementExpressions.AssignStmt;
 import statements.*;
 
 import java.io.IOException;
@@ -18,15 +16,16 @@ public class Main {
         String teststring = "class TestKlasse{int i = i;}";
         //System.out.println(ASTGenerator.generateAST(teststring));
 
-        // testblock=new Block(Arrays.asList(new LocalVarDecl(AType.INT,"i",new AInteger(1,AType.INT)),
-        //        new LocalVarDecl(AType.INT,"test",new AInteger(1,AType.INT)),
-        //        new LocalVarDecl(AType.INT,"test2",new AInteger(1,AType.INT))));
+        Block testblock=new Block(Arrays.asList(new LocalVarDecl(AType.INT,"i",new AInteger(1,AType.INT)),
+                new If(new Binary(new LocalOrFieldVar(AType.INT,"i"),new AInteger(2,AType.INT),BinaryOperator.GREATER_THAN),
+                        new Block(Arrays.asList(new LocalVarDecl(AType.INT,"i",new AInteger(45,AType.INT))))
+                                ,new Block(Arrays.asList(new LocalVarDecl(AType.INT,"i",new AInteger(82,AType.INT)))
+               ))));
 
-       /* Block testblock = new Block(Arrays.asList(new LocalVarDecl(AType.INT,"i",
-                new AInteger(1,AType.INT)),
-                new While(new AInteger(1,AType.INT),
-                new Block(Arrays.asList( new StmtExprStmt("test",new LocalOrFieldVar()))))
-               )));
-        new Codegenerierung().Start(testblock);*/
+       //Block testblock = new Block(Arrays.asList(new LocalVarDecl(AType.INT,"i",
+        //        new AInteger(1,AType.INT)),
+         //       new While(new AInteger(1,AType.INT),
+         //       new Block(Arrays.asList(new AssignStmt("test",new AInteger(3,AType.INT),new LocalOrFieldVar(AType.INT,"i"))) ))));
+        new Codegenerierung().Start(testblock);
     }
 }

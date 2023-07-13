@@ -1,11 +1,14 @@
 package statementExpressions;
 
+import Codegenerierung.Codegenerierung;
 import Expr.Expression;
+import General.AType;
 
 public class AssignStmt implements StatementExpression {
     private final String id;
     private final Expression expr;
     private Expression variable;
+    private AType aType;
 
     public AssignStmt(String id, Expression expr) {
         this.id = id;
@@ -28,5 +31,15 @@ public class AssignStmt implements StatementExpression {
 
     public Expression getExpr() {
         return this.expr;
+    }
+
+    @Override
+    public AType getType() {
+        return aType;
+    }
+
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+        codegenerierung.visit(this);
     }
 }

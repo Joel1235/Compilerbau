@@ -48,15 +48,18 @@ public class ASMBeispiel {
 
         //Methode m erstellen Start
         method.visitCode();
+        method.visitInsn(Opcodes.ICONST_0);
+        method.visitVarInsn(Opcodes.ISTORE, 1);
+
         // getstatic
-        method.visitFieldInsn(Opcodes.GETSTATIC,
-                "java/lang/System", "out",
-                "Ljava/io/PrintStream;");
+        //method.visitFieldInsn(Opcodes.GETSTATIC,
+        //        "java/lang/System", "out",
+        //        "Ljava/io/PrintStream;");
         // ldc "Bytecode"
-        method.visitLdcInsn("Bytecode");
+        //method.visitLdcInsn("Bytecode");
         // invokevirtual
-        method.visitMethodInsn(Opcodes.INVOKEVIRTUAL,
-                "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
+        //method.visitMethodInsn(Opcodes.INVOKEVIRTUAL,
+         //       "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
         // return
         method.visitInsn(Opcodes.RETURN);
 
@@ -128,6 +131,7 @@ public class ASMBeispiel {
         method.visitLdcInsn("Bytecode");
         method.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println",
                 "(Ljava/lang/String;)V", false);
+
 
         method.visitIincInsn(1, 1);
         method.visitJumpInsn(Opcodes.GOTO, loop);
