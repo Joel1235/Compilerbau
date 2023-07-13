@@ -24,6 +24,7 @@ public class Codegenerierung {
     //Method to start Codegen
     public void Start(Block block) throws IOException {
         localVars=new ArrayList();
+        currentClass = "Testcode";
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
 
         cw.visit(Opcodes.V1_8,                  //Version
@@ -190,10 +191,7 @@ public class Codegenerierung {
     public void visit(LocalOrFieldVar localOrFieldVar) {
         int index = localVars.indexOf(localOrFieldVar.getId());
         if (index > -1) { //local var, because found in localvars
-            if (localOrFieldVar.getType().getTypeName().equals("int") ||
-                    localOrFieldVar.getType().getTypeName().equals("void") ||
-                    localOrFieldVar.getType().getTypeName().equals("char") ||
-                    localOrFieldVar.getType().getTypeName().equals("boolean")) {
+            if (isVICZ(localOrFieldVar.getType())) {
                 methodvisitor.visitVarInsn(Opcodes.ILOAD, index);
             } else {
                 methodvisitor.visitVarInsn(Opcodes.ALOAD, index);
@@ -225,12 +223,7 @@ public class Codegenerierung {
     }
 
     public void visit(InstVar instVar) {
-        Expression expression = instVar.getExpr();
-        expression.bevisited(this);
-
-        methodvisitor.visitFieldInsn(Opcodes.GETFIELD, this.currentClass, instVar.getId(),
-                makeDescriptor(instVar.getType()));
-
+      System.out.println("Not implemented");
     }
 
     public void visit(Anull nullExpr) {
@@ -280,10 +273,7 @@ public class Codegenerierung {
     public void visit(LocalVarDecl localVarDecl) {
         localVarDecl.getExpr().bevisited(this);
         localVars.add(localVarDecl.getId());
-        if (localVarDecl.getType().getTypeName().equals("int") ||
-                localVarDecl.getType().getTypeName().equals("void") ||
-                localVarDecl.getType().getTypeName().equals("char") ||
-                localVarDecl.getType().getTypeName().equals("boolean")) {
+        if (isVICZ(localVarDecl.getType())) {
             methodvisitor.visitVarInsn(Opcodes.ISTORE, localVars.indexOf(localVarDecl.getId()));
         } else {
             methodvisitor.visitVarInsn(Opcodes.ASTORE, localVars.indexOf(localVarDecl.getId()));
@@ -295,10 +285,7 @@ public class Codegenerierung {
             methodvisitor.visitInsn(Opcodes.RETURN);
         } else {
             returnvar.getExpr().bevisited(this);
-            if (returnvar.getExpr().getType().getTypeName().equals("int") ||
-                    returnvar.getExpr().getType().getTypeName().equals("void") ||
-                    returnvar.getExpr().getType().getTypeName().equals("char") ||
-                    returnvar.getExpr().getType().getTypeName().equals("boolean")) {
+            if (isVICZ(returnvar.getExpr().getType())) {
                 methodvisitor.visitInsn(Opcodes.IRETURN);
             } else {
                 methodvisitor.visitInsn(Opcodes.ARETURN);
@@ -323,7 +310,27 @@ public class Codegenerierung {
     //StatementExpressions
 
     public void visit(AssignStmt assignStmt) {
-        System.out.println("Not implemented");
+        Expression variable = assignStmt.getVariable();
+        Expression assignExpression = assignStmt.getExpr();
+
+        if (variable instanceof LocalOrFieldVar) {
+            int index = localVars.indexOf(((LocalOrFieldVar) variable).getId());
+            if (index >= 0) { // local var
+                assignExpression.bevisited(this);
+                methodvisitor.visitInsn(Opcodes.DUP);
+                if (isVICZ(assignExpression.getType())   ) {
+                    methodvisitor.visitVarInsn(Opcodes.ISTORE, index);
+                } else {
+                    methodvisitor.visitVarInsn(Opcodes.ASTORE, index);
+                }
+            } else { // field var
+                methodvisitor.visitVarInsn(Opcodes.ALOAD, 0);
+                assignExpression.bevisited(this);
+                methodvisitor.visitInsn(Opcodes.DUP_X1);
+                methodvisitor.visitFieldInsn(Opcodes.PUTFIELD, currentClass, ((LocalOrFieldVar) variable).getId(),
+                        makeDescriptor((variable).getType()));
+            }
+        }
     }
 
     public void visit(DecrementExpr decrementExpr) {
@@ -332,6 +339,7 @@ public class Codegenerierung {
 
     public void visit(IncrementExpr incrementExpr) {
         System.out.println("Not implemented");
+        methodvisitor.visitIincInsn(1, 1);
     }
 
     public void visit(Method method) {
@@ -378,6 +386,13 @@ public class Codegenerierung {
             case "char" -> "C";
             case "boolean" -> "Z";
             default -> "T";
+        };
+    }
+
+    public Boolean isVICZ(AType aType){
+        return switch (aType.getTypeName()) {
+            case "void", "int", "char", "boolean" -> true;
+            default -> false;
         };
     }
 
