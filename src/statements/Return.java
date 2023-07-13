@@ -1,5 +1,6 @@
 package statements;
 
+import Codegenerierung.Codegenerierung;
 import Expr.Expression;
 
 public class Return implements Statement {
@@ -14,5 +15,10 @@ public class Return implements Statement {
 
     public Expression getExpr() {
         return this.expr;
+    }
+
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+        codegenerierung.visit(this);
     }
 }

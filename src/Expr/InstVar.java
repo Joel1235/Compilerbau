@@ -29,7 +29,7 @@ public class InstVar implements Expression {
         return this.id;
     }
 
-    public AType getAtype() {
+    public AType getType() {
         return Atype;
     }
 

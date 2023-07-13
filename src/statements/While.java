@@ -1,5 +1,6 @@
 package statements;
 
+import Codegenerierung.Codegenerierung;
 import Expr.Expression;
 
 public class While implements Statement {
@@ -17,5 +18,10 @@ public class While implements Statement {
 
     public Block getBlock() {
         return this.block;
+    }
+
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+        codegenerierung.visit(this);
     }
 }

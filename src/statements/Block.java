@@ -1,5 +1,7 @@
 package statements;
 
+import Codegenerierung.Codegenerierung;
+
 import java.util.List;
 
 public class Block implements Statement {
@@ -11,5 +13,10 @@ public class Block implements Statement {
 
     public List<Statement> getStatements() {
         return this.statements;
+    }
+
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+        codegenerierung.visit(this);
     }
 }

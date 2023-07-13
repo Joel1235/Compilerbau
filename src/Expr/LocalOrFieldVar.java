@@ -36,6 +36,6 @@ public class LocalOrFieldVar implements Expression {
 
     @Override
     public void bevisited(Codegenerierung codegenerierung) {
-
+        codegenerierung.visit(this);
     }
 }

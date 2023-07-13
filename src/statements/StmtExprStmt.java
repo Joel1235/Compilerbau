@@ -1,5 +1,6 @@
 package statements;
 
+import Codegenerierung.Codegenerierung;
 import Expr.Expression;
 
 public class StmtExprStmt implements Statement {
@@ -18,5 +19,10 @@ public class StmtExprStmt implements Statement {
 
     public Expression getExpression() {
         return expression;
+    }
+
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+        System.out.println("Not implemented");
     }
 }

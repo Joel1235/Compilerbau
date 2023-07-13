@@ -11,6 +11,7 @@ import statements.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,12 +22,13 @@ public class Codegenerierung {
     private String currentClass;
 
     //Method to start Codegen
-    public void Start() throws IOException {
-        ClassWriter cw = new ClassWriter( ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+    public void Start(Block block) throws IOException {
+        localVars=new ArrayList();
+        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
 
         cw.visit(Opcodes.V1_8,                  //Version
                 Opcodes.ACC_PUBLIC,            //Access
-                "Bytecode",                    //Name
+                "Testcode",                    //Name
                 null,                          //Signatur
                 "java/lang/Object",            //Superklasse
                 null);                         //implemntierte Interfaces
@@ -38,7 +40,7 @@ public class Codegenerierung {
                         null,            //Signatur
                         null);           //Exceptions
 
-         this.methodvisitor =
+        this.methodvisitor =
                 cw.visitMethod(Opcodes.ACC_PUBLIC, "m", "()V", null, null);
 
         //Konstruktor erstellen Start
@@ -64,6 +66,7 @@ public class Codegenerierung {
 
         // Hier dann das eingegebene Objekt abarbeiten
 
+        block.bevisited(this);
         // return
         methodvisitor.visitInsn(Opcodes.RETURN);
 
@@ -81,7 +84,7 @@ public class Codegenerierung {
 
     //Expressions
 
-    public void visit(ACharacter aCharacter){
+    public void visit(ACharacter aCharacter) {
         char aCharacterValue = aCharacter.getValue();
         if (aCharacterValue <= Byte.MAX_VALUE) {
             methodvisitor.visitIntInsn(Opcodes.BIPUSH, aCharacterValue);
@@ -104,11 +107,11 @@ public class Codegenerierung {
         }
     }
 
-    public void visit(AString aString){
+    public void visit(AString aString) {
         methodvisitor.visitLdcInsn(aString.getValue());
     }
 
-    public void visit(Binary binary){
+    public void visit(Binary binary) {
         switch (binary.getOperator()) {
             case PLUS, MINUS, MULTIPLY, DIVIDE, MODULUS -> addMathCodes(binary);
             case GREATER_THAN, LESS_THAN, GREATER_THAN_OR_EQUAL_TO, LESS_THAN_OR_EQUAL_TO, EQUAL_TO, NOT_EQUAL_TO, AND, OR -> addBooleanCodes(binary);
@@ -169,7 +172,7 @@ public class Codegenerierung {
                 methodvisitor.visitJumpInsn(Opcodes.IF_ICMPGT, falseLabel);
             }
 
-           // case EQUAL_TO and case NOT_EQUAL_TO missing, I didn't know how
+            // case EQUAL_TO and case NOT_EQUAL_TO missing, I didn't know how
 
         }
 
@@ -184,32 +187,32 @@ public class Codegenerierung {
     }
 
 
-    public void visit(LocalOrFieldVar localOrFieldVar){
-
+    public void visit(LocalOrFieldVar localOrFieldVar) {
         int index = localVars.indexOf(localOrFieldVar.getId());
-        if(index>-1){ //local var, because found in localvars
-            if (localOrFieldVar.getType() instanceof AType) {
+        if (index > -1) { //local var, because found in localvars
+            if (localOrFieldVar.getType().getTypeName().equals("int") ||
+                    localOrFieldVar.getType().getTypeName().equals("void") ||
+                    localOrFieldVar.getType().getTypeName().equals("char") ||
+                    localOrFieldVar.getType().getTypeName().equals("boolean")) {
                 methodvisitor.visitVarInsn(Opcodes.ILOAD, index);
             } else {
                 methodvisitor.visitVarInsn(Opcodes.ALOAD, index);
             }
-        }else  { // fieldvar, because not found in localvars
+        } else { // fieldvar, because not found in localvars
             methodvisitor.visitVarInsn(Opcodes.ALOAD, 0);
             methodvisitor.visitFieldInsn(Opcodes.GETFIELD, currentClass, localOrFieldVar.getId(),
                     makeDescriptor(localOrFieldVar.getType()));
         }
-
     }
 
 
-
-    public void visit(Unary unary){ //accepts only Not as an unary input
+    public void visit(Unary unary) { //accepts only Not as an unary input
 
         Label trueLabel = new Label();
         Label falseLabel = new Label();
         Label end = new Label();
         unary.getExpr().bevisited(this);
-        methodvisitor.visitJumpInsn(Opcodes.IFNE, falseLabel); //Jump to falseinsert in case the value is true
+        methodvisitor.visitJumpInsn(Opcodes.IFNE, falseLabel); //Jump to falseinsert in case the value is not 0, therefore true
 
         methodvisitor.visitLabel(trueLabel);
         methodvisitor.visitInsn(Opcodes.ICONST_1);
@@ -224,10 +227,9 @@ public class Codegenerierung {
     public void visit(InstVar instVar) {
         Expression expression = instVar.getExpr();
         expression.bevisited(this);
-        //this.lastClass = ((ReferenceType) expression.getType()).getIdentifier();
 
         methodvisitor.visitFieldInsn(Opcodes.GETFIELD, this.currentClass, instVar.getId(),
-                makeDescriptor(instVar.getAtype()));
+                makeDescriptor(instVar.getType()));
 
     }
 
@@ -237,63 +239,121 @@ public class Codegenerierung {
 
 //Statements
 
-    public void visit(Block block){
-
+    public void visit(Block block) {
+        block.getStatements().forEach(statement -> {
+            statement.bevisited(this);
+        });
     }
 
-    public void visit(For forvar){
+    public void visit(For forvar) {
+        Label forlabel = new Label();
+        Label end = new Label();
 
+        forvar.getInitStmt().bevisited(this);
+        methodvisitor.visitLabel(forlabel);
+        forvar.getCondition().bevisited(this);
+        methodvisitor.visitJumpInsn(Opcodes.IFEQ, end);
+
+        forvar.getBody().bevisited(this);
+        forvar.getUpdateStmt().bevisited(this);
+        methodvisitor.visitJumpInsn(Opcodes.GOTO, forlabel);
+        methodvisitor.visitLabel(end);
     }
 
-    public void visit(If ifvar){
+    public void visit(If ifvar) {
+        Label falseLabel = new Label();
+        Label end = new Label();
 
+        ifvar.getCondition().bevisited(this);
+        methodvisitor.visitJumpInsn(Opcodes.IFEQ, falseLabel); //0 means the condition is false
+
+        ifvar.getIfBlock().bevisited(this);
+        methodvisitor.visitJumpInsn(Opcodes.GOTO, end);
+
+        methodvisitor.visitLabel(falseLabel);
+        if (ifvar.getElseBlock() != null) {
+            ifvar.getElseBlock().bevisited(this);
+        }
+        methodvisitor.visitLabel(end);
     }
 
-    public void visit(LocalVarDecl localVarDecl){
-
+    public void visit(LocalVarDecl localVarDecl) {
+        localVarDecl.getExpr().bevisited(this);
+        localVars.add(localVarDecl.getId());
+        if (localVarDecl.getType().getTypeName().equals("int") ||
+                localVarDecl.getType().getTypeName().equals("void") ||
+                localVarDecl.getType().getTypeName().equals("char") ||
+                localVarDecl.getType().getTypeName().equals("boolean")) {
+            methodvisitor.visitVarInsn(Opcodes.ISTORE, localVars.indexOf(localVarDecl.getId()));
+        } else {
+            methodvisitor.visitVarInsn(Opcodes.ASTORE, localVars.indexOf(localVarDecl.getId()));
+        }
     }
 
-    public void visit(Return returnvar){
-
+    public void visit(Return returnvar) {
+        if (returnvar.getExpr() == null) {
+            methodvisitor.visitInsn(Opcodes.RETURN);
+        } else {
+            returnvar.getExpr().bevisited(this);
+            if (returnvar.getExpr().getType().getTypeName().equals("int") ||
+                    returnvar.getExpr().getType().getTypeName().equals("void") ||
+                    returnvar.getExpr().getType().getTypeName().equals("char") ||
+                    returnvar.getExpr().getType().getTypeName().equals("boolean")) {
+                methodvisitor.visitInsn(Opcodes.IRETURN);
+            } else {
+                methodvisitor.visitInsn(Opcodes.ARETURN);
+            }
+        }
     }
 
-    public void visit(StmtExprStmt stmtExprStmt){
 
-    }
+    public void visit(While whilevar) {
+        Label whilelabel = new Label();
+        Label end = new Label();
 
-    public void visit(While whilevar){
+        methodvisitor.visitLabel(whilelabel);
+        whilevar.getCondition().bevisited(this);
+        methodvisitor.visitJumpInsn(Opcodes.IFEQ, end);
 
+        whilevar.getBlock().bevisited(this);
+        methodvisitor.visitJumpInsn(Opcodes.GOTO, whilelabel);
+        methodvisitor.visitLabel(end);
     }
 
     //StatementExpressions
 
-    public void visit(AssignStmt assignStmt){
+    public void visit(AssignStmt assignStmt) {
+        System.out.println("Not implemented");
+    }
+
+    public void visit(DecrementExpr decrementExpr) {
+        System.out.println("Not implemented");
+    }
+
+    public void visit(IncrementExpr incrementExpr) {
+        System.out.println("Not implemented");
+    }
+
+    public void visit(Method method) {
+        System.out.println("Not implemented");
+    }
+
+    public void visit(MethodCall methodCall) {
+
+        methodCall.getExprList().forEach(expression -> expression.bevisited(this));
+        methodvisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, this.currentClass,
+                methodCall.getId(), makeMethodcallDescriptor(methodCall.getExprList()),
+                false);
 
     }
 
-    public void visit(DecrementExpr decrementExpr){
-
-    }
-
-    public void visit(IncrementExpr incrementExpr){
-
-    }
-
-    public void visit(Method method){
-
-    }
-
-    public void visit(MethodCall methodCall){
-
-    }
-
-    public void visit(New newvar){
-
+    public void visit(New newvar) {
+        System.out.println("Not implemented");
     }
 
 
     //Helpers
-     void writeClassfile(ClassWriter cw) throws IOException {
+    void writeClassfile(ClassWriter cw) throws IOException {
         byte[] bytes = cw.toByteArray();
         String className = new ClassReader(bytes).getClassName();
         File outputFile = new File("./", className + ".class");
@@ -302,12 +362,22 @@ public class Codegenerierung {
         output.close();
     }
 
-    public String makeDescriptor(AType aType){
+    public String makeMethodcallDescriptor(List<Expression> expressions) {
+        StringBuilder Descriptor = new StringBuilder();
+        for (Expression expression :
+                expressions) {
+            Descriptor.append(makeDescriptor(expression.getType()));
+        }
+        return Descriptor.toString();
+    }
+
+    public String makeDescriptor(AType aType) {
         return switch (aType.getTypeName()) {
             case "void" -> "V";
             case "int" -> "I";
             case "char" -> "C";
             case "boolean" -> "Z";
+            default -> "T";
         };
     }
 

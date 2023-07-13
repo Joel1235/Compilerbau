@@ -1,5 +1,6 @@
 package statements;
 
+import Codegenerierung.Codegenerierung;
 import Expr.Expression;
 import General.AType;
 
@@ -24,5 +25,10 @@ public class LocalVarDecl implements Statement {
 
     public Expression getExpr() {
         return this.expr;
+    }
+
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+        codegenerierung.visit(this);
     }
 }

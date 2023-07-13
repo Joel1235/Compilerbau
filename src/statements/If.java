@@ -1,5 +1,6 @@
 package statements;
 
+import Codegenerierung.Codegenerierung;
 import Expr.Expression;
 
 public class If implements Statement {
@@ -23,5 +24,10 @@ public class If implements Statement {
 
     public Block getElseBlock() {
         return this.elseBlock;
+    }
+
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+        codegenerierung.visit(this);
     }
 }

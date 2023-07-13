@@ -1,5 +1,6 @@
 package statements;
 
+import Codegenerierung.Codegenerierung;
 import Expr.Expression;
 
 public class For implements Statement {
@@ -31,4 +32,8 @@ public class For implements Statement {
         return this.body;
     }
 
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+        codegenerierung.visit(this);
+    }
 }
