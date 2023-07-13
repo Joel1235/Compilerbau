@@ -4,6 +4,7 @@ package Codegenerierung;
 import Expr.*;
 
 import General.AType;
+import General.ReturnType;
 import org.objectweb.asm.*;
 import statementExpressions.*;
 import statements.*;
@@ -20,12 +21,13 @@ public class Codegenerierung {
     private MethodVisitor methodvisitor;
     private List<String> localVars;
     private String currentClass;
+    private ClassWriter cw;
 
     //Method to start Codegen
     public void Start(Block block) throws IOException {
-        localVars=new ArrayList();
+        localVars = new ArrayList();
         currentClass = "Testcode";
-        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+        cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
 
         cw.visit(Opcodes.V1_8,                  //Version
                 Opcodes.ACC_PUBLIC,            //Access
@@ -70,6 +72,60 @@ public class Codegenerierung {
         block.bevisited(this);
         // return
         methodvisitor.visitInsn(Opcodes.RETURN);
+
+        methodvisitor.visitMaxs(0, 0);
+
+        methodvisitor.visitEnd();
+        //Methode m erstellen Ende
+
+        cw.visitEnd();
+        System.out.println(cw.toByteArray());
+        writeClassfile(cw);
+        //return cw.toByteArray();
+    }
+
+    public void Start(Method method) throws IOException {
+        localVars = new ArrayList();
+        currentClass = "Testcode";
+        cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+
+        cw.visit(Opcodes.V1_8,                  //Version
+                Opcodes.ACC_PUBLIC,            //Access
+                "Testcode",                    //Name
+                null,                          //Signatur
+                "java/lang/Object",            //Superklasse
+                null);                         //implemntierte Interfaces
+
+        MethodVisitor constructor =
+                cw.visitMethod(Opcodes.ACC_PUBLIC,
+                        "<init>",        //Name
+                        "()V",           //Typ (Descriptor)
+                        null,            //Signatur
+                        null);           //Exceptions
+
+
+        //Konstruktor erstellen Start
+        constructor.visitCode();               //Start-Initialisierung
+        // aload_0
+        constructor.visitVarInsn(Opcodes.ALOAD, 0);
+        // invokespecial
+        constructor.visitMethodInsn(Opcodes.INVOKESPECIAL,  //invoke-Befehl
+                "java/lang/Object",     //Owner-Klasse
+                "<init>",               //Name
+                "()V",                  //Typ (Descriptor)
+                false);                 //is interface?
+        // return
+        constructor.visitInsn(Opcodes.RETURN);
+
+        constructor.visitMaxs(0, 0);          //maximale Anzahl des Stacks bzw. der lokalen Veriablen
+
+        constructor.visitEnd();               //Ende-Initialisierung
+        //Konstruktor erstellen Ende
+
+        // Hier dann das eingegebene Objekt abarbeiten
+
+        method.bevisited(this);
+
 
         methodvisitor.visitMaxs(0, 0);
 
@@ -223,7 +279,7 @@ public class Codegenerierung {
     }
 
     public void visit(InstVar instVar) {
-      System.out.println("Not implemented");
+        System.out.println("Not implemented");
     }
 
     public void visit(Anull nullExpr) {
@@ -318,7 +374,7 @@ public class Codegenerierung {
             if (index >= 0) { // local var
                 assignExpression.bevisited(this);
                 methodvisitor.visitInsn(Opcodes.DUP);
-                if (isVICZ(assignExpression.getType())   ) {
+                if (isVICZ(assignExpression.getType())) {
                     methodvisitor.visitVarInsn(Opcodes.ISTORE, index);
                 } else {
                     methodvisitor.visitVarInsn(Opcodes.ASTORE, index);
@@ -343,7 +399,25 @@ public class Codegenerierung {
     }
 
     public void visit(Method method) {
-        System.out.println("Not implemented");
+        StringBuilder Descriptor = new StringBuilder();
+        Descriptor.append("(");
+        for (LocalOrFieldVar Param :
+                method.getParams()) {
+            Descriptor.append(makeDescriptor(Param.getType()));
+            localVars.add(Param.getId());
+        }
+        Descriptor.append(")");
+        Descriptor.append(method.getReturnType());
+
+        methodvisitor = cw.visitMethod(Opcodes.ACC_PUBLIC, method.getId(),
+                Descriptor.toString(), null, null);
+        methodvisitor.visitCode();
+        method.getBlock().bevisited(this);
+        if ((method.getType()) == AType.VOID) {
+            methodvisitor.visitInsn(Opcodes.RETURN);
+        }
+        methodvisitor.visitMaxs(0, 0);
+        methodvisitor.visitEnd();
     }
 
     public void visit(MethodCall methodCall) {
@@ -389,7 +463,7 @@ public class Codegenerierung {
         };
     }
 
-    public Boolean isVICZ(AType aType){
+    public Boolean isVICZ(AType aType) {
         return switch (aType.getTypeName()) {
             case "void", "int", "char", "boolean" -> true;
             default -> false;

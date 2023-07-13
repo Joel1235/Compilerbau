@@ -5,11 +5,13 @@ import Expr.*;
 import General.AType;
 import General.BinaryOperator;
 import statementExpressions.AssignStmt;
+import statementExpressions.Method;
 import statements.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -28,6 +30,10 @@ public class Main {
         //        new AInteger(1,AType.INT)),
          //       new While(new AInteger(1,AType.INT),
          //       new Block(Arrays.asList(new AssignStmt("test",new AInteger(3,AType.INT),new LocalOrFieldVar(AType.INT,"i"))) ))));
-        new Codegenerierung().Start(testblock);
+
+        Method testmethod= new Method("Test",Arrays.asList(new LocalOrFieldVar(AType.INT,"t")),testblock);
+
+        new Codegenerierung().Start(testmethod);
+
     }
 }
