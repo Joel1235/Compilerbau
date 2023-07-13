@@ -41,12 +41,12 @@ public class Clazz {
 
     @Override
     public String toString(){
-        String result = "Clazz: ";
+        String result = "";
         result += "(Name: " + name + ") (AccesModifier: " + accessModifier.toString() + ") (Fields: ";
         for (AField f: fields ) {
             result += f.toString() + ",";
         }
-        result += ") Methods: ";
+        result += ") (Methods: ";
         for (Method m: methods ) {
             result += m.toString() + ",";
         }
