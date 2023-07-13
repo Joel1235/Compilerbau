@@ -16,4 +16,11 @@ public class InstVar implements Expression {
     public String getId() {
         return this.id;
     }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "InstVar: (Id: " + id + ") (expr: " + expr.toString() + ")";
+        return result;
+    }
 }

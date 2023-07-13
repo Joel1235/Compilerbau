@@ -19,4 +19,11 @@ public class StmtExprStmt implements Statement {
     public Expression getExpression() {
         return expression;
     }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "StmtExprStmt: (varName: " + variableName + ") (expr: " + expression.toString() + ")";
+        return result;
+    }
 }

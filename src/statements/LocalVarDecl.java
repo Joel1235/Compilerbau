@@ -25,4 +25,11 @@ public class LocalVarDecl implements Statement {
     public Expression getExpr() {
         return this.expr;
     }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "LocalVarDecl: (Id: " + id + ") (Type: " + type.toString() + ") (expr: " + expr.toString() + ")";
+        return result;
+    }
 }

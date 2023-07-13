@@ -24,4 +24,11 @@ public class Binary implements Expression {
     public BinaryOperator getOperator() {
         return this.operator;
     }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "Binary(left: " + left.toString() + ") (Operator: " + operator.toString() + ") (right: " + right.toString() + ")";
+        return result;
+    }
 }

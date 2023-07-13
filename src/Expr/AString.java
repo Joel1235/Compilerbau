@@ -10,4 +10,11 @@ public class AString implements Expression {
     public String getValue() {
         return this.value;
     }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "String: " + value;
+        return result;
+    }
 }

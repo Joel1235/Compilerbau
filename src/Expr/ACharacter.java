@@ -10,4 +10,11 @@ public class ACharacter implements Expression {
     public char getValue() {
         return this.value;
     }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "Char: " + value;
+        return result;
+    }
 }

@@ -16,4 +16,11 @@ public class StmtExprExpr implements Expression{
     public Expression getExpression() {
         return expression;
     }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "StmtExprExpr: (Id: " + id + ") (Expression:  " + expression.toString() + ")";
+        return result;
+    }
 }

@@ -31,4 +31,11 @@ public class For implements Statement {
         return this.body;
     }
 
+    @Override
+    public String toString(){
+        String result = "";
+        result += "For: (initStatement: " + initStmt.toString() + ") (expr: " + condition.toString() + ") (updateStatement: " + updateStmt.toString() + ") (body: " + body.toString() + ")";
+        return result;
+    }
+
 }

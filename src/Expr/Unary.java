@@ -16,4 +16,11 @@ public class Unary implements Expression {
     public String getOperator() {
         return this.operator;
     }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "Unary: (expr: " + expr.toString() + ") (Operator: " + operator.toString() + ")";
+        return result;
+    }
 }

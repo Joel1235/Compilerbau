@@ -18,4 +18,11 @@ public class AssignStmt implements StatementExpression {
     public Expression getExpr() {
         return this.expr;
     }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "AssignStmt: (Id: " + id + ") (expr: " + expr.toString() + ")";
+        return result;
+    }
 }

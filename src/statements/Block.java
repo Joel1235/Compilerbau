@@ -1,5 +1,7 @@
 package statements;
 
+import Expr.Expression;
+
 import java.util.List;
 
 public class Block implements Statement {
@@ -11,5 +13,16 @@ public class Block implements Statement {
 
     public List<Statement> getStatements() {
         return this.statements;
+    }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "Block: (statements: ";
+        for(Statement s: statements){
+            result += s.toString() + ",";
+        }
+        result += ")";
+        return result;
     }
 }

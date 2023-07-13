@@ -1,5 +1,7 @@
 package General;
 
+import Expr.Expression;
+
 public enum BinaryOperator {
     PLUS("+"),
     MINUS("-"),
@@ -23,6 +25,13 @@ public enum BinaryOperator {
 
     public String getSymbol() {
         return this.symbol;
+    }
+
+    @Override
+    public String toString(){
+        String result = "BinaryOperator: ";
+        result += symbol;
+        return result;
     }
 }
 

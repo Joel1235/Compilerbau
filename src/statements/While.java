@@ -18,4 +18,11 @@ public class While implements Statement {
     public Block getBlock() {
         return this.block;
     }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "While: (Condition: " + condition.toString() + ") (Block: " + block.toString() + ")";
+        return result;
+    }
 }

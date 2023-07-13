@@ -1,5 +1,7 @@
 package General;
 
+import Expr.Expression;
+
 public class AType {
     private final String typeName;
 

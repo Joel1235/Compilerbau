@@ -51,4 +51,16 @@ public class Method implements StatementExpression {
     public Block getBlock() {
         return block;
     }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "Method: (Id: " + id + ") (AccesModifier: " + accessModifier.toString() + ") (ReturnType: " + returnType.toString() + ") (Parameters: ";
+        for (LocalOrFieldVar p: params ) {
+            result += p.toString() + ",";
+        }
+        result += ") Block: ";
+        result += block.toString();
+        return result;
+    }
 }

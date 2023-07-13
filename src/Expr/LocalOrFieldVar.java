@@ -8,7 +8,6 @@ public class LocalOrFieldVar implements Expression {
     private final AccessModifier accessModifier;
     private final AType type;
     private final String id;
-
     public LocalOrFieldVar(AType type, String id) {
         this.accessModifier = AccessModifier.PUBLIC;//default
         this.type = type;
@@ -31,5 +30,12 @@ public class LocalOrFieldVar implements Expression {
 
     public AccessModifier getAccessModifier() {
         return accessModifier;
+    }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "LocalOrFieldVar: (Id: " + id + ") (Type: " + type.toString() + ") (AccessModifier: " + accessModifier.toString();
+        return result;
     }
 }

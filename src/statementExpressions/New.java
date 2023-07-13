@@ -20,4 +20,15 @@ public class New implements StatementExpression {
     public List<Expression> getExprList() {
         return this.exprList;
     }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "New: (Id: " + id + ") (expr: ";
+        for(Expression e: exprList){
+            result += exprList.toString() + ",";
+        }
+        result += ")";
+        return result;
+    }
 }

@@ -15,4 +15,11 @@ public class Return implements Statement {
     public Expression getExpr() {
         return this.expr;
     }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "Return: (expr: " + expr.toString() + ")";
+        return result;
+    }
 }

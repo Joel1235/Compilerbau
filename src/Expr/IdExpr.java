@@ -10,4 +10,11 @@ public class IdExpr implements PointableExpression{
     public String getId() {
         return this.id;
     }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "Id: " + id;
+        return result;
+    }
 }

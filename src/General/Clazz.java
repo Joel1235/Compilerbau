@@ -3,22 +3,23 @@ package General;
 import Expr.LocalOrFieldVar;
 import statementExpressions.Method;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 public class Clazz {
     private AccessModifier accessModifier;
     private String name;
-    private List<LocalOrFieldVar> fields;
+    private List<Field> fields;
     private List<Method> methods;
 
-    public Clazz(String name, List<LocalOrFieldVar> fields, List<Method> methods) {
+    public Clazz(String name, List<Field> fields, List<Method> methods) {
         accessModifier = AccessModifier.PUBLIC; //default
         this.name = name;
         this.fields = fields;
         this.methods = methods;
     }
 
-    public Clazz(AccessModifier accessModifier, String name, List<LocalOrFieldVar> fields, List<Method> methods) {
+    public Clazz(AccessModifier accessModifier, String name, List<Field> fields, List<Method> methods) {
         this.accessModifier = accessModifier;
         this.name = name;
         this.fields = fields;
@@ -33,11 +34,26 @@ public class Clazz {
         return name;
     }
 
-    public List<LocalOrFieldVar> getFields() {
+    public List<Field> getFields() {
         return fields;
     }
 
     public List<Method> getMethods() {
         return methods;
+    }
+
+    @Override
+    public String toString(){
+        String result = "Clazz: ";
+        result += "(Name: " + name + ") (AccesModifier: " + accessModifier.toString() + ") (Fields: ";
+        for (Field f: fields ) {
+            result += f.toString() + ",";
+        }
+        result += ") Methods: ";
+        for (Method m: methods ) {
+            result += m.toString() + ",";
+        }
+        result += (")");
+        return result;
     }
 }

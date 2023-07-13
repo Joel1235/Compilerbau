@@ -24,4 +24,11 @@ public class If implements Statement {
     public Block getElseBlock() {
         return this.elseBlock;
     }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "If: (Condition: " + condition.toString() + ") (ifBlock: " + ifBlock.toString() + ") (elseBlock: " + elseBlock.toString() + ")";
+        return result;
+    }
 }

@@ -1,3 +1,4 @@
+import Expr.Expression;
 import General.AType;
 
 public class Field {
@@ -14,5 +15,12 @@ public class Field {
 
     public AType getType() {
         return type;
+    }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "Field: (Name: " + name + ") (Type: " + type.toString() + ")";
+        return result;
     }
 }

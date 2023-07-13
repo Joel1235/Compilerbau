@@ -10,4 +10,11 @@ public class DecrementExpr implements StatementExpression {
     public String getId() {
         return this.id;
     }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "Decrement: (Id: " + id + ")";
+        return result;
+    }
 }
