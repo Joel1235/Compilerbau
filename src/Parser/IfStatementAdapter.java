@@ -8,10 +8,10 @@ import statements.Statement;
 
 public class IfStatementAdapter {
     public static If adapt(miniJavaParser.StatementContext ctx) {
-        //Expression condition = ExpressionAdapter.adapt(ctx.);
+        Expression condition = ExpressionAdapter.adapt(ctx.ifStatement().condition().expr());
         Block thenBranch = BlockAdapter.adapt(ctx.block());
-        //Block elseBranch = BlockAdapter.adapt(ctx.block());
+        Block elseBranch = BlockAdapter.adapt(ctx.block());
 
-        // return new If(condition, thenBranch, elseBranch);
+        return new If(condition, thenBranch, elseBranch);
     }
 }
