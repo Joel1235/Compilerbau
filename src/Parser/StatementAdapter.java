@@ -10,9 +10,8 @@ public class StatementAdapter {
         if (ctx.localVarDecl() != null) {
             return LocalVarDeclAdapter.adapt(ctx.localVarDecl());
 
-            //TODO
-        // } else if (ctx.stmtExpr() != null) {
-            // return StatementExprAdapter.adapt(ctx.stmtExpr());
+        } else if (ctx.stmtExpr() != null) {
+           return (Statement) StatementExprAdapter.adapt(ctx.stmtExpr());
 
         } else if (ctx.block() != null) {
             return BlockAdapter.adapt(ctx.block());
