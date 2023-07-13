@@ -339,7 +339,7 @@ public class Codegenerierung {
 
     public void visit(IncrementExpr incrementExpr) {
         System.out.println("Not implemented");
-        methodvisitor.visitIincInsn(1, 1);
+        //methodvisitor.visitIincInsn(1, 1);
     }
 
     public void visit(Method method) {
