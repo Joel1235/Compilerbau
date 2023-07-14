@@ -20,13 +20,13 @@ public class ClassChecker {
         this.methodChecker = new MethodChecker(clazz);
     }
 
-    public AField check(AField field) throws Exception {//todo: check if correct, also: fix strings
+    public AField check(AField field) throws Exception {//todo: fix strings
         String type = field.getType().toString();
         switch (type) {
             case "String" -> /*field.setType(AType.nonexistantapparently)*/ throw(new ExecutionControl.NotImplementedException("string not implemented"));
             case "char" -> field.setType(AType.CHAR);
             case "int" -> field.setType(AType.INT);
-            case "bool", "boolean" -> field.setType(AType.BOOLEAN);
+            case "boolean" -> field.setType(AType.BOOLEAN);
             case "void" -> field.setType(AType.VOID);
             default -> throw new Exception();
         }
@@ -38,7 +38,7 @@ public class ClassChecker {
         return methodChecker.check(method);
     }
 
-    public Method check(String methodId) throws Exception {
+    public Method check(String methodId) throws Exception {// todo: is this even used? does not seem so lol
         for (Method method : methods) {
             if (method.getId().equals(methodId)) {
                 Method checkedMethod = check(method);
