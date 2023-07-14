@@ -1,9 +1,8 @@
 package TypeChecking;
 
 import General.*;
-import jdk.jshell.spi.ExecutionControl;
 import statementExpressions.*;
-
+import jdk.jshell.spi.ExecutionControl;
 import java.util.List;
 
 public class ClassChecker {
@@ -18,6 +17,7 @@ public class ClassChecker {
         this.fields = fields;
         this.methods = methods;
         this.methodChecker = new MethodChecker(clazz);
+        //since we don't have constructors, they cannot be type checked
     }
 
     public AField check(AField field) throws Exception {//todo: fix strings
@@ -38,7 +38,7 @@ public class ClassChecker {
         return methodChecker.check(method);
     }
 
-    public Method check(String methodId) throws Exception {// todo: is this even used? does not seem so lol
+    public Method check(String methodId) throws Exception {// todo: is this even used? does not seem so
         for (Method method : methods) {
             if (method.getId().equals(methodId)) {
                 Method checkedMethod = check(method);
