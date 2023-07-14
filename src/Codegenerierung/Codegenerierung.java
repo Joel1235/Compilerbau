@@ -125,11 +125,6 @@ public class Codegenerierung {
         // Hier dann das eingegebene Objekt abarbeiten
 
         method.bevisited(this);
-
-
-        methodvisitor.visitMaxs(0, 0);
-
-        methodvisitor.visitEnd();
         //Methode m erstellen Ende
 
         cw.visitEnd();
@@ -369,22 +364,14 @@ public class Codegenerierung {
         Expression variable = assignStmt.getVariable();
         Expression assignExpression = assignStmt.getExpr();
 
-        if (variable instanceof LocalOrFieldVar) {
-            int index = localVars.indexOf(((LocalOrFieldVar) variable).getId());
-            if (index >= 0) { // local var
-                assignExpression.bevisited(this);
-                methodvisitor.visitInsn(Opcodes.DUP);
-                if (isVICZ(assignExpression.getType())) {
-                    methodvisitor.visitVarInsn(Opcodes.ISTORE, index);
-                } else {
-                    methodvisitor.visitVarInsn(Opcodes.ASTORE, index);
-                }
-            } else { // field var
-                methodvisitor.visitVarInsn(Opcodes.ALOAD, 0);
-                assignExpression.bevisited(this);
-                methodvisitor.visitInsn(Opcodes.DUP_X1);
-                methodvisitor.visitFieldInsn(Opcodes.PUTFIELD, currentClass, ((LocalOrFieldVar) variable).getId(),
-                        makeDescriptor((variable).getType()));
+        int index = localVars.indexOf(((LocalOrFieldVar) variable).getId());
+        if (index >= 0) {
+            assignExpression.bevisited(this);
+            methodvisitor.visitInsn(Opcodes.DUP);
+            if (isVICZ(assignExpression.getType())) {
+                methodvisitor.visitVarInsn(Opcodes.ISTORE, index);
+            } else {
+                methodvisitor.visitVarInsn(Opcodes.ASTORE, index);
             }
         }
     }

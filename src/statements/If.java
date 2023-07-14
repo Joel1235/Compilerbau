@@ -14,6 +14,12 @@ public class If implements Statement {
         this.elseBlock = elseBlock;
     }
 
+    public If(Expression condition, Block ifBlock) {
+        this.condition = condition;
+        this.ifBlock = ifBlock;
+        this.elseBlock = null;
+    }
+
     public Expression getCondition() {
         return this.condition;
     }
