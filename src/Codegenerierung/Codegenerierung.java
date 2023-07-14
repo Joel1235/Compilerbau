@@ -377,12 +377,17 @@ public class Codegenerierung {
     }
 
     public void visit(DecrementExpr decrementExpr) {
-        System.out.println("Not implemented");
+        int index = localVars.indexOf(decrementExpr.getId());
+        if (index >= 0) {
+            methodvisitor.visitIincInsn(index, -1);
+        } else System.out.println("Field increment not implemented");
     }
 
     public void visit(IncrementExpr incrementExpr) {
-        System.out.println("Not implemented");
-        //methodvisitor.visitIincInsn(1, 1);
+        int index = localVars.indexOf(incrementExpr.getId());
+        if (index >= 0) {
+            methodvisitor.visitIincInsn(index, 1);
+        } else System.out.println("Field increment not implemented");
     }
 
     public void visit(Method method) {
@@ -408,16 +413,26 @@ public class Codegenerierung {
     }
 
     public void visit(MethodCall methodCall) {
-
         methodCall.getExprList().forEach(expression -> expression.bevisited(this));
         methodvisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, this.currentClass,
                 methodCall.getId(), makeMethodcallDescriptor(methodCall.getExprList()),
                 false);
-
     }
 
     public void visit(New newvar) {
-        System.out.println("Not implemented");
+        StringBuilder Descriptor = new StringBuilder();
+        Descriptor.append("(");
+        for (Expression Expr :
+                newvar.getExprList()) {
+            Descriptor.append(makeDescriptor(Expr.getType()));
+        }
+        Descriptor.append(")");
+        Descriptor.append("V");
+        methodvisitor.visitTypeInsn(Opcodes.NEW, newvar.getId());
+        methodvisitor.visitInsn(Opcodes.DUP);
+        newvar.getExprList().forEach(expr -> expr.bevisited(this));
+
+        methodvisitor.visitMethodInsn(Opcodes.INVOKESPECIAL, newvar.getId(), "<init>", Descriptor.toString(), false);
     }
 
 
