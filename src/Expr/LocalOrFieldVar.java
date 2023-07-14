@@ -35,7 +35,7 @@ public class LocalOrFieldVar implements Expression {
     @Override
     public String toString(){
         String result = "";
-        result += "LocalOrFieldVar: (Id: " + id + ") (Type: " + type.toString() + ") (AccessModifier: " + accessModifier.toString();
+        result += "LocalOrFieldVar: (Id: " + id + ") (Type: " + type.toString() + ") (AccessModifier: " + accessModifier.toString() + ")";
         return result;
     }
 }

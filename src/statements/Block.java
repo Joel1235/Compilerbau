@@ -18,7 +18,7 @@ public class Block implements Statement {
     @Override
     public String toString(){
         String result = "";
-        result += "Block: (statements: ";
+        result += "(statements: ";
         for(Statement s: statements){
             result += s.toString() + ",";
         }
