@@ -3,7 +3,7 @@ package Expr;
 import Codegenerierung.Codegenerierung;
 import General.AType;
 import General.ReturnType;
-import Syntaxcollection.Type;
+
 
 public class InstVar implements Expression {
     private final Expression expr;

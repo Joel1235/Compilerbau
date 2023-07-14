@@ -4,6 +4,7 @@ package Codegenerierung;
 import Expr.*;
 
 import General.AType;
+import General.Clazz;
 import General.ReturnType;
 import org.objectweb.asm.*;
 import statementExpressions.*;
@@ -24,17 +25,11 @@ public class Codegenerierung {
     private ClassWriter cw;
 
     //Method to start Codegen
-    public void Start(Block block) throws IOException {
+    public void Start(Clazz clazz) throws IOException {
         localVars = new ArrayList();
-        currentClass = "Testcode";
-        cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
-
-        cw.visit(Opcodes.V1_8,                  //Version
-                Opcodes.ACC_PUBLIC,            //Access
-                "Testcode",                    //Name
-                null,                          //Signatur
-                "java/lang/Object",            //Superklasse
-                null);                         //implemntierte Interfaces
+        currentClass = clazz.getName();
+        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+        cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, clazz.getName(), null, "java/lang/Object", null);
 
         MethodVisitor constructor =
                 cw.visitMethod(Opcodes.ACC_PUBLIC,
@@ -42,10 +37,6 @@ public class Codegenerierung {
                         "()V",           //Typ (Descriptor)
                         null,            //Signatur
                         null);           //Exceptions
-
-        this.methodvisitor =
-                cw.visitMethod(Opcodes.ACC_PUBLIC, "m", "()V", null, null);
-
         //Konstruktor erstellen Start
         constructor.visitCode();               //Start-Initialisierung
         // aload_0
@@ -64,24 +55,11 @@ public class Codegenerierung {
         constructor.visitEnd();               //Ende-Initialisierung
         //Konstruktor erstellen Ende
 
-        //Methode m erstellen Start
-        methodvisitor.visitCode();
-
-        // Hier dann das eingegebene Objekt abarbeiten
-
-        block.bevisited(this);
-        // return
-        methodvisitor.visitInsn(Opcodes.RETURN);
-
-        methodvisitor.visitMaxs(0, 0);
-
-        methodvisitor.visitEnd();
-        //Methode m erstellen Ende
-
+        for (Method method : clazz.getMethods()) {
+            method.bevisited(this);
+        }
         cw.visitEnd();
-        System.out.println(cw.toByteArray());
         writeClassfile(cw);
-        //return cw.toByteArray();
     }
 
     public void Start(Method method) throws IOException {
@@ -122,15 +100,11 @@ public class Codegenerierung {
         constructor.visitEnd();               //Ende-Initialisierung
         //Konstruktor erstellen Ende
 
-        // Hier dann das eingegebene Objekt abarbeiten
-
         method.bevisited(this);
         //Methode m erstellen Ende
 
         cw.visitEnd();
-        System.out.println(cw.toByteArray());
         writeClassfile(cw);
-        //return cw.toByteArray();
     }
 
 
@@ -322,7 +296,9 @@ public class Codegenerierung {
     }
 
     public void visit(LocalVarDecl localVarDecl) {
-        localVarDecl.getExpr().bevisited(this);
+
+        //localVarDecl.getExpr().bevisited(this);
+        methodvisitor.visitInsn(Opcodes.ICONST_0);
         localVars.add(localVarDecl.getId());
         if (isVICZ(localVarDecl.getType())) {
             methodvisitor.visitVarInsn(Opcodes.ISTORE, localVars.indexOf(localVarDecl.getId()));
