@@ -12,6 +12,7 @@ public class ClassChecker {
     private String name;
     private List<AField> fields;
     private List<Method> methods;
+    private MethodChecker methodChecker;
 
 
     public ClassChecker(Clazz clazz, List<AField> fields, List<Method> methods) {
@@ -37,7 +38,7 @@ public class ClassChecker {
     }
 
     public Method check(Method method) throws Exception {
-        return MethodChecker.check(method);
+        return methodChecker.check(method);
     }
 
     public Method check(String methodId) throws Exception {
