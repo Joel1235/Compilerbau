@@ -10,7 +10,6 @@ public class TypeChecker {
         for (Clazz clazz : program.getClazzes()) {
             List<AField> typeCheckedFields = new ArrayList<>(clazz.getFields().size());
             List<Method> typeCheckedMethods = new ArrayList<>(clazz.getMethods().size());
-            // todo: access modifiers?
 
             ClassChecker classChecker = new ClassChecker(clazz, typeCheckedFields, typeCheckedMethods);
             for (AField field : clazz.getFields()) {
