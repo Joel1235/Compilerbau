@@ -6,7 +6,7 @@ classDeclaration: accessModifier? 'class' ID '{' field* constructorDecl* method*
 
 constructorDecl: accessModifier? ID '(' paramList? ')' block;
 
-field: accessModifier? type ID ';';
+field: accessModifier? type ID ('=' expr)? ';';
 
 method: accessModifier? (type | 'void') ID '(' paramList? ')' block;
 
@@ -39,7 +39,7 @@ condition: expr;
 
 iteration: stmtExpr;
 
-localVarDecl: type ID '=' expr;
+localVarDecl: type ID ('=' expr)?;
 
 stmtExpr: ID '=' expr
         | 'new' ID '(' exprList? ')'
