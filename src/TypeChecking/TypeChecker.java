@@ -1,9 +1,7 @@
 package TypeChecking;
-import Expr.*;
+
 import General.*;
 import statementExpressions.*;
-import statements.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
