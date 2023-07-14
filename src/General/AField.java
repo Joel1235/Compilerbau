@@ -18,6 +18,8 @@ public class AField {
         return type;
     }
 
+    public void setType(AType type) { this.type = type; }
+
     @Override
     public String toString(){
         String result = "";
