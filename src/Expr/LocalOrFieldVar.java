@@ -6,7 +6,7 @@ import General.AccessModifier;
 
 public class LocalOrFieldVar implements Expression {
     private final AccessModifier accessModifier;
-    private final AType type;
+    private AType type;
     private final String id;
     public LocalOrFieldVar(AType type, String id) {
         this.accessModifier = AccessModifier.PUBLIC;//default
@@ -23,6 +23,8 @@ public class LocalOrFieldVar implements Expression {
     public AType getType() {
         return type;
     }
+
+    public void setType(AType type) { this.type = type; }
 
     public String getId() {
         return id;

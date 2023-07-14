@@ -12,20 +12,21 @@ public class TypeChecker {
         for (Clazz clazz : program.getClazzes()) {
             List<AField> typeCheckedFields = new ArrayList<>(clazz.getFields().size());
             List<Method> typeCheckedMethods = new ArrayList<>(clazz.getMethods().size());
-            // access modifiers?
+            // todo: access modifiers?
 
+            ClassChecker classChecker = new ClassChecker(clazz, typeCheckedFields, typeCheckedMethods);
             for (AField field : clazz.getFields()) {
-                // check fields
+                typeCheckedFields.add(classChecker.check(field));
             }
 
             for (Method method : clazz.getMethods()) {
-                // check methods
+                typeCheckedMethods.add(classChecker.check(method));
             }
 
             clazz.setFields(typeCheckedFields);
             clazz.setMethods(typeCheckedMethods);
         }
 
-        return program; // now with its classes being type checked
+        return program;
     }
 }
