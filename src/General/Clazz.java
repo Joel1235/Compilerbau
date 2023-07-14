@@ -35,9 +35,13 @@ public class Clazz {
         return fields;
     }
 
+    public void setFields(List<AField> fields) { this.fields = fields; }
+
     public List<Method> getMethods() {
         return methods;
     }
+
+    public void setMethods(List<Method> methods) { this.methods = methods; }
 
     @Override
     public String toString(){
