@@ -1,10 +1,8 @@
 package TypeChecking;
 
-import Expr.*;
 import General.*;
 import jdk.jshell.spi.ExecutionControl;
 import statementExpressions.*;
-import statements.*;
 
 import java.util.List;
 
