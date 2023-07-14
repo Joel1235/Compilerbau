@@ -28,7 +28,7 @@ public class Codegenerierung {
     public void Start(Clazz clazz) throws IOException {
         localVars = new ArrayList();
         currentClass = clazz.getName();
-        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
+        cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
         cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, clazz.getName(), null, "java/lang/Object", null);
 
         MethodVisitor constructor =
@@ -197,8 +197,27 @@ public class Codegenerierung {
                 binary.getRight().bevisited(this);
                 methodvisitor.visitJumpInsn(Opcodes.IF_ICMPGT, falseLabel);
             }
+            case EQUAL_TO -> {
+                binary.getLeft().bevisited(this);
+                binary.getRight().bevisited(this);
+                if (isVICZ(binary.getLeft().getType() )
+                        && isVICZ(binary.getRight().getType())  ) {
+                    methodvisitor.visitJumpInsn(Opcodes.IF_ICMPNE, falseLabel);
+                } else {
+                    methodvisitor.visitJumpInsn(Opcodes.IF_ACMPNE, falseLabel);
+                }
+            }
+            case NOT_EQUAL_TO -> {
+                binary.getLeft().bevisited(this);
+                binary.getRight().bevisited(this);
+                if (isVICZ(binary.getLeft().getType() )
+                        && isVICZ(binary.getRight().getType())  ) {
+                    methodvisitor.visitJumpInsn(Opcodes.IF_ICMPEQ, falseLabel);
+                } else {
+                    methodvisitor.visitJumpInsn(Opcodes.IF_ACMPEQ, falseLabel);
+                }
+            }
 
-            // case EQUAL_TO and case NOT_EQUAL_TO missing, I didn't know how
 
         }
 
@@ -295,16 +314,8 @@ public class Codegenerierung {
         methodvisitor.visitLabel(end);
     }
 
-    public void visit(LocalVarDecl localVarDecl) {
-
-        //localVarDecl.getExpr().bevisited(this);
-        methodvisitor.visitInsn(Opcodes.ICONST_0);
+    public void visit(LocalVarDecl localVarDecl) { //only needs to be in the loacalvars list, assign will handle the first actual call
         localVars.add(localVarDecl.getId());
-        if (isVICZ(localVarDecl.getType())) {
-            methodvisitor.visitVarInsn(Opcodes.ISTORE, localVars.indexOf(localVarDecl.getId()));
-        } else {
-            methodvisitor.visitVarInsn(Opcodes.ASTORE, localVars.indexOf(localVarDecl.getId()));
-        }
     }
 
     public void visit(Return returnvar) {
