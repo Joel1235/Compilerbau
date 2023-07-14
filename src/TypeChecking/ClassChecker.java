@@ -19,8 +19,7 @@ public class ClassChecker {
         name = clazz.getName();
         this.fields = fields;
         this.methods = methods;
-
-        //method checker
+        this.methodChecker = new MethodChecker(clazz);
     }
 
     public AField check(AField field) throws Exception {//todo: check if correct, also: fix strings
