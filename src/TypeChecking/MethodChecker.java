@@ -4,16 +4,22 @@ import Expr.*;
 import General.*;
 import jdk.jshell.spi.ExecutionControl;
 import statementExpressions.*;
-import statements.*;
+
 public class MethodChecker {
-    private String name;
-    private StatementChecker statementChecker;
-    public MethodChecker(Clazz clazz /*some weird stuff*/){
+    private String name; //todo: unnecessary if we don't have object type
+
+    public MethodChecker(Clazz clazz){
         this.name = clazz.getName();
-        //some weird stuff
+        //todo: here would be the creation of statement and expression checkers, but since they wouldnt work we dont do this here
     }
     public Method check(Method method) throws Exception {
-        throw new ExecutionControl.NotImplementedException("method check not yet implemented"); //todo: implement
+        //first: getting statement by checking method.statement (does not exist)
+        //second: check parameters:
+        for (LocalOrFieldVar parameter : method.getParams()) {
+            parameter.setType(check(parameter).getType());// todo: thing is. since we using a getter, maybe original data not modified
+        }
+        //third: set method type via statement, not possible, since our statements don't have types
+        return method;
     }
 
     public LocalOrFieldVar check(LocalOrFieldVar parameter) throws Exception {
