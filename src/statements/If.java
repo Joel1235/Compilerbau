@@ -1,5 +1,6 @@
 package statements;
 
+import Codegenerierung.Codegenerierung;
 import Expr.Expression;
 import General.AType;
 
@@ -38,6 +39,10 @@ public class If implements Statement {
         return type;
     }
 
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+        codegenerierung.visit(this);
+    }
     public void setType(AType type) {
         this.type = type;
     }

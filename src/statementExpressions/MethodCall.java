@@ -1,5 +1,6 @@
 package statementExpressions;
 
+import Codegenerierung.Codegenerierung;
 import Expr.Expression;
 import General.AType;
 import Helper.ArgumentHelper;
@@ -81,5 +82,15 @@ public class MethodCall implements StatementExpression {
         }
         result += ")";
         return result;
+    }
+
+    @Override
+    public AType getType() {
+        return aType;
+    }
+
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+        codegenerierung.visit(this);
     }
 }

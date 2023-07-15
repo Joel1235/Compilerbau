@@ -1,5 +1,6 @@
 package statements;
 
+import Codegenerierung.Codegenerierung;
 import Expr.Expression;
 
 public class StmtExprStmt implements Statement {
@@ -21,6 +22,8 @@ public class StmtExprStmt implements Statement {
     }
 
     @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+        System.out.println("Not implemented");
     public String toString(){
         String result = "";
         result += "StmtExprStmt: (varName: " + variableName + ") (expr: " + expression.toString() + ")";

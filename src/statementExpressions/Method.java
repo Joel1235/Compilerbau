@@ -1,6 +1,8 @@
 package statementExpressions;
 
+import Codegenerierung.Codegenerierung;
 import Expr.LocalOrFieldVar;
+import General.AType;
 import General.ReturnType;
 import General.AccessModifier;
 import statements.Block;
@@ -13,6 +15,7 @@ public class Method implements StatementExpression {
     private final String id;
     private final List<LocalOrFieldVar> params;
     private final Block block;
+    private AType aType;
 
     //constructor
     public Method( String id, List<LocalOrFieldVar> params, Block block) {
@@ -61,6 +64,13 @@ public class Method implements StatementExpression {
     }
 
     @Override
+    public AType getType() {
+        return aType;
+    }
+
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+        codegenerierung.visit(this);
     public String toString(){
         String result = "";
         result += "Method: (Id: " + id + ") (AccesModifier: " + accessModifier.toString() + ") (ReturnType: " + returnType.toString() + ") (Parameters: ";

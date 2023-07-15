@@ -1,5 +1,6 @@
 package statements;
 
+import Codegenerierung.Codegenerierung;
 import Expr.Expression;
 import General.AType;
 
@@ -27,6 +28,8 @@ public class LocalVarDecl implements Statement {
     }
 
     @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+        codegenerierung.visit(this);
     public String toString(){
         String result = "";
         result += "LocalVarDecl: (Id: " + id + ") (Type: " + type.toString() + ") (expr: " + expr.toString() + ")";

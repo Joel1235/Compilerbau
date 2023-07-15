@@ -1,5 +1,6 @@
 package Expr;
 
+import Codegenerierung.Codegenerierung;
 import General.AType;
 import General.Operator;
 
@@ -47,5 +48,13 @@ public class Unary implements Expression {
         String result = "";
         result += "Unary: (expr: " + expr.toString() + ") (Operator: " + operator.toString() + ")";
         return result;
+    }
+
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+        codegenerierung.visit(this);
+    }
+    public AType getType() {
+        return this.aType;
     }
 }

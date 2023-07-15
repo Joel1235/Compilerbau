@@ -1,5 +1,6 @@
 package statements;
 
+import Codegenerierung.Codegenerierung;
 import Expr.Expression;
 import General.AType;
 
@@ -51,5 +52,10 @@ public class Return implements Statement {
         String result = "";
         result += "Return: (expr: " + expr.toString() + ")";
         return result;
+    }
+
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+        codegenerierung.visit(this);
     }
 }

@@ -1,5 +1,14 @@
 package Expr;
 
+import Codegenerierung.Codegenerierung;
+import General.AType;
+import General.ReturnType;
+
+
+public class InstVar implements Expression {
+    private final Expression expr;
+    private final String id;
+    private AType Atype;
 import General.AType;
 
 public class InstVar implements Expression {
@@ -58,5 +67,14 @@ public class InstVar implements Expression {
         String result = "";
         result += "InstVar: (Id: " + id + ") (expr: " + expr.toString() + ")";
         return result;
+    }
+
+    public AType getType() {
+        return Atype;
+    }
+
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+        codegenerierung.visit(this);
     }
 }

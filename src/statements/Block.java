@@ -1,5 +1,6 @@
 package statements;
 
+import Codegenerierung.Codegenerierung;
 import Expr.Expression;
 
 import java.util.List;
@@ -16,6 +17,8 @@ public class Block implements Statement {
     }
 
     @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+        codegenerierung.visit(this);
     public String toString(){
         String result = "";
         result += "(statements: ";

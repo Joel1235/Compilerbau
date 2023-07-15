@@ -1,5 +1,6 @@
 package statementExpressions;
 
+import Codegenerierung.Codegenerierung;
 import Expr.Expression;
 import General.AType;
 
@@ -53,5 +54,15 @@ public class AssignStmt implements StatementExpression {
         String result = "";
         result += "AssignStmt: (Type: " + type + ") (lexpr: " + lExpr.toString() + ") (rexpr: " + rExpr.toString() + ")";
         return result;
+    }
+
+    @Override
+    public AType getType() {
+        return aType;
+    }
+
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+        codegenerierung.visit(this);
     }
 }

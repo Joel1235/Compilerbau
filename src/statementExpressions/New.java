@@ -1,6 +1,8 @@
 package statementExpressions;
 
+import Codegenerierung.Codegenerierung;
 import Expr.Expression;
+import General.AType;
 
 import java.util.List;
 
@@ -31,6 +33,13 @@ public class New implements StatementExpression {
     }
 
     @Override
+    public AType getType() {
+        return aType;
+    }
+
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+        codegenerierung.visit(this);
     public String toString(){
         String result = "";
         result += "New: (Id: " + id + ") (expr: ";

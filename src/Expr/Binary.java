@@ -1,5 +1,7 @@
 package Expr;
 
+import Codegenerierung.Codegenerierung;
+import General.AType;
 import General.Operator;
 
 public class Binary implements Expression {
@@ -25,6 +27,14 @@ public class Binary implements Expression {
         this.column = col;
     }
 
+    public Binary(Expression left, Expression right, BinaryOperator operator,AType aType) {
+        this.left = left;
+        this.right = right;
+        this.operator = operator;
+        this.aType = aType;
+    }
+
+
     public Expression getLeft() {
         return this.left;
     }
@@ -38,6 +48,12 @@ public class Binary implements Expression {
     }
 
     @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+        codegenerierung.visit(this);
+    }
+
+    public AType getType() {
+        return this.aType;
     public String toString(){
         String result = "";
         result += "Binary(left: " + left.toString() + ") (Operator: " + operator.toString() + ") (right: " + right.toString() + ")";

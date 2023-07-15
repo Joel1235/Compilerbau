@@ -1,5 +1,6 @@
 package statements;
 
+import Codegenerierung.Codegenerierung;
 import Expr.Expression;
 import General.AType;
 import statementExpressions.StatementExpression;
@@ -85,6 +86,9 @@ public class For implements Statement {
         return update;
     }
 
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+        codegenerierung.visit(this);
     public void setUpdate(StatementExpression update) {
         this.update = update;
     }
