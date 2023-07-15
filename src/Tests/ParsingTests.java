@@ -1,6 +1,8 @@
 package Tests;
+import Expr.Expression;
 import General.Program;
 import TreeGeneration.ASTGenerator;
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +12,7 @@ public class ParsingTests {
 
     //TODO: BITTE DEN NACHFOLGENDEN TEXT LESEN
     /*
+    Jeder Test schlägt  fehl, da Constructor nicht generiert werden
     Die Expected Werte sind nicht zu 100% Korrekt, da strukturell ein paar Klassen fehlen und was nicht existiert lässt sich nicht testen.
     Ich habe einfach mal so getan, als würden die fehlenden Klassen existieren (Bsp.: ExprStmtExpr oder Boolean).
     Ebenfalls fehlen sämtliche Objekttypen.
@@ -158,6 +161,16 @@ public class ParsingTests {
                                                                 "(Parameters: ) " +
                                                                 "Block: (statements: )," +
                                                             ")");
+    }
+
+    @Test
+    void FieldFail() {
+        try {
+            ASTGenerator.generateAST("class Field{ int }");
+        }catch(Exception e) {
+            return;
+        }
+        Assert.fail("Exception erwartet");
     }
 
     @Test
