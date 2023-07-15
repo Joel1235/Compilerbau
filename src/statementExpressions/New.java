@@ -42,11 +42,11 @@ public class New implements StatementExpression {
     public void bevisited(Codegenerierung codegenerierung) {
         codegenerierung.visit(this);
     }
-    
-    public String toString(){
+
+    public String toString() {
         String result = "";
         result += "New: (Id: " + id + ") (expr: ";
-        for(Expression e: exprList){
+        for (Expression e : exprList) {
             result += exprList.toString() + ",";
         }
         result += ")";

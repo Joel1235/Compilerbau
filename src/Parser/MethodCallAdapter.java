@@ -1,13 +1,13 @@
 package Parser;
 
-import java.util.List;
-
-import Helper.ArgumentHelper;
 import AntlrOut.miniJavaParser;
 import Expr.Expression;
 import Expr.LocalOrFieldVar;
 import Expr.This;
+import Helper.ArgumentHelper;
 import statementExpressions.MethodCall;
+
+import java.util.List;
 
 public class MethodCallAdapter {
 

@@ -15,7 +15,7 @@ public class ABool implements Expression {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         String result = "";
         result += "Boolean: " + value;
         return result;

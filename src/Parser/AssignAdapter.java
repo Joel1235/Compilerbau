@@ -1,7 +1,7 @@
 package Parser;
 
-import statementExpressions.AssignStmt;
 import AntlrOut.miniJavaParser;
+import statementExpressions.AssignStmt;
 
 public class AssignAdapter {
     public static AssignStmt adapt(miniJavaParser.AssignContext assignContext) {

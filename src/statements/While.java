@@ -5,9 +5,9 @@ import Expr.Expression;
 import General.AType;
 
 public class While implements Statement {
-    private AType type;
     public int line;
     public int column;
+    private AType type;
     private Expression condition;
     private Block block;
 
@@ -37,7 +37,7 @@ public class While implements Statement {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         String result = "";
         result += "While: (Condition: " + condition.toString() + ") (Block: " + block.toString() + ")";
         return result;

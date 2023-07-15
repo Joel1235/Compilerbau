@@ -1,7 +1,6 @@
 package statements;
 
 import Codegenerierung.Codegenerierung;
-import Expr.Expression;
 
 import java.util.List;
 
@@ -21,10 +20,10 @@ public class Block implements Statement {
         codegenerierung.visit(this);
     }
 
-    public String toString(){
+    public String toString() {
         String result = "";
         result += "(statements: ";
-        for(Statement s: statements){
+        for (Statement s : statements) {
             result += s.toString() + ",";
         }
         result += ")";

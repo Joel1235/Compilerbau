@@ -1,7 +1,7 @@
 package Parser;
 
-import Expr.*;
 import AntlrOut.miniJavaParser;
+import Expr.*;
 
 public class ValueAdapter {
 

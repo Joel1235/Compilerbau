@@ -74,10 +74,10 @@ public class MethodCall implements StatementExpression {
 
 
     @Override
-    public String toString(){
+    public String toString() {
         String result = "";
         result += "MethodCall: (Id: " + id + ") (expr: ";
-        for(Expression e: arguments){
+        for (Expression e : arguments) {
             result += arguments.toString() + ",";
         }
         result += ")";

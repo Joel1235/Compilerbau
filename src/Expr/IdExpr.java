@@ -3,7 +3,7 @@ package Expr;
 import Codegenerierung.Codegenerierung;
 import General.AType;
 
-public class IdExpr implements PointableExpression{
+public class IdExpr implements PointableExpression {
     private final String id;
     private AType aType;
 
@@ -24,7 +24,7 @@ public class IdExpr implements PointableExpression{
         return this.aType;
     }
 
-    public String toString(){
+    public String toString() {
         String result = "";
         result += "Id: " + id;
         return result;

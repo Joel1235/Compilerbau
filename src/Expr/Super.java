@@ -3,8 +3,9 @@ package Expr;
 import Codegenerierung.Codegenerierung;
 import General.AType;
 
-public class Super implements PointableExpression{
+public class Super implements PointableExpression {
     private AType aType;
+
     @Override
     public void bevisited(Codegenerierung codegenerierung) {
         System.out.println("Not implemented");
@@ -15,7 +16,7 @@ public class Super implements PointableExpression{
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         String result = "";
         result += "Super";
         return result;

@@ -3,8 +3,8 @@ package statementExpressions;
 import Codegenerierung.Codegenerierung;
 import Expr.LocalOrFieldVar;
 import General.AType;
-import General.ReturnType;
 import General.AccessModifier;
+import General.ReturnType;
 import statements.Block;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class Method implements StatementExpression {
     private AType aType;
 
     //constructor
-    public Method( String id, List<LocalOrFieldVar> params, Block block) {
+    public Method(String id, List<LocalOrFieldVar> params, Block block) {
         this.accessModifier = AccessModifier.PUBLIC; //default
         this.block = block;
         this.returnType = null; //default
@@ -73,10 +73,10 @@ public class Method implements StatementExpression {
         codegenerierung.visit(this);
     }
 
-    public String toString(){
+    public String toString() {
         String result = "";
         result += "Method: (Id: " + id + ") (AccesModifier: " + accessModifier.toString() + ") (ReturnType: " + returnType.toString() + ") (Parameters: ";
-        for (LocalOrFieldVar p: params ) {
+        for (LocalOrFieldVar p : params) {
             result += p.toString() + ",";
         }
         result += ") Block: ";

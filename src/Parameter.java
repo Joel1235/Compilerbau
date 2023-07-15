@@ -1,4 +1,3 @@
-import Expr.Expression;
 import General.AType;
 
 public class Parameter {
@@ -19,7 +18,7 @@ public class Parameter {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         String result = "";
         result += "Parameter: (Name: " + s.toString() + ") (Type: " + t.toString() + ")";
         return result;

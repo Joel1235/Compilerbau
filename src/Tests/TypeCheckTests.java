@@ -1,24 +1,18 @@
 package Tests;
-import Expr.AInteger;
+
 import Expr.LocalOrFieldVar;
-import Expr.StmtExprExpr;
 import General.*;
-import statementExpressions.AssignStmt;
-import statementExpressions.Method;
-import TreeGeneration.ASTGenerator;
 import TypeChecking.TypeChecker;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+import statementExpressions.Method;
 import statements.Block;
-import statements.LocalVarDecl;
-import statements.StmtExprStmt;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class TypeCheckTests {
 
@@ -43,71 +37,73 @@ public class TypeCheckTests {
     geschrieben von: Kevin Kern
      */
 
+    ArrayList<Clazz> classes = new ArrayList<>();
+    ArrayList<AField> field = new ArrayList<>();
+    ArrayList<Method> methods = new ArrayList<>();
+    Program result = null;
+
     protected Program TypeChecker(Program in) throws Exception {
         TypeChecker checker = new TypeChecker();
         Program result = checker.check(in);
         return result;
     }
-    ArrayList<Clazz> classes = new ArrayList<>();
-    ArrayList<AField> field = new ArrayList<>();
-    ArrayList<Method> methods = new ArrayList<>();
-    Program result = null;
-    @Test
-    void EmptyClass(){
 
-        classes.add(new Clazz( "Empty", field,  methods));
+    @Test
+    void EmptyClass() {
+
+        classes.add(new Clazz("Empty", field, methods));
         try {
             result = TypeChecker(new Program(classes));
-        }catch(Exception e){
+        } catch (Exception e) {
             Assert.fail("Type Check auf Grund von kritischem Fehler abgebrochen");
         }
         //nichts zu prüfen
     }
 
     @Test
-    void PrivateClass(){
+    void PrivateClass() {
 
         AccessModifier clazzmod = AccessModifier.PRIVATE;
 
-        classes.add(new Clazz( clazzmod, "Empty", field,  methods));
+        classes.add(new Clazz(clazzmod, "Empty", field, methods));
         try {
             result = TypeChecker(new Program(classes));
-        }catch(Exception e){
+        } catch (Exception e) {
             Assert.fail("Type Check auf Grund von kritischem Fehler abgebrochen");
         }
         //nichts zu prüfen
     }
 
     @Test
-    void EmptyConstructor(){
+    void EmptyConstructor() {
 
         methods.add(new Method("Empty", new ArrayList<>(), new Block(Arrays.asList())));
 
-        classes.add(new Clazz( "Empty", field,  methods));
+        classes.add(new Clazz("Empty", field, methods));
         try {
             result = TypeChecker(new Program(classes));
-        }catch(Exception e){
+        } catch (Exception e) {
             Assert.fail("Type Check auf Grund von kritischem Fehler abgebrochen");
         }
         //nichts zu prüfen
     }
 
     @Test
-    void EmptyMethod(){
+    void EmptyMethod() {
 
         methods.add(new Method("emptyMethod", new ArrayList<>(), new Block(Arrays.asList())));
 
-        classes.add(new Clazz(  "Method", field,  methods));
+        classes.add(new Clazz("Method", field, methods));
         try {
             result = TypeChecker(new Program(classes));
-        }catch(Exception e){
+        } catch (Exception e) {
             Assert.fail("Type Check auf Grund von kritischem Fehler abgebrochen");
         }
         //nichts zu prüfen
     }
 
     @Test
-    void Parameters(){
+    void Parameters() {
 
 
         List<LocalOrFieldVar> params = new ArrayList<>();
@@ -116,10 +112,10 @@ public class TypeCheckTests {
 
         methods.add(new Method("emptyMethod", params, new Block(Arrays.asList())));
 
-        classes.add(new Clazz( "Method", field,  methods));
+        classes.add(new Clazz("Method", field, methods));
         try {
             result = TypeChecker(new Program(classes));
-        }catch(Exception e){
+        } catch (Exception e) {
             Assert.fail("Type Check auf Grund von kritischem Fehler abgebrochen");
         }
         assertEquals(new AType("int"), result.getClazzes().get(0).getMethods().get(0).getParams().get(0).getType());
@@ -127,28 +123,28 @@ public class TypeCheckTests {
     }
 
     @Test
-    void Field(){
+    void Field() {
 
         field.add(new AField(new AType("int"), "x"));
 
-        classes.add(new Clazz( "Field", field,  methods));
+        classes.add(new Clazz("Field", field, methods));
         try {
             result = TypeChecker(new Program(classes));
-        }catch(Exception e){
+        } catch (Exception e) {
             Assert.fail("Type Check auf Grund von kritischem Fehler abgebrochen");
         }
         assertEquals(new AType("int"), result.getClazzes().get(0).getFields().get(0).getType());
     }
 
     @Test
-    void FieldFail(){
+    void FieldFail() {
 
         field.add(new AField(new AType("void"), "x"));
 
-        classes.add(new Clazz( "Field", field,  methods));
+        classes.add(new Clazz("Field", field, methods));
         try {
             result = TypeChecker(new Program(classes));
-        }catch(Exception e){
+        } catch (Exception e) {
             return; //Fehler erwartet
         }
         Assert.fail("void ist kein Valider Feld Typ, wird aber akzeptiert");
@@ -187,7 +183,6 @@ public class TypeCheckTests {
         //der Assign etc lässt sich gar nicht abfragen, da dort keine Types sind und sich der Assign nicht korrekt erstellen lässt
     }
     */
-
 
 
     //weitere Tests der Typisierung lohnen sich nicht und lassen sich auch nicht korrekt erstellen, da mir der Link zwischen StmtExpr und Expr fehlt.

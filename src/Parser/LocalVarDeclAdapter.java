@@ -9,7 +9,8 @@ public class LocalVarDeclAdapter {
     public static LocalVarDecl adapt(AType type, String identifier, Expression expression) {
         return new LocalVarDecl(type, identifier, expression);
     }
-    public static LocalVarDecl adapt(miniJavaParser.LocalVarDeclContext lvdCtx){
+
+    public static LocalVarDecl adapt(miniJavaParser.LocalVarDeclContext lvdCtx) {
 
         AType type = TypeAdapter.adapt(lvdCtx.type());
         String identifier = lvdCtx.ID().toString();

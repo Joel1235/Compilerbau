@@ -5,11 +5,11 @@ import General.AType;
 import General.Operator;
 
 public class Unary implements Expression {
+    public int line;
+    public int column;
     private Expression expr;
     private Operator operator;
     private AType type;
-    public int line;
-    public int column;
 
     public Unary(Expression expression, Operator operator, int line, int column) {
         this.expr = expression;
@@ -37,9 +37,8 @@ public class Unary implements Expression {
     }
 
 
-
     @Override
-    public String toString(){
+    public String toString() {
         String result = "";
         result += "Unary: (expr: " + expr.toString() + ") (Operator: " + operator.toString() + ")";
         return result;

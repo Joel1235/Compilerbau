@@ -1,5 +1,5 @@
 package Tests;
-import Expr.Expression;
+
 import General.Program;
 import TreeGeneration.ASTGenerator;
 import org.junit.Assert;
@@ -25,547 +25,546 @@ public class ParsingTests {
      */
 
 
-    private void generateTree( String input, String expected) {
+    private void generateTree(String input, String expected) {
         Program output = null;
         try {
             output = ASTGenerator.generateAST(input);
-        }catch (Exception e) {
+        } catch (Exception e) {
             Assertions.fail("Syntax Fehler beim Generieren des Trees");
         }
-        assertEquals(expected ,output.toString());
+        assertEquals(expected, output.toString());
     }
 
 
     @Test
     void EmptyClassOK() {
         generateTree("class Empty { }", "Clazz: " +
-                                                      "(Name: Empty) " +
-                                                      "(AccesModifier: PUBLIC) " +
-                                                      "(Fields: ) " +
-                                                      "(Methods: " +
-                                                      "Method: " +
-                                                        "(Id: Empty) " +
-                                                        "(AccesModifier: PUBLIC) " +
-                                                        "(ReturnType: Empty) " +
-                                                        "(Parameters: ) " +
-                                                        "Block: (statements: )," +
-                                                      ")");
+                "(Name: Empty) " +
+                "(AccesModifier: PUBLIC) " +
+                "(Fields: ) " +
+                "(Methods: " +
+                "Method: " +
+                "(Id: Empty) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: Empty) " +
+                "(Parameters: ) " +
+                "Block: (statements: )," +
+                ")");
     }
 
     @Test
     void PrivateClassOK() {
         generateTree("private class Empty{ }", "Clazz: " +
-                                                              "(Name: Empty) " +
-                                                              "(AccesModifier: PRIVATE) " +
-                                                              "(Fields: ) " +
-                                                              "(Methods: " +
-                                                              "Method: " +
-                                                                "(Id: Empty) " +
-                                                                "(AccesModifier: PUBLIC) " +
-                                                                "(ReturnType: Empty) " +
-                                                                "(Parameters: ) " +
-                                                                "Block: (statements: )," +
-                                                              ")");
+                "(Name: Empty) " +
+                "(AccesModifier: PRIVATE) " +
+                "(Fields: ) " +
+                "(Methods: " +
+                "Method: " +
+                "(Id: Empty) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: Empty) " +
+                "(Parameters: ) " +
+                "Block: (statements: )," +
+                ")");
     }
 
     @Test
-    void EmptyConstructorOK()
-    {
+    void EmptyConstructorOK() {
         generateTree("class Empty{ Empty( ){  } }", "Clazz: " +
-                                                                   "(Name: Empty) " +
-                                                                   "(AccesModifier: PUBLIC) " +
-                                                                   "(Fields: ) " +
-                                                                   "(Methods: " +
-                                                                     "Method: " +
-                                                                     "(Id: Empty) " +
-                                                                     "(AccesModifier: PUBLIC) " +
-                                                                     "(ReturnType: Empty) " +
-                                                                     "(Parameters: ) " +
-                                                                     "Block: (statements: )," +
-                                                                   ")");
+                "(Name: Empty) " +
+                "(AccesModifier: PUBLIC) " +
+                "(Fields: ) " +
+                "(Methods: " +
+                "Method: " +
+                "(Id: Empty) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: Empty) " +
+                "(Parameters: ) " +
+                "Block: (statements: )," +
+                ")");
     }
 
     @Test
-    void EmptyMethodOK(){
+    void EmptyMethodOK() {
         generateTree("class Method{ int emptyMethod(){ } }", "Clazz: " +
-                                                                          "(Name: Method) " +
-                                                                          "(AccesModifier: PUBLIC) " +
-                                                                          "(Fields: ) " +
-                                                                          "(Methods: " +
+                "(Name: Method) " +
+                "(AccesModifier: PUBLIC) " +
+                "(Fields: ) " +
+                "(Methods: " +
 
-                                                                            "Method: " +
-                                                                            "(Id: Method) " +
-                                                                            "(AccesModifier: PUBLIC) " +
-                                                                            "(ReturnType: Method) " +
-                                                                            "(Parameters: ) " +
-                                                                            "Block: (statements: )," +
+                "Method: " +
+                "(Id: Method) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: Method) " +
+                "(Parameters: ) " +
+                "Block: (statements: )," +
 
-                                                                            "Method: " +
-                                                                            "(Id: emptyMethod) " +
-                                                                            "(AccesModifier: PUBLIC) " +
-                                                                            "(ReturnType: int) " +
-                                                                            "(Parameters: ) " +
-                                                                            "Block: (statements: )," +
-                                                                          ")");
+                "Method: " +
+                "(Id: emptyMethod) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: int) " +
+                "(Parameters: ) " +
+                "Block: (statements: )," +
+                ")");
     }
 
     @Test
-    void ParametersOK(){
+    void ParametersOK() {
         generateTree("class Method{ int emptyMethod( int i, boolean b ){ } }", "Clazz: " +
-                                                                                  "(Name: Method) " +
-                                                                                  "(AccesModifier: PUBLIC) " +
-                                                                                  "(Fields: ) " +
-                                                                                  "(Methods: " +
+                "(Name: Method) " +
+                "(AccesModifier: PUBLIC) " +
+                "(Fields: ) " +
+                "(Methods: " +
 
-                                                                                  "Method: " +
-                                                                                  "(Id: Method) " +
-                                                                                  "(AccesModifier: PUBLIC) " +
-                                                                                  "(ReturnType: Method) " +
-                                                                                  "(Parameters: ) " +
-                                                                                  "Block: (statements: )," +
+                "Method: " +
+                "(Id: Method) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: Method) " +
+                "(Parameters: ) " +
+                "Block: (statements: )," +
 
 
-                                                                                  "Method: " +
-                                                                                  "(Id: emptyMethod) " +
-                                                                                  "(AccesModifier: PUBLIC) " +
-                                                                                  "(ReturnType: int) " +
-                                                                                  "(Parameters: " +
-                                                                                    "LocalOrFieldVar: " +
-                                                                                    "(Id: i) " +
-                                                                                    "(Type: int) " +
-                                                                                    "(AccessModifier: PUBLIC)," +
-                                                                                    "LocalOrFieldVar: " +
-                                                                                    "(Id: b) " +
-                                                                                    "(Type: boolean) " +
-                                                                                    "(AccessModifier: PUBLIC)," +
-                                                                                  ") " +
-                                                                                  "Block: (statements: )," +
-                                                                                  ")");
+                "Method: " +
+                "(Id: emptyMethod) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: int) " +
+                "(Parameters: " +
+                "LocalOrFieldVar: " +
+                "(Id: i) " +
+                "(Type: int) " +
+                "(AccessModifier: PUBLIC)," +
+                "LocalOrFieldVar: " +
+                "(Id: b) " +
+                "(Type: boolean) " +
+                "(AccessModifier: PUBLIC)," +
+                ") " +
+                "Block: (statements: )," +
+                ")");
     }
 
     @Test
     void FieldOK() {
         generateTree("class Field{ int x; }", "Clazz: " +
-                                                            "(Name: Field) " +
-                                                            "(AccesModifier: PUBLIC) " +
-                                                            "(Fields: " +
-                                                                "Field: " +
-                                                                "(Name: x) " +
-                                                                "(Type: int)," +
-                                                            ") " +
-                                                            "(Methods: " +
-                                                                "Method: " +
-                                                                "(Id: Field) " +
-                                                                "(AccesModifier: PUBLIC) " +
-                                                                "(ReturnType: Field) " +
-                                                                "(Parameters: ) " +
-                                                                "Block: (statements: )," +
-                                                            ")");
+                "(Name: Field) " +
+                "(AccesModifier: PUBLIC) " +
+                "(Fields: " +
+                "Field: " +
+                "(Name: x) " +
+                "(Type: int)," +
+                ") " +
+                "(Methods: " +
+                "Method: " +
+                "(Id: Field) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: Field) " +
+                "(Parameters: ) " +
+                "Block: (statements: )," +
+                ")");
     }
 
     @Test
     void FieldFail() {
         try {
             ASTGenerator.generateAST("class Field{ int }");
-        }catch(Exception e) {
+        } catch (Exception e) {
             return;
         }
         Assert.fail("Exception erwartet");
     }
 
     @Test
-    void LocalOrFieldVarOK(){
+    void LocalOrFieldVarOK() {
         generateTree("class Variable{void var(){ int a; int b; } }", "Clazz: " +
-                                                                                   "(Name: Variable) " +
-                                                                                   "(AccesModifier: PUBLIC) " +
-                                                                                   "(Fields: ) " +
-                                                                                   "(Methods: " +
+                "(Name: Variable) " +
+                "(AccesModifier: PUBLIC) " +
+                "(Fields: ) " +
+                "(Methods: " +
 
-                                                                                    "Method: " +
-                                                                                    "(Id: Variable) " +
-                                                                                    "(AccesModifier: PUBLIC) " +
-                                                                                    "(ReturnType: Variable) " +
-                                                                                    "(Parameters: ) " +
-                                                                                    "Block: (statements: )," +
+                "Method: " +
+                "(Id: Variable) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: Variable) " +
+                "(Parameters: ) " +
+                "Block: (statements: )," +
 
-                                                                                   "Method: " +
-                                                                                   "(Id: var) " +
-                                                                                   "(AccesModifier: PUBLIC) " +
-                                                                                   "(ReturnType: int) " +
-                                                                                   "(Parameters: " +
-                                                                                   ") " +
-                                                                                   "Block: (statements: " +
-                                                                                        "LocalVarDecl: (Id: a) (Type: int) " +
-                                                                                        "(expr: )," +
-                                                                                        "LocalVarDecl: (Id: b) (Type: int) " +
-                                                                                        "(expr: )," +
-                                                                                    ")," +
-                                                                                   ")");
+                "Method: " +
+                "(Id: var) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: int) " +
+                "(Parameters: " +
+                ") " +
+                "Block: (statements: " +
+                "LocalVarDecl: (Id: a) (Type: int) " +
+                "(expr: )," +
+                "LocalVarDecl: (Id: b) (Type: int) " +
+                "(expr: )," +
+                ")," +
+                ")");
     }
 
     @Test
-    void BooleanOK(){
+    void BooleanOK() {
         generateTree("class Bool{ void bool(){ boolean b = true; } }", "Clazz: " +
-                                                                                        "(Name: Bool) " +
-                                                                                        "(AccesModifier: PUBLIC) " +
-                                                                                        "(Fields: ) " +
-                                                                                        "(Methods: " +
+                "(Name: Bool) " +
+                "(AccesModifier: PUBLIC) " +
+                "(Fields: ) " +
+                "(Methods: " +
 
-                                                                                            "Method: " +
-                                                                                            "(Id: Bool) " +
-                                                                                            "(AccesModifier: PUBLIC) " +
-                                                                                            "(ReturnType: Bool) " +
-                                                                                            "(Parameters: ) " +
-                                                                                            "Block: (statements: )," +
+                "Method: " +
+                "(Id: Bool) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: Bool) " +
+                "(Parameters: ) " +
+                "Block: (statements: )," +
 
-                                                                                            "Method: " +
-                                                                                            "(Id: bool) " +
-                                                                                            "(AccesModifier: PUBLIC) " +
-                                                                                            "(ReturnType: void) " +
-                                                                                            "(Parameters: ) " +
-                                                                                            "Block: (statements: " +
-                                                                                                    "LocalVarDecl: (Id: b) (Type: boolean) " +
-                                                                                                    "(expr: ExprStmtExpr: AssignStmt: (Id: b) (expr: ABoolean true))," +
-                                                                                            ")," +
-                                                                                        ")");
+                "Method: " +
+                "(Id: bool) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: void) " +
+                "(Parameters: ) " +
+                "Block: (statements: " +
+                "LocalVarDecl: (Id: b) (Type: boolean) " +
+                "(expr: ExprStmtExpr: AssignStmt: (Id: b) (expr: ABoolean true))," +
+                ")," +
+                ")");
     }
 
     @Test
-    void CharacterOK(){
+    void CharacterOK() {
         generateTree("class Char { void charMethod(){ char a = '_'; } }", "Clazz: " +
-                                                                                        "(Name: Char) " +
-                                                                                        "(AccesModifier: PUBLIC) " +
-                                                                                        "(Fields: ) " +
-                                                                                        "(Methods: " +
+                "(Name: Char) " +
+                "(AccesModifier: PUBLIC) " +
+                "(Fields: ) " +
+                "(Methods: " +
 
-                                                                                            "Method: " +
-                                                                                            "(Id: Char) " +
-                                                                                            "(AccesModifier: PUBLIC) " +
-                                                                                            "(ReturnType: Char) " +
-                                                                                            "(Parameters: ) " +
-                                                                                            "Block: (statements: )," +
+                "Method: " +
+                "(Id: Char) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: Char) " +
+                "(Parameters: ) " +
+                "Block: (statements: )," +
 
-                                                                                            "Method: " +
-                                                                                            "(Id: charMethod) " +
-                                                                                            "(AccesModifier: PUBLIC) " +
-                                                                                            "(ReturnType: void) " +
-                                                                                            "(Parameters: ) " +
-                                                                                            "Block: (statements: " +
-                                                                                                "LocalVarDecl: (Id: a) (Type: char) " +
-                                                                                                "(expr: ExprStmtExpr: AssignStmt: (Id: a) (expr: Char: _))," +
-                                                                                            ")," +
-                                                                                        ")");
+                "Method: " +
+                "(Id: charMethod) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: void) " +
+                "(Parameters: ) " +
+                "Block: (statements: " +
+                "LocalVarDecl: (Id: a) (Type: char) " +
+                "(expr: ExprStmtExpr: AssignStmt: (Id: a) (expr: Char: _))," +
+                ")," +
+                ")");
     }
 
     @Test
-    void IntegerOK(){
+    void IntegerOK() {
         generateTree("class Int{void intMethod(){ int a = -1; } }", "Clazz: " +
-                                                                                     "(Name: Int) " +
-                                                                                     "(AccesModifier: PUBLIC) " +
-                                                                                     "(Fields: ) " +
-                                                                                     "(Methods: " +
+                "(Name: Int) " +
+                "(AccesModifier: PUBLIC) " +
+                "(Fields: ) " +
+                "(Methods: " +
 
-                                                                                        "Method: " +
-                                                                                        "(Id: Int) " +
-                                                                                        "(AccesModifier: PUBLIC) " +
-                                                                                        "(ReturnType: Int) " +
-                                                                                        "(Parameters: ) " +
-                                                                                        "Block: (statements: )," +
+                "Method: " +
+                "(Id: Int) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: Int) " +
+                "(Parameters: ) " +
+                "Block: (statements: )," +
 
-                                                                                        "Method: " +
-                                                                                        "(Id: intMethod) " +
-                                                                                        "(AccesModifier: PUBLIC) " +
-                                                                                        "(ReturnType: void) " +
-                                                                                        "(Parameters: ) " +
-                                                                                        "Block: (statements: " +
-                                                                                            "LocalVarDecl: (Id: a) (Type: int) " +
-                                                                                            "(expr: ExprStmtExpr: AssignStmt: (Id: a) (expr: int: -1))," +
-                                                                                        ")," +
-                                                                                     ")");
+                "Method: " +
+                "(Id: intMethod) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: void) " +
+                "(Parameters: ) " +
+                "Block: (statements: " +
+                "LocalVarDecl: (Id: a) (Type: int) " +
+                "(expr: ExprStmtExpr: AssignStmt: (Id: a) (expr: int: -1))," +
+                ")," +
+                ")");
     }
 
     @Test
-    void StringOK(){
+    void StringOK() {
         generateTree("class String{String stringMethod(){ void s = \"*TODO: versteckte Nachricht für Prof einfügen!\"; } }", "Clazz: " +
-                                                                                                                                        "(Name: String) " +
-                                                                                                                                        "(AccesModifier: PUBLIC) " +
-                                                                                                                                        "(Fields: ) " +
-                                                                                                                                        "(Methods: " +
+                "(Name: String) " +
+                "(AccesModifier: PUBLIC) " +
+                "(Fields: ) " +
+                "(Methods: " +
 
-                                                                                                                                            "Method: " +
-                                                                                                                                            "(Id: String) " +
-                                                                                                                                            "(AccesModifier: PUBLIC) " +
-                                                                                                                                            "(ReturnType: String) " +
-                                                                                                                                            "(Parameters: ) " +
-                                                                                                                                            "Block: (statements: )," +
+                "Method: " +
+                "(Id: String) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: String) " +
+                "(Parameters: ) " +
+                "Block: (statements: )," +
 
-                                                                                                                                            "Method: " +
-                                                                                                                                            "(Id: stringMethod) " +
-                                                                                                                                            "(AccesModifier: PUBLIC) " +
-                                                                                                                                            "(ReturnType: void) " +
-                                                                                                                                            "(Parameters: ) " +
-                                                                                                                                            "Block: (statements: " +
-                                                                                                                                                "LocalVarDecl: (Id: s) (Type: string) " +
-                                                                                                                                                "(expr: ExprStmtExpr: AssignStmt: (Id: s) (expr: string: *TODO: versteckte Nachricht für Prof einfügen!))," +
-                                                                                                                                            ")," +
-                                                                                                                                        ")");
+                "Method: " +
+                "(Id: stringMethod) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: void) " +
+                "(Parameters: ) " +
+                "Block: (statements: " +
+                "LocalVarDecl: (Id: s) (Type: string) " +
+                "(expr: ExprStmtExpr: AssignStmt: (Id: s) (expr: string: *TODO: versteckte Nachricht für Prof einfügen!))," +
+                ")," +
+                ")");
     }
 
     @Test
-    void NullOK(){
+    void NullOK() {
         generateTree("class Null{void nullMethod(){ string s = null; } }", "Clazz: " +
-                                                                                            "(Name: Null) " +
-                                                                                            "(AccesModifier: PUBLIC) " +
-                                                                                            "(Fields: ) " +
-                                                                                            "(Methods: " +
+                "(Name: Null) " +
+                "(AccesModifier: PUBLIC) " +
+                "(Fields: ) " +
+                "(Methods: " +
 
-                                                                                                "Method: " +
-                                                                                                "(Id: Null) " +
-                                                                                                "(AccesModifier: PUBLIC) " +
-                                                                                                "(ReturnType: Null) " +
-                                                                                                "(Parameters: ) " +
-                                                                                                "Block: (statements: )," +
+                "Method: " +
+                "(Id: Null) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: Null) " +
+                "(Parameters: ) " +
+                "Block: (statements: )," +
 
-                                                                                                "Method: " +
-                                                                                                "(Id: nullMethod) " +
-                                                                                                "(AccesModifier: PUBLIC) " +
-                                                                                                "(ReturnType: void) " +
-                                                                                                "(Parameters: ) " +
-                                                                                                "Block: (statements: " +
-                                                                                                    "LocalVarDecl: (Id: s) (Type: string) " +
-                                                                                                    "(expr: ExprStmtExpr: AssignStmt: (Id: s) (expr: null))," +
-                                                                                                ")," +
-                                                                                            ")");
+                "Method: " +
+                "(Id: nullMethod) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: void) " +
+                "(Parameters: ) " +
+                "Block: (statements: " +
+                "LocalVarDecl: (Id: s) (Type: string) " +
+                "(expr: ExprStmtExpr: AssignStmt: (Id: s) (expr: null))," +
+                ")," +
+                ")");
     }
 
     @Test
-    void BinaryOK(){
+    void BinaryOK() {
         generateTree("class Binary{ void binaryMethod(){ int x; x = 1 + 99; } }", "Clazz: " +
-                                                                                            "(Name: Binary) " +
-                                                                                            "(AccesModifier: PUBLIC) " +
-                                                                                            "(Fields: ) " +
-                                                                                            "(Methods: " +
+                "(Name: Binary) " +
+                "(AccesModifier: PUBLIC) " +
+                "(Fields: ) " +
+                "(Methods: " +
 
-                                                                                                "Method: " +
-                                                                                                "(Id: Binary) " +
-                                                                                                "(AccesModifier: PUBLIC) " +
-                                                                                                "(ReturnType: Binary) " +
-                                                                                                "(Parameters: ) " +
-                                                                                                "Block: (statements: )," +
+                "Method: " +
+                "(Id: Binary) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: Binary) " +
+                "(Parameters: ) " +
+                "Block: (statements: )," +
 
-                                                                                                "Method: " +
-                                                                                                "(Id: binaryMethod) " +
-                                                                                                "(AccesModifier: PUBLIC) " +
-                                                                                                "(ReturnType: void) " +
-                                                                                                "(Parameters: ) " +
-                                                                                                "Block: (statements: " +
-                                                                                                    "LocalVarDecl: (Id: x) (Type: int) (expr:)"+
-                                                                                                    "StmtExprStmt: AssignStmt: (Id: x) (expr: Binary:(left: expr: int: 1) (Operator: +) (right: expr: int: 99)))," +
-                                                                                                ")," +
-                                                                                            ")");
+                "Method: " +
+                "(Id: binaryMethod) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: void) " +
+                "(Parameters: ) " +
+                "Block: (statements: " +
+                "LocalVarDecl: (Id: x) (Type: int) (expr:)" +
+                "StmtExprStmt: AssignStmt: (Id: x) (expr: Binary:(left: expr: int: 1) (Operator: +) (right: expr: int: 99)))," +
+                ")," +
+                ")");
     }
 
     //Mir ist bewusst, das "this" nicht in Assign eingefügt werden kann. Müsste es aber. ANTLR gibt auch nur Fehler für den Input Code zurück.
     @Test
-    void InstVarOK(){
+    void InstVarOK() {
         generateTree("class InstVar{int i; void instMethod(){ this.i = 1; } }", "Clazz: " +
-                                                                                               "(Name: Int) " +
-                                                                                               "(AccesModifier: PUBLIC) " +
-                                                                                               "(Fields: " +
-                                                                                                    "Field: " +
-                                                                                                    "(Name: i) " +
-                                                                                                    "(Type: int)," +
-                                                                                               ") " +
-                                                                                               "(Methods: " +
+                "(Name: Int) " +
+                "(AccesModifier: PUBLIC) " +
+                "(Fields: " +
+                "Field: " +
+                "(Name: i) " +
+                "(Type: int)," +
+                ") " +
+                "(Methods: " +
 
-                                                                                                    "Method: " +
-                                                                                                    "(Id: InstVar) " +
-                                                                                                    "(AccesModifier: PUBLIC) " +
-                                                                                                    "(ReturnType: InstVar) " +
-                                                                                                    "(Parameters: ) " +
-                                                                                                    "Block: (statements: )," +
+                "Method: " +
+                "(Id: InstVar) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: InstVar) " +
+                "(Parameters: ) " +
+                "Block: (statements: )," +
 
-                                                                                                    "Method: " +
-                                                                                                    "(Id: instMethod) " +
-                                                                                                    "(AccesModifier: PUBLIC) " +
-                                                                                                    "(ReturnType: void) " +
-                                                                                                    "(Parameters: ) " +
-                                                                                                    "Block: (statements: " +
-                                                                                                        "LocalVarDecl: (Id: s) (Type: string) " +
-                                                                                                        "(expr: ExprStmtExpr: AssignStmt: (this: s) (expr: int: 1))," +
-                                                                                                    ")," +
-                                                                                               ")");
+                "Method: " +
+                "(Id: instMethod) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: void) " +
+                "(Parameters: ) " +
+                "Block: (statements: " +
+                "LocalVarDecl: (Id: s) (Type: string) " +
+                "(expr: ExprStmtExpr: AssignStmt: (this: s) (expr: int: 1))," +
+                ")," +
+                ")");
     }
 
     @Test
-    void UnaryOK(){
+    void UnaryOK() {
         generateTree("class Unary{ void unaryMethod(){ boolean b = !false; } }", "Clazz: " +
-                                                                                              "(Name: Unary) " +
-                                                                                              "(AccesModifier: PUBLIC) " +
-                                                                                              "(Fields: ) " +
-                                                                                              "(Methods: " +
+                "(Name: Unary) " +
+                "(AccesModifier: PUBLIC) " +
+                "(Fields: ) " +
+                "(Methods: " +
 
-                                                                                                  "Method: " +
-                                                                                                  "(Id: Unary) " +
-                                                                                                  "(AccesModifier: PUBLIC) " +
-                                                                                                  "(ReturnType: Unary) " +
-                                                                                                  "(Parameters: ) " +
-                                                                                                  "Block: (statements: )," +
+                "Method: " +
+                "(Id: Unary) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: Unary) " +
+                "(Parameters: ) " +
+                "Block: (statements: )," +
 
-                                                                                                  "Method: " +
-                                                                                                  "(Id: unaryMethod) " +
-                                                                                                  "(AccesModifier: PUBLIC) " +
-                                                                                                  "(ReturnType: void) " +
-                                                                                                  "(Parameters: ) " +
-                                                                                                  "Block: (statements: " +
-                                                                                                    "LocalVarDecl: (Id: s) (Type: string) " +
-                                                                                                    "(expr: ExprStmtExpr: Unary: (expr: boolean: false) (Operator: !))," +
-                                                                                                  ")," +
-                                                                                              ")");
+                "Method: " +
+                "(Id: unaryMethod) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: void) " +
+                "(Parameters: ) " +
+                "Block: (statements: " +
+                "LocalVarDecl: (Id: s) (Type: string) " +
+                "(expr: ExprStmtExpr: Unary: (expr: boolean: false) (Operator: !))," +
+                ")," +
+                ")");
     }
 
     @Test
-    void IfOK(){
+    void IfOK() {
         generateTree("class If{ void ifMethod(){ if( 1 == 1 ) {int i = 1;} else { i = 404;} } }", "Clazz: " +
-                                                                                                                    "(Name: If) " +
-                                                                                                                    "(AccesModifier: PUBLIC) " +
-                                                                                                                    "(Fields: ) " +
-                                                                                                                    "(Methods: " +
+                "(Name: If) " +
+                "(AccesModifier: PUBLIC) " +
+                "(Fields: ) " +
+                "(Methods: " +
 
-                                                                                                                        "Method: " +
-                                                                                                                        "(Id: If) " +
-                                                                                                                        "(AccesModifier: PUBLIC) " +
-                                                                                                                        "(ReturnType: If) " +
-                                                                                                                        "(Parameters: ) " +
-                                                                                                                        "Block: (statements: )," +
+                "Method: " +
+                "(Id: If) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: If) " +
+                "(Parameters: ) " +
+                "Block: (statements: )," +
 
-                                                                                                                        "Method: " +
-                                                                                                                        "(Id: ifMethod) " +
-                                                                                                                        "(AccesModifier: PUBLIC) " +
-                                                                                                                        "(ReturnType: void) " +
-                                                                                                                        "(Parameters: ) " +
-                                                                                                                        "Block: (" +
-                                                                                                                        "If: (Condition: Binary:(left: expr: int: 1) (Operator: ==) (right: expr: int: 1)) " +
-                                                                                                                            "(ifBlock: (statements: " +
-                                                                                                                                "LocalVarDecl: (Id: i) (Type: int) " +
-                                                                                                                                "(expr: ExprStmtExpr: AssignStmt: (Id: i) (expr: int: 1)),)) " +
-                                                                                                                            "(elseBlock: (statements: " +
-                                                                                                                                "LocalVarDecl: (Id: a) (Type: int) " +
-                                                                                                                                "(expr: ExprStmtExpr: AssignStmt: (Id: i) (expr: int: 404)),))" +
-                                                                                                                    ")");
+                "Method: " +
+                "(Id: ifMethod) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: void) " +
+                "(Parameters: ) " +
+                "Block: (" +
+                "If: (Condition: Binary:(left: expr: int: 1) (Operator: ==) (right: expr: int: 1)) " +
+                "(ifBlock: (statements: " +
+                "LocalVarDecl: (Id: i) (Type: int) " +
+                "(expr: ExprStmtExpr: AssignStmt: (Id: i) (expr: int: 1)),)) " +
+                "(elseBlock: (statements: " +
+                "LocalVarDecl: (Id: a) (Type: int) " +
+                "(expr: ExprStmtExpr: AssignStmt: (Id: i) (expr: int: 404)),))" +
+                ")");
     }
 
     @Test
-    void ReturnOK(){
+    void ReturnOK() {
         generateTree("class Return{ boolean returnMethod(){ return true; } }", "Clazz: " +
-                                                                                            "(Name:Return) " +
-                                                                                            "(AccesModifier: PUBLIC) " +
-                                                                                            "(Fields: ) " +
-                                                                                            "(Methods: " +
+                "(Name:Return) " +
+                "(AccesModifier: PUBLIC) " +
+                "(Fields: ) " +
+                "(Methods: " +
 
-                                                                                                "Method: " +
-                                                                                                "(Id: Return) " +
-                                                                                                "(AccesModifier: PUBLIC) " +
-                                                                                                "(ReturnType: Return) " +
-                                                                                                "(Parameters: ) " +
-                                                                                                "Block: (statements: )," +
+                "Method: " +
+                "(Id: Return) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: Return) " +
+                "(Parameters: ) " +
+                "Block: (statements: )," +
 
-                                                                                                "Method: " +
-                                                                                                "(Id: returnMethod) " +
-                                                                                                "(AccesModifier: PUBLIC) " +
-                                                                                                "(ReturnType: boolean) " +
-                                                                                                "(Parameters: ) " +
-                                                                                                "Block: (statements: " +
-                                                                                                    "Return: (expr: boolen: true)" +
-                                                                                                ")," +
-                                                                                            ")");
+                "Method: " +
+                "(Id: returnMethod) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: boolean) " +
+                "(Parameters: ) " +
+                "Block: (statements: " +
+                "Return: (expr: boolen: true)" +
+                ")," +
+                ")");
     }
 
     @Test
-    void WhileOK(){
+    void WhileOK() {
         generateTree("class While{ boolean whileMethod(){ while( 1 == 1 ){ return true; } } }", "Clazz: " +
-                                                                                                                "(Name: While) " +
-                                                                                                                "(AccesModifier: PUBLIC) " +
-                                                                                                                "(Fields: ) " +
-                                                                                                                "(Methods: " +
+                "(Name: While) " +
+                "(AccesModifier: PUBLIC) " +
+                "(Fields: ) " +
+                "(Methods: " +
 
-                                                                                                                    "Method: " +
-                                                                                                                    "(Id: While) " +
-                                                                                                                    "(AccesModifier: PUBLIC) " +
-                                                                                                                    "(ReturnType: While) " +
-                                                                                                                    "(Parameters: ) " +
-                                                                                                                    "Block: (statements: )," +
+                "Method: " +
+                "(Id: While) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: While) " +
+                "(Parameters: ) " +
+                "Block: (statements: )," +
 
-                                                                                                                    "Method: " +
-                                                                                                                    "(Id: whileMethod) " +
-                                                                                                                    "(AccesModifier: PUBLIC) " +
-                                                                                                                    "(ReturnType: boolean) " +
-                                                                                                                    "(Parameters: ) " +
-                                                                                                                    "Block: (statements: " +
-                                                                                                                        "While: (Condition: Binary:(left: expr: int: 1) (Operator: ==) (right: expr: int: 1)) " +
-                                                                                                                               "(Block: (statements: Retrun: (expr: boolean: true)))" +
-                                                                                                                    ")," +
-                                                                                                                ")");
+                "Method: " +
+                "(Id: whileMethod) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: boolean) " +
+                "(Parameters: ) " +
+                "Block: (statements: " +
+                "While: (Condition: Binary:(left: expr: int: 1) (Operator: ==) (right: expr: int: 1)) " +
+                "(Block: (statements: Retrun: (expr: boolean: true)))" +
+                ")," +
+                ")");
     }
 
     @Test
-    void MethodCallOK(){
+    void MethodCallOK() {
         generateTree("class MethodCall{ void  method(){ } void call(){ method(); } }", "Clazz: " +
-                                                                                                     "(Name: MethodCall) " +
-                                                                                                     "(AccesModifier: PUBLIC) " +
-                                                                                                     "(Fields: ) " +
-                                                                                                     "(Methods: " +
+                "(Name: MethodCall) " +
+                "(AccesModifier: PUBLIC) " +
+                "(Fields: ) " +
+                "(Methods: " +
 
-                                                                                                         "Method: " +
-                                                                                                         "(Id: MethodCall) " +
-                                                                                                         "(AccesModifier: PUBLIC) " +
-                                                                                                         "(ReturnType: MethodCall) " +
-                                                                                                         "(Parameters: ) " +
-                                                                                                         "Block: (statements: )," +
+                "Method: " +
+                "(Id: MethodCall) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: MethodCall) " +
+                "(Parameters: ) " +
+                "Block: (statements: )," +
 
-                                                                                                         "Method: " +
-                                                                                                         "(Id: method) " +
-                                                                                                         "(AccesModifier: PUBLIC) " +
-                                                                                                         "(ReturnType: void) " +
-                                                                                                         "(Parameters: ) " +
-                                                                                                         "Block: (statements: )," +
-                                                                                                         "Method: " +
-                                                                                                         "(Id: call) " +
-                                                                                                         "(AccesModifier: PUBLIC) " +
-                                                                                                         "(ReturnType: void) " +
-                                                                                                         "(Parameters: ) " +
-                                                                                                        "Block: (statements: " +
-                                                                                                            "ExprStmtExpr: MethodCall: (Id: method) (expr: ,)" +
-                                                                                                        ")," +
-                                                                                                     ")");
+                "Method: " +
+                "(Id: method) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: void) " +
+                "(Parameters: ) " +
+                "Block: (statements: )," +
+                "Method: " +
+                "(Id: call) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: void) " +
+                "(Parameters: ) " +
+                "Block: (statements: " +
+                "ExprStmtExpr: MethodCall: (Id: method) (expr: ,)" +
+                ")," +
+                ")");
     }
 
     //hier fehlt auch etwas für expr zu stmtexpr
     @Test
-    void NewOK(){
+    void NewOK() {
         generateTree("class Neu{ Neu(){} void newMethod(){ Neu neu = new Neu(); } }", "Clazz: " +
-                                                                                                    "(Name: Neu) " +
-                                                                                                    "(AccesModifier: PUBLIC) " +
-                                                                                                    "(Fields: ) " +
-                                                                                                    "(Methods: " +
+                "(Name: Neu) " +
+                "(AccesModifier: PUBLIC) " +
+                "(Fields: ) " +
+                "(Methods: " +
 
-                                                                                                        "Method: " +
-                                                                                                        "(Id: Neu) " +
-                                                                                                        "(AccesModifier: PUBLIC) " +
-                                                                                                        "(ReturnType: Neu) " +
-                                                                                                        "(Parameters: ) " +
-                                                                                                        "Block: (statements: )," +
+                "Method: " +
+                "(Id: Neu) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: Neu) " +
+                "(Parameters: ) " +
+                "Block: (statements: )," +
 
-                                                                                                        "Method: " +
-                                                                                                        "(Id: newMethod) " +
-                                                                                                        "(AccesModifier: PUBLIC) " +
-                                                                                                        "(ReturnType: void) " +
-                                                                                                        "(Parameters: ) " +
-                                                                                                        "Block: (statements: " +
-                                                                                                            "LocalVarDecl: (Id: neu) (Type: Neu) " +
-                                                                                                            "(expr: ExprStmtExpr: AssignStmt: (Id: ) (expr: exprstmtexpr: New: (Id: neu) (expr: ,)))," +
-                                                                                                        ")," +
-                                                                                                    ")");
+                "Method: " +
+                "(Id: newMethod) " +
+                "(AccesModifier: PUBLIC) " +
+                "(ReturnType: void) " +
+                "(Parameters: ) " +
+                "Block: (statements: " +
+                "LocalVarDecl: (Id: neu) (Type: Neu) " +
+                "(expr: ExprStmtExpr: AssignStmt: (Id: ) (expr: exprstmtexpr: New: (Id: neu) (expr: ,)))," +
+                ")," +
+                ")");
     }
 
 

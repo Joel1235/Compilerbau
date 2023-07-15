@@ -1,12 +1,10 @@
 package General;
 
-import Expr.Expression;
-
-import java.util.ArrayList;
 import java.util.List;
 
-public class Program{
+public class Program {
     private List<Clazz> clazzes;
+
     public Program(List<Clazz> classes) {
         clazzes = classes;
     }
@@ -16,9 +14,9 @@ public class Program{
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         String result = "Clazz: ";
-        for(Clazz c : clazzes) {
+        for (Clazz c : clazzes) {
             result += c.toString();
         }
         return result;

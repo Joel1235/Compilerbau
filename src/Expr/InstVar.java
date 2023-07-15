@@ -6,9 +6,9 @@ import General.AType;
 public class InstVar implements Expression {
     private final String id;
     private final Expression expr;
-    private AType type;
     public int line;
     public int column;
+    private AType type;
 
     public InstVar(String identifier, Expression expression) {
         this.id = identifier;
@@ -55,7 +55,7 @@ public class InstVar implements Expression {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         String result = "";
         result += "InstVar: (Id: " + id + ") (expr: " + expr.toString() + ")";
         return result;

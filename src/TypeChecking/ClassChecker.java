@@ -1,8 +1,11 @@
 package TypeChecking;
 
-import General.*;
-import statementExpressions.*;
+import General.AField;
+import General.AType;
+import General.Clazz;
 import jdk.jshell.spi.ExecutionControl;
+import statementExpressions.Method;
+
 import java.util.List;
 
 public class ClassChecker {
@@ -21,7 +24,8 @@ public class ClassChecker {
     public AField check(AField field) throws Exception {//todo: fix strings (currently not implemented as type)
         String type = field.getType().toString();
         switch (type) {
-            case "String" -> /*field.setType(AType.nonexistentapparently)*/ throw(new ExecutionControl.NotImplementedException("string not implemented"));
+            case "String" -> /*field.setType(AType.nonexistentapparently)*/
+                    throw (new ExecutionControl.NotImplementedException("string not implemented"));
             case "char" -> field.setType(AType.CHAR);
             case "int" -> field.setType(AType.INT);
             case "boolean" -> field.setType(AType.BOOLEAN);

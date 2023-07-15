@@ -1,8 +1,8 @@
 package Parser;
 
 
-import statements.While;
 import AntlrOut.miniJavaParser;
+import statements.While;
 
 public class WhileAdapter {
     public static While adapt(miniJavaParser.WhileStatementContext whileStmtContext) {

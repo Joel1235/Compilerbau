@@ -26,7 +26,7 @@ public class StmtExprStmt implements Statement {
         System.out.println("Not implemented");
     }
 
-    public String toString(){
+    public String toString() {
         String result = "";
         result += "StmtExprStmt: (varName: " + variableName + ") (expr: " + expression.toString() + ")";
         return result;

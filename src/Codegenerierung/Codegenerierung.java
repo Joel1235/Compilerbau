@@ -2,12 +2,13 @@ package Codegenerierung;
 
 
 import Expr.*;
-
 import General.AType;
 import General.Clazz;
-import General.ReturnType;
 import org.objectweb.asm.*;
-import statementExpressions.*;
+import statementExpressions.AssignStmt;
+import statementExpressions.Method;
+import statementExpressions.MethodCall;
+import statementExpressions.New;
 import statements.*;
 
 import java.io.File;
@@ -136,7 +137,8 @@ public class Codegenerierung {
     public void visit(Binary binary) {
         switch (binary.getOperator()) {
             case PLUS, MINUS, MULTIPLY, DIVIDE, MODULUS -> addMathCodes(binary);
-            case GREATER_THAN, LESS_THAN, GREATER_THAN_OR_EQUAL_TO, LESS_THAN_OR_EQUAL_TO, EQUAL_TO, NOT_EQUAL_TO, AND, OR -> addBooleanCodes(binary);
+            case GREATER_THAN, LESS_THAN, GREATER_THAN_OR_EQUAL_TO, LESS_THAN_OR_EQUAL_TO, EQUAL_TO, NOT_EQUAL_TO, AND, OR ->
+                    addBooleanCodes(binary);
         }
     }
 
@@ -196,8 +198,8 @@ public class Codegenerierung {
             case EQUAL_TO -> {
                 binary.getLeft().bevisited(this);
                 binary.getRight().bevisited(this);
-                if (isVICZ(binary.getLeft().getType() )
-                        && isVICZ(binary.getRight().getType())  ) {
+                if (isVICZ(binary.getLeft().getType())
+                        && isVICZ(binary.getRight().getType())) {
                     methodvisitor.visitJumpInsn(Opcodes.IF_ICMPNE, falseLabel);
                 } else {
                     methodvisitor.visitJumpInsn(Opcodes.IF_ACMPNE, falseLabel);
@@ -206,8 +208,8 @@ public class Codegenerierung {
             case NOT_EQUAL_TO -> {
                 binary.getLeft().bevisited(this);
                 binary.getRight().bevisited(this);
-                if (isVICZ(binary.getLeft().getType() )
-                        && isVICZ(binary.getRight().getType())  ) {
+                if (isVICZ(binary.getLeft().getType())
+                        && isVICZ(binary.getRight().getType())) {
                     methodvisitor.visitJumpInsn(Opcodes.IF_ICMPEQ, falseLabel);
                 } else {
                     methodvisitor.visitJumpInsn(Opcodes.IF_ACMPEQ, falseLabel);
@@ -383,9 +385,9 @@ public class Codegenerierung {
         }
         Descriptor.append(")");
         //Descriptor.append(method.getReturnType());
-        if (method.getReturnType()==null){
+        if (method.getReturnType() == null) {
             Descriptor.append("V");
-        }else {
+        } else {
             Descriptor.append(makeDescriptor(method.getReturnType().getTypeName()));
         }
 

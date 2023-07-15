@@ -22,7 +22,7 @@ public class BlockAdapter {
     public static Block adapt(List<miniJavaParser.BlockContext> ctxList) {
         List<Statement> statements = new ArrayList<>();
 
-        for(miniJavaParser.BlockContext blockCtx : ctxList) {
+        for (miniJavaParser.BlockContext blockCtx : ctxList) {
             for (miniJavaParser.StatementContext stmtCtx : blockCtx.statement()) {
                 Statement stmt = StatementAdapter.adapt(stmtCtx);
                 statements.add(stmt);

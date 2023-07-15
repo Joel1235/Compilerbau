@@ -3,7 +3,7 @@ package Expr;
 import Codegenerierung.Codegenerierung;
 import General.AType;
 
-public class StmtExprExpr implements Expression{
+public class StmtExprExpr implements Expression {
     private final String id;
     private final Expression expression;
     private AType aType;
@@ -13,7 +13,7 @@ public class StmtExprExpr implements Expression{
         this.expression = expression;
     }
 
-    public StmtExprExpr(String id, Expression expression,AType aType) {
+    public StmtExprExpr(String id, Expression expression, AType aType) {
         this.id = id;
         this.expression = expression;
         this.aType = aType;
@@ -36,7 +36,7 @@ public class StmtExprExpr implements Expression{
         return this.aType;
     }
 
-    public String toString(){
+    public String toString() {
         String result = "";
         result += "StmtExprExpr: (Id: " + id + ") (Expression:  " + expression.toString() + ")";
         return result;

@@ -8,9 +8,9 @@ public class If implements Statement {
     private final Expression condition;
     private final Statement blockIf;
     private final Statement blockElse;
-    private AType type;
     public int line;
     public int column;
+    private AType type;
 
     public If(Expression condition, Statement blockIf, Statement blockElse) {
         this.condition = condition;
@@ -39,12 +39,13 @@ public class If implements Statement {
         return type;
     }
 
+    public void setType(AType type) {
+        this.type = type;
+    }
+
     @Override
     public void bevisited(Codegenerierung codegenerierung) {
         codegenerierung.visit(this);
-    }
-    public void setType(AType type) {
-        this.type = type;
     }
 
 }

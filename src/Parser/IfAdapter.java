@@ -1,7 +1,7 @@
 package Parser;
 
-import statements.If;
 import AntlrOut.miniJavaParser;
+import statements.If;
 
 public class IfAdapter {
     public static If adapt(miniJavaParser.IfElseStatementContext ifElseStmtContext) {

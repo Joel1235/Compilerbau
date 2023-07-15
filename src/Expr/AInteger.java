@@ -29,7 +29,7 @@ public class AInteger implements Expression {
         return this.aType;
     }
 
-    public String toString(){
+    public String toString() {
         String result = "";
         result += "Int: " + value;
         return result;

@@ -1,7 +1,10 @@
 package TypeChecking;
 
-import General.*;
-import statementExpressions.*;
+import General.AField;
+import General.Clazz;
+import General.Program;
+import statementExpressions.Method;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package Parser;
 
 import AntlrOut.miniJavaParser;
-import Expr.*;
+import Expr.Expression;
 
 public class ExpressionAdapter {
 

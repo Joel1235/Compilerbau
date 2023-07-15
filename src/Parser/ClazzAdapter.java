@@ -1,10 +1,10 @@
 package Parser;
 
-import General.AField;
-import General.Clazz;
-import General.AccessModifier;
-import statementExpressions.Method;
 import AntlrOut.miniJavaParser;
+import General.AField;
+import General.AccessModifier;
+import General.Clazz;
+import statementExpressions.Method;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -7,9 +7,9 @@ import General.AType;
 public class AssignStmt implements StatementExpression {
     private final Expression lExpr;
     private final Expression rExpr;
-    private AType type;
     public int line;
     public int column;
+    private AType type;
 
     public AssignStmt(Expression lExpression, Expression rExpression) {
         this.lExpr = lExpression;
@@ -50,7 +50,7 @@ public class AssignStmt implements StatementExpression {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         String result = "";
         result += "AssignStmt: (Type: " + type + ") (lexpr: " + lExpr.toString() + ") (rexpr: " + rExpr.toString() + ")";
         return result;

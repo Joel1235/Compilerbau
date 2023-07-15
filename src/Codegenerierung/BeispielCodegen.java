@@ -3,7 +3,6 @@ package Codegenerierung;
 import Expr.AInteger;
 import Expr.Binary;
 import Expr.LocalOrFieldVar;
-import Expr.Unary;
 import General.*;
 import statementExpressions.AssignStmt;
 import statementExpressions.IncrementExpr;
@@ -25,12 +24,12 @@ public class BeispielCodegen {
                         new Block(Arrays.asList(new IncrementExpr("v"),new AssignStmt("test",new AInteger(243634,AType.INT),new LocalOrFieldVar(AType.INT,"m")))))
                                 ,new Block(Arrays.asList(new LocalVarDecl(AType.INT,"b",new AInteger(82,AType.INT)))
                )));*/
-        Block testblock=new Block(Arrays.asList(new LocalVarDecl(AType.INT,"i",new AInteger(1,AType.INT)),
-                new AssignStmt("test",new AInteger(435345,AType.INT),new LocalOrFieldVar(AType.INT,"i"))
-        ,new If(new Binary(new LocalOrFieldVar(AType.INT,"t"),
-                        new LocalOrFieldVar(AType.INT,"i"), Operator.GREATER_THAN),
-                        new Block(Arrays.asList(new AssignStmt("test2",new AInteger(1234,AType.INT),new LocalOrFieldVar(AType.INT,"i"))))
-                        )));
+        Block testblock = new Block(Arrays.asList(new LocalVarDecl(AType.INT, "i", new AInteger(1, AType.INT)),
+                new AssignStmt("test", new AInteger(435345, AType.INT), new LocalOrFieldVar(AType.INT, "i"))
+                , new If(new Binary(new LocalOrFieldVar(AType.INT, "t"),
+                        new LocalOrFieldVar(AType.INT, "i"), Operator.GREATER_THAN),
+                        new Block(Arrays.asList(new AssignStmt("test2", new AInteger(1234, AType.INT), new LocalOrFieldVar(AType.INT, "i"))))
+                )));
         // Shows that while works
         Block Whileblock = new Block(Arrays.asList(
                 new While(new Binary(new LocalOrFieldVar(AType.INT, "k"),
@@ -66,10 +65,9 @@ public class BeispielCodegen {
        ,new AssignStmt("test2",new AInteger(3,AType.INT),new LocalOrFieldVar(AType.INT,"g"))
        ));*/
 
-        Method testmethod = new Method( "Test", Arrays.asList(new LocalOrFieldVar(AType.INT, "k"),
+        Method testmethod = new Method("Test", Arrays.asList(new LocalOrFieldVar(AType.INT, "k"),
                 new LocalOrFieldVar(AType.INT, "m"), new LocalOrFieldVar(AType.INT, "v")), testblock);
         Clazz testclazz = new Clazz("testmethod", new ArrayList<>(), Arrays.asList(testmethod));
-
 
 
         // If-Block Anfang
@@ -175,7 +173,6 @@ public class BeispielCodegen {
         Method sumMethod = new Method(AccessModifier.PUBLIC, ReturnType.INT, "SumExample", new ArrayList<>(), sumBlock);
         Clazz sumClazz = new Clazz("SumExampleClass", new ArrayList<>(), Arrays.asList(sumMethod));
         // Summen-Block Ende
-
 
 
         Codegenerierung codegen = new Codegenerierung();

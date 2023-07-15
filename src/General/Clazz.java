@@ -1,6 +1,7 @@
 package General;
 
 import statementExpressions.Method;
+
 import java.util.List;
 
 public class Clazz {
@@ -35,23 +36,27 @@ public class Clazz {
         return fields;
     }
 
-    public void setFields(List<AField> fields) { this.fields = fields; }
+    public void setFields(List<AField> fields) {
+        this.fields = fields;
+    }
 
     public List<Method> getMethods() {
         return methods;
     }
 
-    public void setMethods(List<Method> methods) { this.methods = methods; }
+    public void setMethods(List<Method> methods) {
+        this.methods = methods;
+    }
 
     @Override
-    public String toString(){
+    public String toString() {
         String result = "";
         result += "(Name: " + name + ") (AccesModifier: " + accessModifier.toString() + ") (Fields: ";
-        for (AField f: fields ) {
+        for (AField f : fields) {
             result += f.toString() + ",";
         }
         result += ") (Methods: ";
-        for (Method m: methods ) {
+        for (Method m : methods) {
             result += m.toString() + ",";
         }
         result += (")");

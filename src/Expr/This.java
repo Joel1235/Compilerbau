@@ -3,7 +3,7 @@ package Expr;
 import Codegenerierung.Codegenerierung;
 import General.AType;
 
-public class This implements PointableExpression{
+public class This implements PointableExpression {
     private AType aType;
 
     @Override
@@ -14,8 +14,9 @@ public class This implements PointableExpression{
     public AType getType() {
         return this.aType;
     }
+
     @Override
-    public String toString(){
+    public String toString() {
         String result = "";
         result += "This";
         return result;

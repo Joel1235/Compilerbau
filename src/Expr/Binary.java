@@ -58,7 +58,7 @@ public class Binary implements Expression {
         return this.aType;
     }
 
-    public String toString(){
+    public String toString() {
         String result = "";
         result += "Binary(left: " + left.toString() + ") (Operator: " + operator.toString() + ") (right: " + right.toString() + ")";
         return result;

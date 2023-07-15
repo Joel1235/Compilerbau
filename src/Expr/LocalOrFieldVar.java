@@ -7,10 +7,10 @@ import General.AccessModifier;
 
 public class LocalOrFieldVar implements Expression {
     private final AccessModifier accessModifier;
-    private AType type;
     private final String id;
     public int line;
     public int column;
+    private AType type;
 
     public LocalOrFieldVar(AType type, String id) {
         this.accessModifier = AccessModifier.PUBLIC;//default
@@ -41,7 +41,9 @@ public class LocalOrFieldVar implements Expression {
         return type;
     }
 
-    public void setType(AType type) { this.type = type; }
+    public void setType(AType type) {
+        this.type = type;
+    }
 
     public String getId() {
         return id;
@@ -56,7 +58,7 @@ public class LocalOrFieldVar implements Expression {
         codegenerierung.visit(this);
     }
 
-    public String toString(){
+    public String toString() {
         String result = "";
         result += "LocalOrFieldVar: (Id: " + id + ") (Type: " + type.toString() + ") (AccessModifier: " + accessModifier.toString() + ")";
         return result;

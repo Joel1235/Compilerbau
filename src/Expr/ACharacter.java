@@ -11,7 +11,7 @@ public class ACharacter implements Expression {
         this.value = value;
     }
 
-    public ACharacter(char value,AType aType) {
+    public ACharacter(char value, AType aType) {
         this.value = value;
         this.aType = aType;
     }
@@ -30,7 +30,7 @@ public class ACharacter implements Expression {
         return this.aType;
     }
 
-    public String toString(){
+    public String toString() {
         String result = "";
         result += "Char: " + value;
         return result;

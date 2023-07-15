@@ -5,10 +5,10 @@ import Expr.Expression;
 import General.AType;
 
 public class Return implements Statement {
-    private Expression expr;
-    private AType type;
     public int line;
     public int column;
+    private Expression expr;
+    private AType type;
 
     public Return(Expression expression) {
         this.expr = expression;
@@ -46,7 +46,7 @@ public class Return implements Statement {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         String result = "";
         result += "Return: (expr: " + expr.toString() + ")";
         return result;

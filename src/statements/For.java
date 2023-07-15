@@ -6,13 +6,13 @@ import General.AType;
 import statementExpressions.StatementExpression;
 
 public class For implements Statement {
+    public int line;
+    public int column;
     private AType type;
     private Statement init; // z.B. int i = 0;
     private Expression condition; // z.B. i < 10
     private StatementExpression update; // z.B. i = i + 1;
     private Statement statement;
-    public int line;
-    public int column;
 
     public For(
             Statement init, Expression condition, StatementExpression update,
@@ -24,8 +24,8 @@ public class For implements Statement {
     }
 
     public For(AType type,
-                   Statement init, Expression condition, StatementExpression update,
-                   Statement statement) {
+               Statement init, Expression condition, StatementExpression update,
+               Statement statement) {
         this.init = init;
         this.condition = condition;
         this.update = update;
@@ -46,8 +46,8 @@ public class For implements Statement {
     }
 
     public For(AType type,
-                   Statement init, Expression condition, StatementExpression update,
-                   Statement statement, int line, int column) {
+               Statement init, Expression condition, StatementExpression update,
+               Statement statement, int line, int column) {
         this.init = init;
         this.condition = condition;
         this.update = update;
@@ -86,15 +86,14 @@ public class For implements Statement {
         return update;
     }
 
+    public void setUpdate(StatementExpression update) {
+        this.update = update;
+    }
+
     @Override
     public void bevisited(Codegenerierung codegenerierung) {
         codegenerierung.visit(this);
     }
-
-        public void setUpdate (StatementExpression update){
-            this.update = update;
-        }
-
 
     public Statement getStatement() {
         return statement;
@@ -106,7 +105,7 @@ public class For implements Statement {
 
 
     @Override
-    public String toString(){
+    public String toString() {
         String result = "";
         result += "For: (initStatement: " + init.toString() + ") (condition: " + condition.toString() + ") (updateStatement: " + update.toString() + ") (Statement: " + statement.toString() + ")";
         return result;

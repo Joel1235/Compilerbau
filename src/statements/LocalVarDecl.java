@@ -32,7 +32,7 @@ public class LocalVarDecl implements Statement {
         codegenerierung.visit(this);
     }
 
-    public String toString(){
+    public String toString() {
         String result = "";
         result += "LocalVarDecl: (Id: " + id + ") (Type: " + type.toString() + ") (expr: " + expr.toString() + ")";
         return result;

@@ -2,16 +2,16 @@ package statementExpressions;
 
 import Codegenerierung.Codegenerierung;
 import Expr.Expression;
-import General.Operator;
 import General.AType;
+import General.Operator;
 
 public class CrementStmtExpr implements StatementExpression {
 
     private final Expression expression;
     private final Operator operator;
-    private AType type;
     public int line;
     public int column;
+    private AType type;
 
     public CrementStmtExpr(Expression expression, Operator operator) {
         this.expression = expression;
