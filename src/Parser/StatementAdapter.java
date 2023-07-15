@@ -28,9 +28,7 @@ public class StatementAdapter {
         else if (statementContext.ifElseStatement() != null)
             return IfAdapter.adapt(statementContext.ifElseStatement());
         else // StatementExpression
-            // TODO fix me
-            return null;
-        // return StatementExprAdapter.adapt(statementContext.stmtExpr());
+            return StatementExprAdapter.adapt(statementContext.stmtExpr());
 
     }
 }

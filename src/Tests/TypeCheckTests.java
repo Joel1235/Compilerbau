@@ -9,7 +9,6 @@ import statementExpressions.Method;
 import statements.Block;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -77,7 +76,7 @@ public class TypeCheckTests {
     @Test
     void EmptyConstructor() {
 
-        methods.add(new Method("Empty", new ArrayList<>(), new Block(Arrays.asList())));
+        methods.add(new Method("Empty", new ArrayList<>(), new Block(List.of())));
 
         classes.add(new Clazz("Empty", field, methods));
         try {
@@ -91,7 +90,7 @@ public class TypeCheckTests {
     @Test
     void EmptyMethod() {
 
-        methods.add(new Method("emptyMethod", new ArrayList<>(), new Block(Arrays.asList())));
+        methods.add(new Method("emptyMethod", new ArrayList<>(), new Block(List.of())));
 
         classes.add(new Clazz("Method", field, methods));
         try {
@@ -110,7 +109,7 @@ public class TypeCheckTests {
         params.add(new LocalOrFieldVar(new AType("int"), "i"));
         params.add(new LocalOrFieldVar(new AType("boolean"), "b"));
 
-        methods.add(new Method("emptyMethod", params, new Block(Arrays.asList())));
+        methods.add(new Method("emptyMethod", params, new Block(List.of())));
 
         classes.add(new Clazz("Method", field, methods));
         try {

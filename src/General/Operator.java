@@ -24,12 +24,8 @@ public enum Operator {
 
     private String symbol;
 
-    private Operator(String symbol) {
+    Operator(String symbol) {
         this.symbol = symbol;
-    }
-
-    public String getSymbol() {
-        return symbol;
     }
 
     @Override

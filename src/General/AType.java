@@ -19,18 +19,5 @@ public class AType {
     public String toString() {
         return typeName;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        AType type = (AType) obj;
-        return typeName.equals(type.typeName);
-    }
-
-    @Override
-    public int hashCode() {
-        return typeName.hashCode();
-    }
 }
 
