@@ -57,11 +57,6 @@ public class AssignStmt implements StatementExpression {
     }
 
     @Override
-    public AType getType() {
-        return aType;
-    }
-
-    @Override
     public void bevisited(Codegenerierung codegenerierung) {
         codegenerierung.visit(this);
     }

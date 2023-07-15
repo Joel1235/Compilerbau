@@ -11,6 +11,7 @@ public class New implements StatementExpression {
     private final List<Expression> exprList;
     public int line;
     public int column;
+    private AType aType;
 
     public New(String id, List<Expression> exprList) {
         this.id = id;
@@ -40,6 +41,8 @@ public class New implements StatementExpression {
     @Override
     public void bevisited(Codegenerierung codegenerierung) {
         codegenerierung.visit(this);
+    }
+    
     public String toString(){
         String result = "";
         result += "New: (Id: " + id + ") (expr: ";

@@ -9,6 +9,8 @@ public class Binary implements Expression {
     private final Expression right;
     private final Operator operator;
 
+    private AType aType;
+
     private int line;
     private int column;
 
@@ -27,7 +29,7 @@ public class Binary implements Expression {
         this.column = col;
     }
 
-    public Binary(Expression left, Expression right, BinaryOperator operator,AType aType) {
+    public Binary(Expression left, Expression right, Operator operator, AType aType) {
         this.left = left;
         this.right = right;
         this.operator = operator;
@@ -54,6 +56,8 @@ public class Binary implements Expression {
 
     public AType getType() {
         return this.aType;
+    }
+
     public String toString(){
         String result = "";
         result += "Binary(left: " + left.toString() + ") (Operator: " + operator.toString() + ") (right: " + right.toString() + ")";

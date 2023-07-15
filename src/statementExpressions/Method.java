@@ -71,6 +71,8 @@ public class Method implements StatementExpression {
     @Override
     public void bevisited(Codegenerierung codegenerierung) {
         codegenerierung.visit(this);
+    }
+
     public String toString(){
         String result = "";
         result += "Method: (Id: " + id + ") (AccesModifier: " + accessModifier.toString() + ") (ReturnType: " + returnType.toString() + ") (Parameters: ";

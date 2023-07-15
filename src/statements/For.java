@@ -89,9 +89,12 @@ public class For implements Statement {
     @Override
     public void bevisited(Codegenerierung codegenerierung) {
         codegenerierung.visit(this);
-    public void setUpdate(StatementExpression update) {
-        this.update = update;
     }
+
+        public void setUpdate (StatementExpression update){
+            this.update = update;
+        }
+
 
     public Statement getStatement() {
         return statement;

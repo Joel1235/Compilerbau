@@ -1,13 +1,14 @@
 package statementExpressions;
 
+import Codegenerierung.Codegenerierung;
 import Expr.Expression;
 import General.Operator;
 import General.AType;
 
 public class CrementStmtExpr implements StatementExpression {
 
-    private Expression expression;
-    private Operator operator;
+    private final Expression expression;
+    private final Operator operator;
     private AType type;
     public int line;
     public int column;
@@ -63,5 +64,11 @@ public class CrementStmtExpr implements StatementExpression {
             default:
                 return "CrementWithWrongOperator???";
         }
+    }
+
+    @Override
+    public void bevisited(Codegenerierung codegenerierung) {
+        // TODO: fix this
+        //codegenerierung.visit(this);
     }
 }

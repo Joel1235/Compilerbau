@@ -27,6 +27,8 @@ public class AString implements Expression {
 
     public AType getType() {
         return this.aType;
+    }
+
     public String toString(){
         String result = "";
         result += "String: " + value;

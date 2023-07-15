@@ -12,6 +12,7 @@ public class Anull implements Expression {
 
     public AType getType() {
         return this.aType;
+    }
 
     @Override
     public String toString(){

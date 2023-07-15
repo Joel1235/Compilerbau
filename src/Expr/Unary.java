@@ -11,11 +11,6 @@ public class Unary implements Expression {
     public int line;
     public int column;
 
-    public Unary(Expression expression, Operator operator) {
-        this.expr = expression;
-        this.operator = operator;
-    }
-
     public Unary(Expression expression, Operator operator, int line, int column) {
         this.expr = expression;
         this.operator = operator;
@@ -53,8 +48,5 @@ public class Unary implements Expression {
     @Override
     public void bevisited(Codegenerierung codegenerierung) {
         codegenerierung.visit(this);
-    }
-    public AType getType() {
-        return this.aType;
     }
 }

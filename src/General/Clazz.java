@@ -4,8 +4,8 @@ import statementExpressions.Method;
 import java.util.List;
 
 public class Clazz {
-    private AccessModifier accessModifier;
-    private String name;
+    private final AccessModifier accessModifier;
+    private final String name;
     private List<AField> fields;
     private List<Method> methods;
 

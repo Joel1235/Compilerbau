@@ -35,9 +35,7 @@ public class Return implements Statement {
         return expr;
     }
 
-    /**
-     * @return Type
-     */
+
     public AType getType() {
         return type;
     }

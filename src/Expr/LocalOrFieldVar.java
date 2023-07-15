@@ -54,6 +54,8 @@ public class LocalOrFieldVar implements Expression {
     @Override
     public void bevisited(Codegenerierung codegenerierung) {
         codegenerierung.visit(this);
+    }
+
     public String toString(){
         String result = "";
         result += "LocalOrFieldVar: (Id: " + id + ") (Type: " + type.toString() + ") (AccessModifier: " + accessModifier.toString() + ")";
