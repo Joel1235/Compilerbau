@@ -140,6 +140,20 @@ public class TypeCheckTests {
         assertEquals(new AType("int"), result.getClazzes().get(0).getFields().get(0).getType());
     }
 
+    @Test
+    void FieldFail(){
+
+        field.add(new AField(new AType("void"), "x"));
+
+        classes.add(new Clazz( "Field", field,  methods));
+        try {
+            result = TypeChecker(new Program(classes));
+        }catch(Exception e){
+            return; //Fehler erwartet
+        }
+        Assert.fail("void ist kein Valider Feld Typ, wird aber akzeptiert");
+    }
+
 
     //Bitte den folgenden Block auskommentieren uns selbst das Problem begutachten.
 
