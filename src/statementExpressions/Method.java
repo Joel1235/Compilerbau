@@ -32,6 +32,14 @@ public class Method implements StatementExpression {
         this.params = params;
     }
 
+    public Method(ReturnType returnType, String id, List<LocalOrFieldVar> params, Block block) {
+        this.accessModifier = AccessModifier.PROTECTED; //default
+        this.block = block;
+        this.returnType = returnType;
+        this.id = id;
+        this.params = params;
+    }
+
     public AccessModifier getAccessModifier() {
         return accessModifier;
     }
