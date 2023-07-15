@@ -68,7 +68,6 @@ public class CrementStmtExpr implements StatementExpression {
 
     @Override
     public void bevisited(Codegenerierung codegenerierung) {
-        // TODO: fix this
-        //codegenerierung.visit(this);
+        codegenerierung.visit(this);
     }
 }

@@ -8,7 +8,7 @@ public class This implements PointableExpression {
 
     @Override
     public void bevisited(Codegenerierung codegenerierung) {
-        System.out.println("Not implemented");
+        codegenerierung.visit(this);
     }
 
     public AType getType() {

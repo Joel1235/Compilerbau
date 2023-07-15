@@ -100,9 +100,18 @@ public class Codegenerierung {
 
 
     //Expressions
-    public void visitExpression(This thisvar) {
+    public void visit(This thisvar) {
         methodvisitor.visitVarInsn(Opcodes.ALOAD, 0);
     }
+
+    public void visit(ABool boolExpr) {
+        if (boolExpr.getValue()) {
+            methodvisitor.visitInsn(Opcodes.ICONST_1);
+        } else {
+            methodvisitor.visitInsn(Opcodes.ICONST_0);
+        }
+    }
+
 
     public void visit(ACharacter aCharacter) {
         char aCharacterValue = aCharacter.getValue();
@@ -362,18 +371,22 @@ public class Codegenerierung {
             case INCPRE -> {
                 visitIncrement(Crement);
                 Crement.getExpression().bevisited(this);
+                methodvisitor.visitInsn(Opcodes.POP);
             }
             case INCSUF -> {
                 Crement.getExpression().bevisited(this);
                 visitIncrement(Crement);
+                methodvisitor.visitInsn(Opcodes.POP);
             }
             case DECPRE -> {
                 visitDecrement(Crement);
                 Crement.getExpression().bevisited(this);
+                methodvisitor.visitInsn(Opcodes.POP);
             }
             case DECSUF -> {
                 Crement.getExpression().bevisited(this);
                 visitDecrement(Crement);
+                methodvisitor.visitInsn(Opcodes.POP);
             }
         }
 
