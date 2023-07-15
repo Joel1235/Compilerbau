@@ -1,5 +1,7 @@
 package TreeGeneration;
 
+import AntlrOut.miniJavaLexer;
+import AntlrOut.miniJavaParser;
 import General.Program;
 import Parser.ProgramAdapter;
 import org.antlr.v4.runtime.CharStream;

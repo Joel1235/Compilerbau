@@ -2,38 +2,49 @@ package statements;
 
 import Codegenerierung.Codegenerierung;
 import Expr.Expression;
+import General.AType;
 
 public class If implements Statement {
     private final Expression condition;
-    private final Block ifBlock;
-    private final Block elseBlock;
+    private final Statement blockIf;
+    private final Statement blockElse;
+    private AType type;
+    public int line;
+    public int column;
 
-    public If(Expression condition, Block ifBlock, Block elseBlock) {
+    public If(Expression condition, Statement blockIf, Statement blockElse) {
         this.condition = condition;
-        this.ifBlock = ifBlock;
-        this.elseBlock = elseBlock;
+        this.blockIf = blockIf;
+        this.blockElse = blockElse;
     }
 
-    public If(Expression condition, Block ifBlock) {
+    public If(Expression condition, Statement blockIf, Statement blockElse, int line, int column) {
         this.condition = condition;
-        this.ifBlock = ifBlock;
-        this.elseBlock = null;
+        this.blockIf = blockIf;
+        this.blockElse = blockElse;
+        this.line = line;
+        this.column = column;
     }
 
-    public Expression getCondition() {
-        return this.condition;
+    public If(Expression condition, Statement blockIf, int line, int column) {
+        this.condition = condition;
+        this.blockIf = blockIf;
+        this.blockElse = null;
+        this.line = line;
+        this.column = column;
     }
 
-    public Block getIfBlock() {
-        return this.ifBlock;
-    }
 
-    public Block getElseBlock() {
-        return this.elseBlock;
+    public AType getType() {
+        return type;
     }
 
     @Override
     public void bevisited(Codegenerierung codegenerierung) {
         codegenerierung.visit(this);
     }
+    public void setType(AType type) {
+        this.type = type;
+    }
+
 }

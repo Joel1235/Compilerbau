@@ -1,42 +1,36 @@
 package Parser;
 
 import AntlrOut.miniJavaParser;
+import statements.Return;
 import statements.Statement;
 
+
 public class StatementAdapter {
-    public static Statement adapt(miniJavaParser.StatementContext ctx) {
+    public static Statement adapt(miniJavaParser.StatementContext statementContext) {
+        var line = statementContext.start.getLine();
+        var column = statementContext.start.getCharPositionInLine();
+        if (statementContext.returnStatement() != null)
+            if (statementContext.returnStatement().expr() != null)
+                return new Return(ExpressionAdapter.adapt(statementContext.returnStatement().expr()), line,
+                        column);
+            else
+                return new Return(line,
+                        column);
 
-        if (ctx.localVarDecl() != null) {
-            return LocalVarDeclAdapter.adapt(ctx.localVarDecl());
+        else if (statementContext.localVarDecl() != null)
+            return LocalVarDeclAdapter.adapt(statementContext.localVarDecl());
+        else if (statementContext.block() != null)
+            return BlockAdapter.adapt(statementContext.block());
+        else if (statementContext.whileStatement() != null)
+            return WhileAdapter.adapt(statementContext.whileStatement());
+        else if (statementContext.forStatement() != null)
+            return ForStatementAdapter.adapt(statementContext.forStatement());
+        else if (statementContext.ifElseStatement() != null)
+            return IfAdapter.adapt(statementContext.ifElseStatement());
+        else // StatementExpression
+            // TODO fix me
+            return null;
+            // return StatementExprAdapter.adapt(statementContext.stmtExpr());
 
-            //TODO
-        //} else if (ctx.stmtExpr() != null) {
-            //return StatementExprAdapter.adapt(ctx.stmtExpr());
-
-
-        } else if (ctx.block() != null) {
-            return BlockAdapter.adapt(ctx.block());
-        }
-
-        else if (ctx.ifStatement() != null) {
-                return IfStatementAdapter.adapt(ctx);
-            }
-
-
-
-
-        } else if (ctx.whileStatement() != null) {
-            return WhileStatementAdapter.adapt(ctx.whileStatement());
-
-        } else if (ctx.forStatement() != null) {
-            return ForStatementAdapter.adapt(ctx.forStatement());
-
-        } else if (ctx.returnStatement() != null) {
-            return ReturnStatementAdapter.adapt(ctx.returnStatement());
-
-        } else if (ctx.methodCall() != null) {
-            return MethodCallAdapter.adapt(ctx.methodCall());
-        }
-        throw new RuntimeException("Unknown statement: " + ctx);
     }
 }

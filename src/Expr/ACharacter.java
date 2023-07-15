@@ -28,5 +28,9 @@ public class ACharacter implements Expression {
     @Override
     public AType getType() {
         return this.aType;
+    public String toString(){
+        String result = "";
+        result += "Char: " + value;
+        return result;
     }
 }

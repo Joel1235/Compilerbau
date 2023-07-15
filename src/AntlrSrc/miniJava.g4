@@ -6,77 +6,79 @@ classDeclaration: accessModifier? 'class' ID '{' field* constructorDecl* method*
 
 constructorDecl: accessModifier? ID '(' paramList? ')' block;
 
-field: accessModifier? type ID ';';
+field: accessModifier? type ID ('=' expr)? ';';
 
-method: accessModifier? (type | 'void') ID '(' paramList? ')' block;
+method: accessModifier? (methodtype | 'void') ID '(' paramList? ')' block;
 
 paramList: param (',' param)*;
 param: type ID;
 
 block: '{' statement* '}';
 
-statement: localVarDecl ';'
-         |stmtExpr ';'
-         | block
-         | ifStatement
-         | whileStatement
-         | forStatement
-         | returnStatement
-         | methodCall ';'
-         ;
 
-ifStatement:'if' '(' condition ')' block ('else' block)?;
+statement: returnStatement ';' | localVarDecl ';' | block | whileStatement | forStatement | ifElseStatement | stmtExpr ';';
 
-whileStatement: 'while' '(' condition ')' block;
+ifElseStatement: ifStatement elseStatement?;
+ifStatement: 'if' '(' expr ')' statement;
+elseStatement: 'else' statement;
 
-forStatement: 'for' '(' initialization? ';' condition? ';' iteration? ')'  block;
-
-initialization: type ID '=' expr | ID '=' expr;
+whileStatement: 'while' '(' expr ')' block;
+forStatement: 'for' '(' (stmtExpr | localVarDecl) ';' (expr) ';' (stmtExpr) ')' statement;
 
 returnStatement:'return' expr? ';';
 
-condition: expr;
+localVarDecl: type ID ('=' expr)?;
 
-iteration: stmtExpr;
+stmtExpr: assign | newDecl | methodCall | incDecExpr;
+assign: assignableExpr '=' expr;
+assignableExpr: ID | instVar;
 
-localVarDecl: type ID '=' expr;
 
-stmtExpr: ID '=' expr
-        | 'new' ID '(' exprList? ')'
-        | methodCall
-        | incrementExpr
-        | decrementExpr
-        ;
+incDecExpr: incExpr | decExpr;
 
-incrementExpr: '++' ID | ID '++';
-decrementExpr: '--' ID | ID '--';
+incExpr: pIncExpr | sIncExpr;
 
-pointableExpr:
-    'this'
-    | 'super'
-    | ID
-    | pointableExpr '.' ID
-    | pointableExpr '.' ID '(' exprList? ')'
-    | 'new' ID '(' exprList? ')'
-    ;
+pIncExpr: '++' assignableExpr;
+sIncExpr: assignableExpr '++';
 
-expr: expr binaryOp expr
-    | pointableExpr
-    | '-' expr
-    | '!' expr
-    | '(' expr ')'
-    | INT
-    | BOOLEAN
-    | CHAR
-    | STRING
-    | 'null'
-    ;
+decExpr: pDecExpr | sDecExpr;
 
-methodCall: (pointableExpr '.')*? ID '(' exprList? ')';
+pDecExpr: '--' assignableExpr;
+sDecExpr: assignableExpr '--';
+
+
+
+
+
+expr: subExpression | binaryExpr;
+
+//subExpression to ssolve left-recusion problem
+subExpression: This | ID | instVar  | value | stmtExpr | notExpr | '(' expr ')';
+This: 'this';
+instVar: This '.' ID | (This '.')? (ID '.')+ ID;
+value: INT | BOOLEAN | STRING | CHAR | 'null';
+notExpr: '!' expr;
+
+binaryExpr: calcExpr | nonCalcExpr;
+
+calcExpr: calcExpr LineOperator dotExpr | dotExpr;
+dotExpr: dotExpr DotOperator dotSubExpr | dotSubExpr;
+dotSubExpr: INT | ID | instVar | methodCall | '(' calcExpr ')';
+nonCalcExpr: subExpression nonCalcOperator expr;
+DotOperator: '*' | '/' | '%';
+LineOperator: '+' | '-';
+nonCalcOperator: '&&' | '||' | '<' | '<=' | '>' | '>=' | '==' | '!=';
+
+
+newDecl: 'new' ID '(' exprList ')';
+receiver: ((This | instVar | newDecl | ID) '.');
+receivingMethod: ID '(' exprList ')' '.';
+
+methodCall: receiver? receivingMethod* ID '(' exprList ')';
 
 exprList: expr (',' expr)*;
 
-binaryOp: '+' | '-' | '*' | '/' | '%' | '==' | '!=' | '<' | '<=' | '>' | '>=' | '&&' | '||';
+methodtype: 'void' | type;
 
 type: 'int'
     | 'boolean'
@@ -86,15 +88,10 @@ type: 'int'
     ;
 
 accessModifier: 'public' | 'private' | 'protected';
-
 BOOLEAN: 'true' | 'false';
-
 CHAR: '\'' ~'\\' '\'';
-
 STRING: '"' ~'"'* '"';
-
 INT: [0-9]+;
-
 ID: [a-zA-Z_][a-zA-Z_0-9]*;
 
 WS: [ \t\r\n] -> skip;

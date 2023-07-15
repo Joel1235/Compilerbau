@@ -4,32 +4,12 @@
     <option name="perGrammarGenerationSettings">
       <list>
         <PerGrammarGenerationSettings>
-          <option name="fileName" value="$PROJECT_DIR$/src/AntlrSrc/Expression.g4" />
-          <option name="autoGen" value="true" />
-          <option name="outputDir" value="C:\Users\z004b3rk\IdeaProjects\Compilerbau\src\AntlrOut" />
-          <option name="libDir" value="C:\Users\z004b3rk\IdeaProjects\Compilerbau\src\AntlrSrc" />
-          <option name="encoding" value="" />
-          <option name="pkg" value="" />
-          <option name="language" value="" />
-          <option name="generateVisitor" value="true" />
-        </PerGrammarGenerationSettings>
-        <PerGrammarGenerationSettings>
-          <option name="fileName" value="$PROJECT_DIR$/src/AntlrSrc/Decaf.g4" />
-          <option name="autoGen" value="true" />
-          <option name="outputDir" value="C:\Users\z004b3rk\IdeaProjects\Compilerbau\src\AntlrOut" />
-          <option name="libDir" value="" />
-          <option name="encoding" value="" />
-          <option name="pkg" value="" />
-          <option name="language" value="" />
-          <option name="generateVisitor" value="true" />
-        </PerGrammarGenerationSettings>
-        <PerGrammarGenerationSettings>
           <option name="fileName" value="$PROJECT_DIR$/src/AntlrSrc/miniJava.g4" />
           <option name="autoGen" value="true" />
-          <option name="outputDir" value="C:\Users\z004b3rk\IdeaProjects\Compilerbau\src\AntlrOut" />
+          <option name="outputDir" value="C:\DATEN\Git\Compilerbau\src\" />
           <option name="libDir" value="" />
           <option name="encoding" value="" />
-          <option name="pkg" value="" />
+          <option name="pkg" value="AntlrOut" />
           <option name="language" value="" />
           <option name="generateVisitor" value="true" />
         </PerGrammarGenerationSettings>

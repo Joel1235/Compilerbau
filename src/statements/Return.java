@@ -2,19 +2,56 @@ package statements;
 
 import Codegenerierung.Codegenerierung;
 import Expr.Expression;
+import General.AType;
 
 public class Return implements Statement {
-    private final Expression expr;
+    private Expression expr;
+    private AType type;
+    public int line;
+    public int column;
 
-    public Return(Expression expr) {
-        this.expr = expr;
+    public Return(Expression expression) {
+        this.expr = expression;
     }
-    public Return() {
-        this.expr = null;//default
+
+    public Return(Expression expression, int line, int column) {
+        this.expr = expression;
+        this.line = line;
+        this.column = column;
     }
+
+    public Return(int line, int column) {
+        this.line = line;
+        this.column = column;
+    }
+
+    public Return(AType type, Expression expression) {
+        this.expr = expression;
+        this.type = type;
+    }
+
 
     public Expression getExpr() {
-        return this.expr;
+        return expr;
+    }
+
+    /**
+     * @return Type
+     */
+    public AType getType() {
+        return type;
+    }
+
+
+    public void setType(AType type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "Return: (expr: " + expr.toString() + ")";
+        return result;
     }
 
     @Override

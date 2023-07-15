@@ -2,18 +2,29 @@ package Expr;
 
 import Codegenerierung.Codegenerierung;
 import General.AType;
-import General.BinaryOperator;
+import General.Operator;
 
 public class Binary implements Expression {
     private final Expression left;
     private final Expression right;
-    private final BinaryOperator operator;
-    private AType aType;
+    private final Operator operator;
 
-    public Binary(Expression left, Expression right, BinaryOperator operator) {
+    private int line;
+    private int column;
+
+    public Binary(Expression left, Operator operator, Expression right) {
         this.left = left;
         this.right = right;
         this.operator = operator;
+
+    }
+
+    public Binary(Expression left, Expression right, Operator operator, int line, int col) {
+        this.left = left;
+        this.right = right;
+        this.operator = operator;
+        this.line = line;
+        this.column = col;
     }
 
     public Binary(Expression left, Expression right, BinaryOperator operator,AType aType) {
@@ -32,7 +43,7 @@ public class Binary implements Expression {
         return this.right;
     }
 
-    public BinaryOperator getOperator() {
+    public Operator getOperator() {
         return this.operator;
     }
 
@@ -43,5 +54,9 @@ public class Binary implements Expression {
 
     public AType getType() {
         return this.aType;
+    public String toString(){
+        String result = "";
+        result += "Binary(left: " + left.toString() + ") (Operator: " + operator.toString() + ") (right: " + right.toString() + ")";
+        return result;
     }
 }

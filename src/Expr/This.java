@@ -14,4 +14,11 @@ public class This implements PointableExpression{
     public AType getType() {
         return this.aType;
     }
+    @Override
+    public String toString(){
+        String result = "";
+        result += "This";
+        return result;
+    }
+
 }

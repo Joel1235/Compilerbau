@@ -35,6 +35,14 @@ public class Method implements StatementExpression {
         this.params = params;
     }
 
+    public Method(ReturnType returnType, String id, List<LocalOrFieldVar> params, Block block) {
+        this.accessModifier = AccessModifier.PROTECTED; //default
+        this.block = block;
+        this.returnType = returnType;
+        this.id = id;
+        this.params = params;
+    }
+
     public AccessModifier getAccessModifier() {
         return accessModifier;
     }
@@ -63,5 +71,14 @@ public class Method implements StatementExpression {
     @Override
     public void bevisited(Codegenerierung codegenerierung) {
         codegenerierung.visit(this);
+    public String toString(){
+        String result = "";
+        result += "Method: (Id: " + id + ") (AccesModifier: " + accessModifier.toString() + ") (ReturnType: " + returnType.toString() + ") (Parameters: ";
+        for (LocalOrFieldVar p: params ) {
+            result += p.toString() + ",";
+        }
+        result += ") Block: ";
+        result += block.toString();
+        return result;
     }
 }

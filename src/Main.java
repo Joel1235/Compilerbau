@@ -18,10 +18,8 @@ import java.util.List;
 import java.util.concurrent.locks.Condition;
 
 public class Main {
-    public static void main(String[] args)  {
-        String teststring = "class TestKlasse{int i = i;}";
-        //System.out.println(ASTGenerator.generateAST(teststring));
-
-
+    public static void main(String[] args) {
+        String teststring = "class InstVar{int i; void instMethod(){ this.i = 1; } }";
+        System.out.println(ASTGenerator.generateAST(teststring));
     }
 }

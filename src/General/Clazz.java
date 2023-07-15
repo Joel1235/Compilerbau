@@ -1,24 +1,22 @@
 package General;
 
-import Expr.LocalOrFieldVar;
 import statementExpressions.Method;
-
 import java.util.List;
 
 public class Clazz {
     private AccessModifier accessModifier;
     private String name;
-    private List<LocalOrFieldVar> fields;
+    private List<AField> fields;
     private List<Method> methods;
 
-    public Clazz(String name, List<LocalOrFieldVar> fields, List<Method> methods) {
+    public Clazz(String name, List<AField> fields, List<Method> methods) {
         accessModifier = AccessModifier.PUBLIC; //default
         this.name = name;
         this.fields = fields;
         this.methods = methods;
     }
 
-    public Clazz(AccessModifier accessModifier, String name, List<LocalOrFieldVar> fields, List<Method> methods) {
+    public Clazz(AccessModifier accessModifier, String name, List<AField> fields, List<Method> methods) {
         this.accessModifier = accessModifier;
         this.name = name;
         this.fields = fields;
@@ -33,11 +31,30 @@ public class Clazz {
         return name;
     }
 
-    public List<LocalOrFieldVar> getFields() {
+    public List<AField> getFields() {
         return fields;
     }
 
+    public void setFields(List<AField> fields) { this.fields = fields; }
+
     public List<Method> getMethods() {
         return methods;
+    }
+
+    public void setMethods(List<Method> methods) { this.methods = methods; }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "(Name: " + name + ") (AccesModifier: " + accessModifier.toString() + ") (Fields: ";
+        for (AField f: fields ) {
+            result += f.toString() + ",";
+        }
+        result += ") (Methods: ";
+        for (Method m: methods ) {
+            result += m.toString() + ",";
+        }
+        result += (")");
+        return result;
     }
 }

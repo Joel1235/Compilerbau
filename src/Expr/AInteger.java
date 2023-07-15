@@ -27,5 +27,9 @@ public class AInteger implements Expression {
 
     public AType getType() {
         return this.aType;
+    public String toString(){
+        String result = "";
+        result += "Int: " + value;
+        return result;
     }
 }

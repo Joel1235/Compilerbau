@@ -1,14 +1,15 @@
 package Parser;
 
+import AntlrOut.miniJavaParser;
 import Expr.*;
 
 public class ExpressionAdapter {
 
-    public static Expression adapt(miniJavaParser.ExprContext exprContext) {
-        if (exprContext.binaryExpr() != null)
-            return BinaryAdapter.adapt(exprContext.binaryExpr());
+    public static Expression adapt(miniJavaParser.ExprContext expressionContext) {
+        if (expressionContext.binaryExpr() != null)
+            return BinaryAdapter.adapt(expressionContext.binaryExpr());
         else
-            return UnaryAdapter.adapt(exprContext.subExpression());
+            return SubExpressionAdapter.adapt(expressionContext.subExpression());
     }
 }
 

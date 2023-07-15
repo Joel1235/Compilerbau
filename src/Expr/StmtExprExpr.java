@@ -34,5 +34,9 @@ public class StmtExprExpr implements Expression{
 
     public AType getType() {
         return this.aType;
+    public String toString(){
+        String result = "";
+        result += "StmtExprExpr: (Id: " + id + ") (Expression:  " + expression.toString() + ")";
+        return result;
     }
 }

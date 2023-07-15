@@ -9,11 +9,19 @@ import java.util.List;
 public class New implements StatementExpression {
     private final String id;
     private final List<Expression> exprList;
-    private AType aType;
+    public int line;
+    public int column;
 
     public New(String id, List<Expression> exprList) {
         this.id = id;
         this.exprList = exprList;
+    }
+
+    public New(String id, List<Expression> exprList, int line, int column) {
+        this.id = id;
+        this.exprList = exprList;
+        this.line = line;
+        this.column = column;
     }
 
     public String getId() {
@@ -32,5 +40,13 @@ public class New implements StatementExpression {
     @Override
     public void bevisited(Codegenerierung codegenerierung) {
         codegenerierung.visit(this);
+    public String toString(){
+        String result = "";
+        result += "New: (Id: " + id + ") (expr: ";
+        for(Expression e: exprList){
+            result += exprList.toString() + ",";
+        }
+        result += ")";
+        return result;
     }
 }

@@ -9,24 +9,64 @@ public class InstVar implements Expression {
     private final Expression expr;
     private final String id;
     private AType Atype;
+import General.AType;
 
-    public InstVar(Expression expr, String id) {
-        this.expr = expr;
-        this.id = id;
+public class InstVar implements Expression {
+    private final String id;
+    private final Expression expr;
+    private AType type;
+    public int line;
+    public int column;
+
+    public InstVar(String identifier, Expression expression) {
+        this.id = identifier;
+        this.expr = expression;
     }
 
-    public InstVar(Expression expr, String id, AType aType) {
-        this.expr = expr;
-        this.id = id;
-        this.Atype = aType;
+    public InstVar(String identifier, Expression expression, int line, int column) {
+        this.id = identifier;
+        this.expr = expression;
+        this.line = line;
+        this.column = column;
     }
+
+    public InstVar(Expression expression, String identifier) {
+        this.id = identifier;
+        this.expr = expression;
+    }
+
+    public InstVar(AType type, String identifier, Expression expression) {
+        this.id = identifier;
+        this.expr = expression;
+        this.type = type;
+    }
+
+    public InstVar(AType type, Expression expression, String identifier) {
+        this.id = identifier;
+        this.expr = expression;
+        this.type = type;
+    }
+
 
     public Expression getExpr() {
-        return this.expr;
+        return expr;
     }
 
-    public String getId() {
-        return this.id;
+
+    public AType getType() {
+        return type;
+    }
+
+
+    public void setType(AType type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "InstVar: (Id: " + id + ") (expr: " + expr.toString() + ")";
+        return result;
     }
 
     public AType getType() {

@@ -22,5 +22,9 @@ public class IdExpr implements PointableExpression{
 
     public AType getType() {
         return this.aType;
+    public String toString(){
+        String result = "";
+        result += "Id: " + id;
+        return result;
     }
 }

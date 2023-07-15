@@ -1,9 +1,10 @@
 package Parser;
 
-import Expr.LocalOrFieldVar;
+import General.AField;
 import General.Clazz;
 import General.AccessModifier;
 import statementExpressions.Method;
+import AntlrOut.miniJavaParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +16,9 @@ public class ClazzAdapter {
         String name = ctx.ID().getText();//class-name
 
         //fields
-        List<LocalOrFieldVar> fields = new ArrayList<>();
+        List<AField> fields = new ArrayList<>();
         for (miniJavaParser.FieldContext fieldCtx : ctx.field()) {
-            fields.add(new LocalOrFieldVar(TypeAdapter.adapt(fieldCtx.type()), fieldCtx.ID().getText()));
+            fields.add(new AField(TypeAdapter.adapt(fieldCtx.type()), fieldCtx.ID().getText()));
         }
 
         List<Method> methods = new ArrayList<>();
@@ -27,5 +28,4 @@ public class ClazzAdapter {
 
         return new Clazz(accessModifier, name, fields, methods);
     }
-    }
-
+}

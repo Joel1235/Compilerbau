@@ -13,4 +13,12 @@ public class Super implements PointableExpression{
     public AType getType() {
         return this.aType;
     }
+
+    @Override
+    public String toString(){
+        String result = "";
+        result += "Super";
+        return result;
+    }
+
 }
