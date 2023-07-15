@@ -5,7 +5,9 @@ import statements.Statement;
 
 public class MethodCallAdapter {
     public static Statement adapt(miniJavaParser.MethodCallContext methodCallContext) {
-        // TODO implement
+        // TODO: fix me
+
+        // return MethodAdapter.adapt(methodCallContext);
         return null;
     }
 }

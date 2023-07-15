@@ -6,7 +6,7 @@ import AntlrOut.miniJavaParser;
 
 public class StmtExprStmtAdapter{
 
-    public StmtExprStmt adapt(miniJavaParser.StmtExprContext ctx) {
+    public static StmtExprStmt adapt(miniJavaParser.StmtExprContext ctx) {
         String variableName = ctx.ID().getText();
         Expression expression = ExpressionAdapter.adapt(ctx.expr());
 
