@@ -128,7 +128,7 @@ public class ParsingTests {
 
     @Test
     void Boolean(){
-        generateTree("class Bool{ boolean bool(){ boolean b = true; } }", "Clazz: " +
+        generateTree("class Bool{ void bool(){ boolean b = true; } }", "Clazz: " +
                                                                                         "(Name: Bool) " +
                                                                                         "(AccesModifier: PUBLIC) " +
                                                                                         "(Fields: ) " +
@@ -136,15 +136,18 @@ public class ParsingTests {
                                                                                             "Method: " +
                                                                                             "(Id: bool) " +
                                                                                             "(AccesModifier: PUBLIC) " +
-                                                                                            "(ReturnType: boolean) " +
+                                                                                            "(ReturnType: void) " +
                                                                                             "(Parameters: ) " +
-                                                                                            "Block: (statements: ??????)," +
+                                                                                            "Block: (statements: " +
+                                                                                                    "LocalVarDecl: (Id: b) (Type: boolean) " +
+                                                                                                    "(expr: AssignStmt: (Id: b) (expr: ABoolean true))," +
+                                                                                            ")," +
                                                                                         ")");
     }
 
     @Test
     void Character(){
-        generateTree("class Char { char charMethod(){ char a = '_'; } }", "Clazz: " +
+        generateTree("class Char { void charMethod(){ char a = '_'; } }", "Clazz: " +
                                                                                         "(Name: Char) " +
                                                                                         "(AccesModifier: PUBLIC) " +
                                                                                         "(Fields: ) " +
@@ -152,15 +155,18 @@ public class ParsingTests {
                                                                                             "Method: " +
                                                                                             "(Id: charMethod) " +
                                                                                             "(AccesModifier: PUBLIC) " +
-                                                                                            "(ReturnType: char) " +
+                                                                                            "(ReturnType: void) " +
                                                                                             "(Parameters: ) " +
-                                                                                            "Block: (statements: ??????)," +
+                                                                                            "Block: (statements: " +
+                                                                                                "LocalVarDecl: (Id: a) (Type: char) " +
+                                                                                                "(expr: AssignStmt: (Id: a) (expr: Char: _))," +
+                                                                                            ")," +
                                                                                         ")");
     }
 
     @Test
     void Integer(){
-        generateTree("class Int{int intMethod(){ int a = -1; } }", "Clazz: " +
+        generateTree("class Int{void intMethod(){ int a = -1; } }", "Clazz: " +
                                                                                      "(Name: Int) " +
                                                                                      "(AccesModifier: PUBLIC) " +
                                                                                      "(Fields: ) " +
@@ -168,15 +174,18 @@ public class ParsingTests {
                                                                                         "Method: " +
                                                                                         "(Id: intMethod) " +
                                                                                         "(AccesModifier: PUBLIC) " +
-                                                                                        "(ReturnType: int) " +
+                                                                                        "(ReturnType: void) " +
                                                                                         "(Parameters: ) " +
-                                                                                        "Block: (statements: ??????)," +
+                                                                                        "Block: (statements: " +
+                                                                                            "LocalVarDecl: (Id: a) (Type: int) " +
+                                                                                            "(expr: AssignStmt: (Id: a) (expr: int: -1))," +
+                                                                                        ")," +
                                                                                      ")");
     }
 
     @Test
     void String(){
-        generateTree("class String{String stringMethod(){ string s = \"*TODO: versteckte Nachricht für Prof einfügen!\"; } }", "Clazz: " +
+        generateTree("class String{String stringMethod(){ void s = \"*TODO: versteckte Nachricht für Prof einfügen!\"; } }", "Clazz: " +
                                                                                                                                         "(Name: String) " +
                                                                                                                                         "(AccesModifier: PUBLIC) " +
                                                                                                                                         "(Fields: ) " +
@@ -184,9 +193,12 @@ public class ParsingTests {
                                                                                                                                             "Method: " +
                                                                                                                                             "(Id: stringMethod) " +
                                                                                                                                             "(AccesModifier: PUBLIC) " +
-                                                                                                                                            "(ReturnType: string) " +
+                                                                                                                                            "(ReturnType: void) " +
                                                                                                                                             "(Parameters: ) " +
-                                                                                                                                            "Block: (statements: ??????)," +
+                                                                                                                                            "Block: (statements: " +
+                                                                                                                                                "LocalVarDecl: (Id: s) (Type: string) " +
+                                                                                                                                                "(expr: AssignStmt: (Id: s) (expr: string: *TODO: versteckte Nachricht für Prof einfügen!))," +
+                                                                                                                                            ")," +
                                                                                                                                         ")");
     }
 
@@ -202,7 +214,10 @@ public class ParsingTests {
                                                                                                 "(AccesModifier: PUBLIC) " +
                                                                                                 "(ReturnType: void) " +
                                                                                                 "(Parameters: ) " +
-                                                                                                "Block: (statements: ??????)," +
+                                                                                                "Block: (statements: " +
+                                                                                                    "LocalVarDecl: (Id: s) (Type: string) " +
+                                                                                                    "(expr: AssignStmt: (Id: s) (expr: string: *TODO: versteckte Nachricht für Prof einfügen!))," +
+                                                                                                ")," +
                                                                                             ")");
     }
 
@@ -218,7 +233,10 @@ public class ParsingTests {
                                                                                                 "(AccesModifier: PUBLIC) " +
                                                                                                 "(ReturnType: void) " +
                                                                                                 "(Parameters: ) " +
-                                                                                                "Block: (statements: ??????)," +
+                                                                                                "Block: (statements: " +
+                                                                                                    "LocalVarDecl: (Id: x) (Type: int) " +
+                                                                                                    "(expr: ---sowas ähnliches----AssignStmt: (Id: s) (expr: string: *TODO: versteckte Nachricht für Prof einfügen!))," +
+                                                                                                ")," +
                                                                                             ")");
     }
 
