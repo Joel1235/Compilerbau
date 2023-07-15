@@ -371,6 +371,7 @@ public class Codegenerierung {
     }
 
     public void visit(Method method) {
+        localVars.add("this");
         StringBuilder Descriptor = new StringBuilder();
         Descriptor.append("(");
         for (LocalOrFieldVar Param :
@@ -390,6 +391,7 @@ public class Codegenerierung {
         methodvisitor = cw.visitMethod(Opcodes.ACC_PUBLIC, method.getId(),
                 Descriptor.toString(), null, null);
         methodvisitor.visitCode();
+
         method.getBlock().bevisited(this);
         if ((method.getReturnType()) == null) {
             methodvisitor.visitInsn(Opcodes.RETURN);
