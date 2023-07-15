@@ -18,7 +18,8 @@ public class BeispielCodegen {
     public static void main(String[] args) throws IOException {
 
         //Works
-        Block testblock=new Block(Arrays.asList(new AssignStmt("test",new AInteger(1,AType.INT),new LocalOrFieldVar(AType.INT,"m")),
+        Block testblock=new Block(Arrays.asList(new LocalVarDecl(AType.INT,"b",new AInteger(82,AType.INT)),
+                new AssignStmt("test",new AInteger(1,AType.INT),new LocalOrFieldVar(AType.INT,"m")),
                 new While(new Binary(new LocalOrFieldVar(AType.INT,"m"),new AInteger(10,AType.INT),BinaryOperator.LESS_THAN),
                         new Block(Arrays.asList(new IncrementExpr("m"))))
                                 ,new Block(Arrays.asList(new LocalVarDecl(AType.INT,"b",new AInteger(82,AType.INT))))
@@ -75,8 +76,8 @@ public class BeispielCodegen {
                 new AssignStmt("x", new AInteger(5, AType.INT), new LocalOrFieldVar(AType.INT, "a")),
                 new If(new Binary(new LocalOrFieldVar(AType.INT, "a"), new AInteger(10, AType.INT), BinaryOperator.GREATER_THAN),
                         new Block(Arrays.asList(
-                                new AssignStmt("y", new AInteger(2, AType.INT), new LocalOrFieldVar(AType.INT, "b")),
-                                new AssignStmt("z", new Binary(new LocalOrFieldVar(AType.INT, "a"), new LocalOrFieldVar(AType.INT, "b"), BinaryOperator.MULTIPLY, AType.INT), new LocalOrFieldVar(AType.INT, "c"))
+                                new AssignStmt("y", new AInteger(2, AType.INT), new LocalOrFieldVar(AType.INT, "b"))
+                                //new AssignStmt("z", new Binary(new LocalOrFieldVar(AType.INT, "a"), new LocalOrFieldVar(AType.INT, "b"), BinaryOperator.MULTIPLY, AType.INT), new LocalOrFieldVar(AType.INT, "c"))
                         ))
                 )
         ));
@@ -177,14 +178,14 @@ public class BeispielCodegen {
 
 
         Codegenerierung codegen = new Codegenerierung();
-        codegen.Start(testclazz);
+        codegen.Start(testclazz);//cant be decompiled
         codegen.Start(AssignAndBinaryclazz);
         codegen.Start(WhileClazz);
         codegen.Start(ifClazz);
         codegen.Start(loopClazz);
         codegen.Start(calculationClazz);
         codegen.Start(loopAndIfClazz);
-        codegen.Start(returnClazz);
+        codegen.Start(returnClazz);//cant be decompiled
         codegen.Start(sumClazz);
     }
 }

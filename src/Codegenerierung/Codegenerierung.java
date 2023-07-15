@@ -348,7 +348,6 @@ public class Codegenerierung {
         int index = localVars.indexOf(((LocalOrFieldVar) variable).getId());
         if (index >= 0) {
             assignExpression.bevisited(this);
-            methodvisitor.visitInsn(Opcodes.DUP);
             if (isVICZ(assignExpression.getType())) {
                 methodvisitor.visitVarInsn(Opcodes.ISTORE, index);
             } else {
