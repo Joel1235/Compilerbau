@@ -237,7 +237,7 @@ public class Codegenerierung {
         } else { // fieldvar, because not found in localvars
             methodvisitor.visitVarInsn(Opcodes.ALOAD, 0);
             methodvisitor.visitFieldInsn(Opcodes.GETFIELD, currentClass, localOrFieldVar.getId(),
-                    makeDescriptor(localOrFieldVar.getType()));
+                    makeDescriptor(localOrFieldVar.getType().getTypeName()));
         }
     }
 
@@ -375,17 +375,23 @@ public class Codegenerierung {
         Descriptor.append("(");
         for (LocalOrFieldVar Param :
                 method.getParams()) {
-            Descriptor.append(makeDescriptor(Param.getType()));
+            Descriptor.append(makeDescriptor(Param.getType().getTypeName()));
             localVars.add(Param.getId());
         }
         Descriptor.append(")");
-        Descriptor.append(method.getReturnType());
+        //Descriptor.append(method.getReturnType());
+        if (method.getReturnType()==null){
+            Descriptor.append("V");
+        }else {
+            Descriptor.append(makeDescriptor(method.getReturnType().getTypeName()));
+        }
+
 
         methodvisitor = cw.visitMethod(Opcodes.ACC_PUBLIC, method.getId(),
                 Descriptor.toString(), null, null);
         methodvisitor.visitCode();
         method.getBlock().bevisited(this);
-        if ((method.getType()) == AType.VOID) {
+        if ((method.getReturnType()) == null) {
             methodvisitor.visitInsn(Opcodes.RETURN);
         }
         methodvisitor.visitMaxs(0, 0);
@@ -404,7 +410,7 @@ public class Codegenerierung {
         Descriptor.append("(");
         for (Expression Expr :
                 newvar.getExprList()) {
-            Descriptor.append(makeDescriptor(Expr.getType()));
+            Descriptor.append(makeDescriptor(Expr.getType().getTypeName()));
         }
         Descriptor.append(")");
         Descriptor.append("V");
@@ -430,13 +436,13 @@ public class Codegenerierung {
         StringBuilder Descriptor = new StringBuilder();
         for (Expression expression :
                 expressions) {
-            Descriptor.append(makeDescriptor(expression.getType()));
+            Descriptor.append(makeDescriptor(expression.getType().getTypeName()));
         }
         return Descriptor.toString();
     }
 
-    public String makeDescriptor(AType aType) {
-        return switch (aType.getTypeName()) {
+    public String makeDescriptor(String type) {
+        return switch (type) {
             case "void" -> "V";
             case "int" -> "I";
             case "char" -> "C";

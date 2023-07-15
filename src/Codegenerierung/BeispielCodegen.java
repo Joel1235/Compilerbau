@@ -17,12 +17,12 @@ public class BeispielCodegen {
 
     public static void main(String[] args) throws IOException {
 
-        //Works
-        Block testblock=new Block(Arrays.asList(new LocalVarDecl(AType.INT,"b",new AInteger(82,AType.INT)),
-                new AssignStmt("test",new AInteger(1,AType.INT),new LocalOrFieldVar(AType.INT,"m")),
-                new While(new Binary(new LocalOrFieldVar(AType.INT,"m"),new AInteger(10,AType.INT),BinaryOperator.LESS_THAN),
-                        new Block(Arrays.asList(new IncrementExpr("m"))))
-                                ,new Block(Arrays.asList(new LocalVarDecl(AType.INT,"b",new AInteger(82,AType.INT))))
+        //
+        Block testblock=new Block(Arrays.asList(//new LocalVarDecl(AType.INT,"b",new AInteger(82,AType.INT)),
+                //new AssignStmt("test",new AInteger(1,AType.INT),new LocalOrFieldVar(AType.INT,"m")),
+                new While(new Binary(new LocalOrFieldVar(AType.INT,"k"),new AInteger(10,AType.INT),BinaryOperator.LESS_THAN),
+                        new Block(Arrays.asList(new IncrementExpr("k"))))
+                               // ,new Block(Arrays.asList(new LocalVarDecl(AType.INT,"b",new AInteger(82,AType.INT))))
                ));
        /* Block testblock=new Block(Arrays.asList(new LocalVarDecl(AType.INT,"i",new AInteger(1,AType.INT)),
                 new AssignStmt("test",new AInteger(435345,AType.INT),new LocalOrFieldVar(AType.INT,"i"))
@@ -65,7 +65,7 @@ public class BeispielCodegen {
        ,new AssignStmt("test2",new AInteger(3,AType.INT),new LocalOrFieldVar(AType.INT,"g"))
        ));*/
 
-        Method testmethod = new Method(AccessModifier.PUBLIC, ReturnType.INT, "Test", Arrays.asList(new LocalOrFieldVar(AType.INT, "k"),
+        Method testmethod = new Method( "Test", Arrays.asList(new LocalOrFieldVar(AType.INT, "k"),
                 new LocalOrFieldVar(AType.INT, "m"), new LocalOrFieldVar(AType.INT, "v")), testblock);
         Clazz testclazz = new Clazz("testmethod", new ArrayList<>(), Arrays.asList(testmethod));
 
@@ -178,14 +178,14 @@ public class BeispielCodegen {
 
 
         Codegenerierung codegen = new Codegenerierung();
-        codegen.Start(testclazz);//cant be decompiled
-        codegen.Start(AssignAndBinaryclazz);
-        codegen.Start(WhileClazz);
+        codegen.Start(testclazz);
+        codegen.Start(AssignAndBinaryclazz);//works
+        codegen.Start(WhileClazz);//works
         codegen.Start(ifClazz);
         codegen.Start(loopClazz);
         codegen.Start(calculationClazz);
         codegen.Start(loopAndIfClazz);
-        codegen.Start(returnClazz);//cant be decompiled
+        codegen.Start(returnClazz);//works
         codegen.Start(sumClazz);
     }
 }
