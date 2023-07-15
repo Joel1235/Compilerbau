@@ -1,16 +1,28 @@
 package Expr;
 
-import General.BinaryOperator;
+import General.Operator;
 
 public class Binary implements Expression {
     private final Expression left;
     private final Expression right;
-    private final BinaryOperator operator;
+    private final Operator operator;
 
-    public Binary(Expression left, Expression right, BinaryOperator operator) {
+    private int line;
+    private int column;
+
+    public Binary(Expression left, Operator operator, Expression right) {
         this.left = left;
         this.right = right;
         this.operator = operator;
+
+    }
+
+    public Binary(Expression left, Expression right, Operator operator, int line, int col) {
+        this.left = left;
+        this.right = right;
+        this.operator = operator;
+        this.line = line;
+        this.column = col;
     }
 
     public Expression getLeft() {
@@ -21,7 +33,7 @@ public class Binary implements Expression {
         return this.right;
     }
 
-    public BinaryOperator getOperator() {
+    public Operator getOperator() {
         return this.operator;
     }
 

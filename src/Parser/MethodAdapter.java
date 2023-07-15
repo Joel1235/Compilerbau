@@ -15,7 +15,7 @@ public class MethodAdapter {
     public static Method adapt(miniJavaParser.MethodContext ctx) {
         AccessModifier accessModifier = AccessModifierAdapter.adapt(ctx.accessModifier());
 
-        ReturnType returnType = ReturnTypeAdapter.adapt(ctx.type());
+        ReturnType returnType = ReturnTypeAdapter.adapt(ctx.methodtype());
 
         String name = ctx.ID().getText();
 

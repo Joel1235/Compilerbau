@@ -7,10 +7,19 @@ import java.util.List;
 public class New implements StatementExpression {
     private final String id;
     private final List<Expression> exprList;
+    public int line;
+    public int column;
 
     public New(String id, List<Expression> exprList) {
         this.id = id;
         this.exprList = exprList;
+    }
+
+    public New(String id, List<Expression> exprList, int line, int column) {
+        this.id = id;
+        this.exprList = exprList;
+        this.line = line;
+        this.column = column;
     }
 
     public String getId() {

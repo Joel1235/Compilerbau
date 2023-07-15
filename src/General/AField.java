@@ -1,6 +1,5 @@
 package General;
 
-import General.AType;
 
 public class AField {
        private String name;

@@ -6,10 +6,10 @@
         <PerGrammarGenerationSettings>
           <option name="fileName" value="$PROJECT_DIR$/src/AntlrSrc/miniJava.g4" />
           <option name="autoGen" value="true" />
-          <option name="outputDir" value="C:\DATEN\Git\Compilerbau\src\AntlrOut" />
+          <option name="outputDir" value="C:\DATEN\Git\Compilerbau\src\" />
           <option name="libDir" value="" />
           <option name="encoding" value="" />
-          <option name="pkg" value="" />
+          <option name="pkg" value="AntlrOut" />
           <option name="language" value="" />
           <option name="generateVisitor" value="true" />
         </PerGrammarGenerationSettings>

@@ -4,7 +4,7 @@ import General.ReturnType;
 import AntlrOut.miniJavaParser;
 
 public class ReturnTypeAdapter {
-    public static ReturnType adapt(miniJavaParser.TypeContext ctx) {
+    public static ReturnType adapt(miniJavaParser.MethodtypeContext ctx) {
         String typeName = ctx.getText();
 
         switch (typeName) {
@@ -14,6 +14,8 @@ public class ReturnTypeAdapter {
                 return ReturnType.BOOLEAN;
             case "char":
                 return ReturnType.CHAR;
+            case "void":
+                return ReturnType.VOID;
             default:
                 // defined by user
                 return new ReturnType(typeName);

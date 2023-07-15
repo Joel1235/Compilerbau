@@ -3,6 +3,7 @@ package Parser;
 import AntlrOut.miniJavaParser;
 import Expr.Expression;
 import statements.Block;
+import statements.For;
 import statements.Statement;
 import statements.StmtExprStmt;
 
@@ -10,18 +11,17 @@ public class ForStatementAdapter {
 
     public static Statement adapt(miniJavaParser.ForStatementContext forStatementContext) {
 
-        // TODO: fix me
+            var line = forStatementContext.start.getLine();
+            var column = forStatementContext.start.getCharPositionInLine();
 
-        // StmtExprStmt initStmt = StmtExprStmtAdapter.adapt(forStatementContext.));
-        StmtExprStmt initStmt = null;
+            final boolean isStatementExpressionInit = forStatementContext.localVarDecl() == null;
+            var init = isStatementExpressionInit ? StatementExprAdapter.adapt(forStatementContext.stmtExpr(0))
+                    : LocalVarDeclAdapter.adapt(forStatementContext.localVarDecl());
 
-        Expression condition = ExpressionAdapter.adapt(forStatementContext.condition().expr());
+            var condition = ExpressionAdapter.adapt(forStatementContext.expr());
+            var update = StatementExprAdapter.adapt(forStatementContext.stmtExpr(isStatementExpressionInit ? 1 : 0));
+            var body = StatementAdapter.adapt(forStatementContext.statement());
 
-        // StmtExprStmt updateStmt = StmtExprStmtAdapter.adapt(forStatementContext.initialization());
-        StmtExprStmt updateStmt = null;
-
-        Block body = BlockAdapter.adapt(forStatementContext.block());
-
-        return ForAdapter.adapt(initStmt, condition, updateStmt, body);
+            return new For((Statement) init, condition, update, body, line, column);
     }
 }
