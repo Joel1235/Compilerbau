@@ -138,7 +138,10 @@ public class ParsingTests {
                                                                                             "(AccesModifier: PUBLIC) " +
                                                                                             "(ReturnType: boolean) " +
                                                                                             "(Parameters: ) " +
-                                                                                            "Block: (statements: ??????)," +
+                                                                                            "Block: (statements: " +
+                                                                                                    "LocalVarDecl: (Id: b) (Type: boolean) " +
+                                                                                                    "(expr: AssignStmt: (Id: b) (expr: ABoolean true))," +
+                                                                                            ")," +
                                                                                         ")");
     }
 
