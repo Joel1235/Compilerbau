@@ -3,6 +3,7 @@ package Codegenerierung;
 import Expr.AInteger;
 import Expr.Binary;
 import Expr.LocalOrFieldVar;
+import Expr.Unary;
 import General.*;
 import statementExpressions.AssignStmt;
 import statementExpressions.IncrementExpr;
@@ -17,21 +18,21 @@ public class BeispielCodegen {
 
     public static void main(String[] args) throws IOException {
 
-        //
-        Block testblock=new Block(Arrays.asList(//new LocalVarDecl(AType.INT,"b",new AInteger(82,AType.INT)),
+        /* this Block works
+        Block testblock=new Block(Arrays.asList(new LocalVarDecl(AType.INT,"b",new AInteger(82,AType.INT)),
                 //new AssignStmt("test",new AInteger(1,AType.INT),new LocalOrFieldVar(AType.INT,"m")),
-                new While(new Binary(new LocalOrFieldVar(AType.INT,"k"),new AInteger(10,AType.INT),BinaryOperator.LESS_THAN),
-                        new Block(Arrays.asList(new IncrementExpr("k"))))
-                               // ,new Block(Arrays.asList(new LocalVarDecl(AType.INT,"b",new AInteger(82,AType.INT))))
-               ));
-       /* Block testblock=new Block(Arrays.asList(new LocalVarDecl(AType.INT,"i",new AInteger(1,AType.INT)),
+                new While(new Unary(new Binary(new LocalOrFieldVar(AType.INT,"k"),new AInteger(10,AType.INT),BinaryOperator.LESS_THAN),"not"),
+                        new Block(Arrays.asList(new IncrementExpr("v"),new AssignStmt("test",new AInteger(243634,AType.INT),new LocalOrFieldVar(AType.INT,"m")))))
+                                ,new Block(Arrays.asList(new LocalVarDecl(AType.INT,"b",new AInteger(82,AType.INT)))
+               )));*/
+        Block testblock=new Block(Arrays.asList(new LocalVarDecl(AType.INT,"i",new AInteger(1,AType.INT)),
                 new AssignStmt("test",new AInteger(435345,AType.INT),new LocalOrFieldVar(AType.INT,"i"))
         ,new If(new Binary(new LocalOrFieldVar(AType.INT,"t"),
                         new LocalOrFieldVar(AType.INT,"i"), BinaryOperator.GREATER_THAN),
                         new Block(Arrays.asList(new AssignStmt("test2",new AInteger(1234,AType.INT),new LocalOrFieldVar(AType.INT,"i"))))
-                        )));*/
-        // visit maxs throws error
-        Block Whileblock = new Block(Arrays.asList(new AssignStmt("test2", new AInteger(12345, AType.INT), new LocalOrFieldVar(AType.INT, "m")),
+                        )));
+        // Shows that while works
+        Block Whileblock = new Block(Arrays.asList(
                 new While(new Binary(new LocalOrFieldVar(AType.INT, "k"),
                         new AInteger(10, AType.INT), BinaryOperator.LESS_THAN),
                         new Block(Arrays.asList(

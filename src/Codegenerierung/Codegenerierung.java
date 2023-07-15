@@ -103,6 +103,9 @@ public class Codegenerierung {
 
 
     //Expressions
+    public void visitExpression(This thisvar) {
+        methodvisitor.visitVarInsn(Opcodes.ALOAD, 0);
+    }
 
     public void visit(ACharacter aCharacter) {
         char aCharacterValue = aCharacter.getValue();
