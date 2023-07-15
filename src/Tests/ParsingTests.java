@@ -1,11 +1,10 @@
 package Tests;
 import General.Program;
 import TreeGeneration.ASTGenerator;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class ParsingTests {
 
@@ -14,7 +13,7 @@ public class ParsingTests {
         try {
             output = ASTGenerator.generateAST(input);
         }catch (Exception e) {
-            Assert.fail("Syntax Fehler beim Generieren des Trees");
+            Assertions.fail("Syntax Fehler beim Generieren des Trees");
         }
         assertEquals(expected ,output.toString());
     }
@@ -277,7 +276,7 @@ public class ParsingTests {
 
     @Test
     void Return(){
-        generateTree("class Return{ boolean returnMethod(){ return true } }", "Clazz: " +
+        generateTree("class Return{ boolean returnMethod(){ return true; } }", "Clazz: " +
                                                                                             "(Name:Return) " +
                                                                                             "(AccesModifier: PUBLIC) " +
                                                                                             "(Fields: ) " +

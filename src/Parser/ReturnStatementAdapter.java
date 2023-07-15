@@ -5,7 +5,6 @@ import statements.Statement;
 
 public class ReturnStatementAdapter {
     public static Statement adapt(miniJavaParser.ReturnStatementContext returnStatementContext) {
-        // TODO implement
-        return null;
+        return ReturnAdapter.adapt(ExpressionAdapter.adapt(returnStatementContext.expr()));
     }
 }
