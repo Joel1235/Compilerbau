@@ -21,20 +21,20 @@ public class BeispielCodegen {
         /* this Block works
         Block testblock=new Block(Arrays.asList(new LocalVarDecl(AType.INT,"b",new AInteger(82,AType.INT)),
                 //new AssignStmt("test",new AInteger(1,AType.INT),new LocalOrFieldVar(AType.INT,"m")),
-                new While(new Unary(new Binary(new LocalOrFieldVar(AType.INT,"k"),new AInteger(10,AType.INT),BinaryOperator.LESS_THAN),"not"),
+                new While(new Unary(new Binary(new LocalOrFieldVar(AType.INT,"k"),new AInteger(10,AType.INT),Operator.LESS_THAN),"not"),
                         new Block(Arrays.asList(new IncrementExpr("v"),new AssignStmt("test",new AInteger(243634,AType.INT),new LocalOrFieldVar(AType.INT,"m")))))
                                 ,new Block(Arrays.asList(new LocalVarDecl(AType.INT,"b",new AInteger(82,AType.INT)))
                )));*/
         Block testblock=new Block(Arrays.asList(new LocalVarDecl(AType.INT,"i",new AInteger(1,AType.INT)),
                 new AssignStmt("test",new AInteger(435345,AType.INT),new LocalOrFieldVar(AType.INT,"i"))
         ,new If(new Binary(new LocalOrFieldVar(AType.INT,"t"),
-                        new LocalOrFieldVar(AType.INT,"i"), BinaryOperator.GREATER_THAN),
+                        new LocalOrFieldVar(AType.INT,"i"), Operator.GREATER_THAN),
                         new Block(Arrays.asList(new AssignStmt("test2",new AInteger(1234,AType.INT),new LocalOrFieldVar(AType.INT,"i"))))
                         )));
         // Shows that while works
         Block Whileblock = new Block(Arrays.asList(
                 new While(new Binary(new LocalOrFieldVar(AType.INT, "k"),
-                        new AInteger(10, AType.INT), BinaryOperator.LESS_THAN),
+                        new AInteger(10, AType.INT), Operator.LESS_THAN),
                         new Block(Arrays.asList(
                                 new IncrementExpr("k")
                         )))
@@ -50,7 +50,7 @@ public class BeispielCodegen {
 */
         // This shows that Binary and AssignStm funtions
         Block AssignandBinary = new Block(Arrays.asList(
-                new AssignStmt("test", new Binary(new LocalOrFieldVar(AType.INT, "m"), new LocalOrFieldVar(AType.INT, "v"), BinaryOperator.PLUS, AType.INT),
+                new AssignStmt("test", new Binary(new LocalOrFieldVar(AType.INT, "m"), new LocalOrFieldVar(AType.INT, "v"), Operator.PLUS, AType.INT),
                         new LocalOrFieldVar(AType.INT, "k"))));
         Method AssignAndBinarymethod = new Method(AccessModifier.PUBLIC, ReturnType.INT, "Test", Arrays.asList(new LocalOrFieldVar(AType.INT, "k"),
                 new LocalOrFieldVar(AType.INT, "m"), new LocalOrFieldVar(AType.INT, "v")), AssignandBinary);
@@ -60,7 +60,7 @@ public class BeispielCodegen {
        Block testblock = new Block(Arrays.asList(
                //new LocalVarDecl(AType.INT,"i", new AInteger(45645745,AType.INT)), Throws index out of Bound in visitmaxs
                 new AssignStmt("test1",new AInteger(3,AType.INT),new LocalOrFieldVar(AType.INT,"u")),
-                new While(new Binary(new LocalOrFieldVar(AType.INT,"m"),new LocalOrFieldVar(AType.INT,"v"),BinaryOperator.LESS_THAN,AType.BOOLEAN),
+                new While(new Binary(new LocalOrFieldVar(AType.INT,"m"),new LocalOrFieldVar(AType.INT,"v"),Operator.LESS_THAN,AType.BOOLEAN),
                 new Block(Arrays.asList(new AssignStmt("test",new AInteger(3,AType.INT),new LocalOrFieldVar(AType.INT,"i"))) ))
        ,new LocalVarDecl(AType.INT,"p",new AInteger(1,AType.INT))
        ,new AssignStmt("test2",new AInteger(3,AType.INT),new LocalOrFieldVar(AType.INT,"g"))
@@ -75,10 +75,10 @@ public class BeispielCodegen {
         // If-Block Anfang
         Block ifBlock = new Block(Arrays.asList(
                 new AssignStmt("x", new AInteger(5, AType.INT), new LocalOrFieldVar(AType.INT, "a")),
-                new If(new Binary(new LocalOrFieldVar(AType.INT, "a"), new AInteger(10, AType.INT), BinaryOperator.GREATER_THAN),
+                new If(new Binary(new LocalOrFieldVar(AType.INT, "a"), new AInteger(10, AType.INT), Operator.GREATER_THAN),
                         new Block(Arrays.asList(
                                 new AssignStmt("y", new AInteger(2, AType.INT), new LocalOrFieldVar(AType.INT, "b"))
-                                //new AssignStmt("z", new Binary(new LocalOrFieldVar(AType.INT, "a"), new LocalOrFieldVar(AType.INT, "b"), BinaryOperator.MULTIPLY, AType.INT), new LocalOrFieldVar(AType.INT, "c"))
+                                //new AssignStmt("z", new Binary(new LocalOrFieldVar(AType.INT, "a"), new LocalOrFieldVar(AType.INT, "b"), Operator.MULTIPLY, AType.INT), new LocalOrFieldVar(AType.INT, "c"))
                         ))
                 )
         ));
@@ -91,10 +91,10 @@ public class BeispielCodegen {
         // Loop-Block Anfang
         Block loopBlock = new Block(Arrays.asList(
                 new AssignStmt("i", new AInteger(0, AType.INT), new LocalOrFieldVar(AType.INT, "counter")),
-                new While(new Binary(new LocalOrFieldVar(AType.INT, "counter"), new AInteger(10, AType.INT), BinaryOperator.LESS_THAN),
+                new While(new Binary(new LocalOrFieldVar(AType.INT, "counter"), new AInteger(10, AType.INT), Operator.LESS_THAN),
                         new Block(Arrays.asList(
-                                new AssignStmt("i", new Binary(new LocalOrFieldVar(AType.INT, "i"), new AInteger(1, AType.INT), BinaryOperator.PLUS, AType.INT), new LocalOrFieldVar(AType.INT, "i")),
-                                new AssignStmt("counter", new Binary(new LocalOrFieldVar(AType.INT, "counter"), new AInteger(1, AType.INT), BinaryOperator.PLUS, AType.INT), new LocalOrFieldVar(AType.INT, "counter"))
+                                new AssignStmt("i", new Binary(new LocalOrFieldVar(AType.INT, "i"), new AInteger(1, AType.INT), Operator.PLUS, AType.INT), new LocalOrFieldVar(AType.INT, "i")),
+                                new AssignStmt("counter", new Binary(new LocalOrFieldVar(AType.INT, "counter"), new AInteger(1, AType.INT), Operator.PLUS, AType.INT), new LocalOrFieldVar(AType.INT, "counter"))
                         ))
                 )
         ));
@@ -108,12 +108,12 @@ public class BeispielCodegen {
         Block calculationBlock = new Block(Arrays.asList(
                 new AssignStmt("x", new AInteger(10, AType.INT), new LocalOrFieldVar(AType.INT, "a")),
                 new AssignStmt("y", new AInteger(20, AType.INT), new LocalOrFieldVar(AType.INT, "b")),
-                new If(new Binary(new LocalOrFieldVar(AType.INT, "a"), new LocalOrFieldVar(AType.INT, "b"), BinaryOperator.GREATER_THAN),
+                new If(new Binary(new LocalOrFieldVar(AType.INT, "a"), new LocalOrFieldVar(AType.INT, "b"), Operator.GREATER_THAN),
                         new Block(Arrays.asList(
-                                new AssignStmt("result", new Binary(new LocalOrFieldVar(AType.INT, "a"), new LocalOrFieldVar(AType.INT, "b"), BinaryOperator.MINUS, AType.INT), new LocalOrFieldVar(AType.INT, "c"))
+                                new AssignStmt("result", new Binary(new LocalOrFieldVar(AType.INT, "a"), new LocalOrFieldVar(AType.INT, "b"), Operator.MINUS, AType.INT), new LocalOrFieldVar(AType.INT, "c"))
                         )),
                         new Block(Arrays.asList(
-                                new AssignStmt("result", new Binary(new LocalOrFieldVar(AType.INT, "a"), new LocalOrFieldVar(AType.INT, "b"), BinaryOperator.PLUS, AType.INT), new LocalOrFieldVar(AType.INT, "c"))
+                                new AssignStmt("result", new Binary(new LocalOrFieldVar(AType.INT, "a"), new LocalOrFieldVar(AType.INT, "b"), Operator.PLUS, AType.INT), new LocalOrFieldVar(AType.INT, "c"))
                         ))
                 )
         ));
@@ -126,17 +126,17 @@ public class BeispielCodegen {
         // Loop und If-Block Anfang
         Block loopAndIfBlock = new Block(Arrays.asList(
                 new LocalVarDecl(AType.INT, "counter", new AInteger(0, AType.INT)),
-                new While(new Binary(new LocalOrFieldVar(AType.INT, "counter"), new AInteger(5, AType.INT), BinaryOperator.LESS_THAN),
+                new While(new Binary(new LocalOrFieldVar(AType.INT, "counter"), new AInteger(5, AType.INT), Operator.LESS_THAN),
                         new Block(Arrays.asList(
-                                new If(new Binary(new LocalOrFieldVar(AType.INT, "counter"), new AInteger(2, AType.INT), BinaryOperator.EQUAL_TO, AType.BOOLEAN),
+                                new If(new Binary(new LocalOrFieldVar(AType.INT, "counter"), new AInteger(2, AType.INT), Operator.EQUAL_TO, AType.BOOLEAN),
                                         new Block(Arrays.asList(
-                                                new AssignStmt("result", new Binary(new LocalOrFieldVar(AType.INT, "counter"), new AInteger(10, AType.INT), BinaryOperator.MULTIPLY, AType.INT), new LocalOrFieldVar(AType.INT, "c"))
+                                                new AssignStmt("result", new Binary(new LocalOrFieldVar(AType.INT, "counter"), new AInteger(10, AType.INT), Operator.MULTIPLY, AType.INT), new LocalOrFieldVar(AType.INT, "c"))
                                         )),
                                         new Block(Arrays.asList(
-                                                new AssignStmt("result", new Binary(new LocalOrFieldVar(AType.INT, "counter"), new AInteger(5, AType.INT), BinaryOperator.MULTIPLY, AType.INT), new LocalOrFieldVar(AType.INT, "c"))
+                                                new AssignStmt("result", new Binary(new LocalOrFieldVar(AType.INT, "counter"), new AInteger(5, AType.INT), Operator.MULTIPLY, AType.INT), new LocalOrFieldVar(AType.INT, "c"))
                                         ))
                                 ),
-                                new AssignStmt("counter", new Binary(new LocalOrFieldVar(AType.INT, "counter"), new AInteger(1, AType.INT), BinaryOperator.PLUS, AType.INT), new LocalOrFieldVar(AType.INT, "counter"))
+                                new AssignStmt("counter", new Binary(new LocalOrFieldVar(AType.INT, "counter"), new AInteger(1, AType.INT), Operator.PLUS, AType.INT), new LocalOrFieldVar(AType.INT, "counter"))
                         ))
                 )
         ));
@@ -150,7 +150,7 @@ public class BeispielCodegen {
         Block returnBlock = new Block(Arrays.asList(
                 new AssignStmt("x", new AInteger(5, AType.INT), new LocalOrFieldVar(AType.INT, "a")),
                 new AssignStmt("y", new AInteger(10, AType.INT), new LocalOrFieldVar(AType.INT, "b")),
-                new AssignStmt("result", new Binary(new LocalOrFieldVar(AType.INT, "a"), new LocalOrFieldVar(AType.INT, "b"), BinaryOperator.MULTIPLY, AType.INT), new LocalOrFieldVar(AType.INT, "c")),
+                new AssignStmt("result", new Binary(new LocalOrFieldVar(AType.INT, "a"), new LocalOrFieldVar(AType.INT, "b"), Operator.MULTIPLY, AType.INT), new LocalOrFieldVar(AType.INT, "c")),
                 new Return(new LocalOrFieldVar(AType.INT, "result"))
         ));
 
@@ -163,10 +163,10 @@ public class BeispielCodegen {
         Block sumBlock = new Block(Arrays.asList(
                 new LocalVarDecl(AType.INT, "sum", new AInteger(0, AType.INT)),
                 new LocalVarDecl(AType.INT, "counter", new AInteger(1, AType.INT)),
-                new While(new Binary(new LocalOrFieldVar(AType.INT, "counter"), new AInteger(10, AType.INT), BinaryOperator.LESS_THAN_OR_EQUAL_TO),
+                new While(new Binary(new LocalOrFieldVar(AType.INT, "counter"), new AInteger(10, AType.INT), Operator.LESS_THAN_OR_EQUAL_TO),
                         new Block(Arrays.asList(
-                                new AssignStmt("sum", new Binary(new LocalOrFieldVar(AType.INT, "sum"), new LocalOrFieldVar(AType.INT, "counter"), BinaryOperator.PLUS, AType.INT), new LocalOrFieldVar(AType.INT, "sum")),
-                                new AssignStmt("counter", new Binary(new LocalOrFieldVar(AType.INT, "counter"), new AInteger(1, AType.INT), BinaryOperator.PLUS, AType.INT), new LocalOrFieldVar(AType.INT, "counter"))
+                                new AssignStmt("sum", new Binary(new LocalOrFieldVar(AType.INT, "sum"), new LocalOrFieldVar(AType.INT, "counter"), Operator.PLUS, AType.INT), new LocalOrFieldVar(AType.INT, "sum")),
+                                new AssignStmt("counter", new Binary(new LocalOrFieldVar(AType.INT, "counter"), new AInteger(1, AType.INT), Operator.PLUS, AType.INT), new LocalOrFieldVar(AType.INT, "counter"))
                         ))
                 ),
                 new Return(new LocalOrFieldVar(AType.INT, "sum"))
