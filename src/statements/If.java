@@ -17,6 +17,12 @@ public class If implements Statement {
         this.blockIf = blockIf;
         this.blockElse = blockElse;
     }
+    public If(Expression condition, Statement blockIf) {
+        this.condition = condition;
+        this.blockIf = blockIf;
+        this.blockElse = null;
+    }
+
 
     public If(Expression condition, Statement blockIf, Statement blockElse, int line, int column) {
         this.condition = condition;
@@ -41,6 +47,18 @@ public class If implements Statement {
 
     public void setType(AType type) {
         this.type = type;
+    }
+
+    public Expression getCondition() {
+        return condition;
+    }
+
+    public Statement getBlockIf() {
+        return blockIf;
+    }
+
+    public Statement getBlockElse() {
+        return blockElse;
     }
 
     @Override

@@ -5,10 +5,7 @@ import Expr.*;
 import General.AType;
 import General.Clazz;
 import org.objectweb.asm.*;
-import statementExpressions.AssignStmt;
-import statementExpressions.Method;
-import statementExpressions.MethodCall;
-import statementExpressions.New;
+import statementExpressions.*;
 import statements.*;
 
 import java.io.File;
@@ -136,8 +133,8 @@ public class Codegenerierung {
 
     public void visit(Binary binary) {
         switch (binary.getOperator()) {
-            case PLUS, MINUS, MULTIPLY, DIVIDE, MODULUS -> addMathCodes(binary);
-            case GREATER_THAN, LESS_THAN, GREATER_THAN_OR_EQUAL_TO, LESS_THAN_OR_EQUAL_TO, EQUAL_TO, NOT_EQUAL_TO, AND, OR ->
+            case PLUS, MINUS, MULT, DIV, MOD -> addMathCodes(binary);
+            case GREATER, LESS, GREATEREQUAL, LESSEQUAL, EQUAL, NOTEQUAL, AND, OR ->
                     addBooleanCodes(binary);
         }
     }
@@ -149,9 +146,9 @@ public class Codegenerierung {
         switch (binary.getOperator()) {
             case PLUS -> methodvisitor.visitInsn(Opcodes.IADD);
             case MINUS -> methodvisitor.visitInsn(Opcodes.ISUB);
-            case MULTIPLY -> methodvisitor.visitInsn(Opcodes.IMUL);
-            case DIVIDE -> methodvisitor.visitInsn(Opcodes.IDIV);
-            case MODULUS -> methodvisitor.visitInsn(Opcodes.IREM);
+            case MULT -> methodvisitor.visitInsn(Opcodes.IMUL);
+            case DIV -> methodvisitor.visitInsn(Opcodes.IDIV);
+            case MOD -> methodvisitor.visitInsn(Opcodes.IREM);
 
         }
     }
@@ -175,27 +172,27 @@ public class Codegenerierung {
                 binary.getRight().bevisited(this);
                 methodvisitor.visitJumpInsn(Opcodes.IFEQ, falseLabel);
             }
-            case GREATER_THAN -> {
+            case GREATER -> {
                 binary.getLeft().bevisited(this);
                 binary.getRight().bevisited(this);
                 methodvisitor.visitJumpInsn(Opcodes.IF_ICMPLE, falseLabel);
             }
-            case LESS_THAN -> {
+            case LESS -> {
                 binary.getLeft().bevisited(this);
                 binary.getRight().bevisited(this);
                 methodvisitor.visitJumpInsn(Opcodes.IF_ICMPGE, falseLabel);
             }
-            case GREATER_THAN_OR_EQUAL_TO -> {
+            case GREATEREQUAL -> {
                 binary.getLeft().bevisited(this);
                 binary.getRight().bevisited(this);
                 methodvisitor.visitJumpInsn(Opcodes.IF_ICMPLT, falseLabel);
             }
-            case LESS_THAN_OR_EQUAL_TO -> {
+            case LESSEQUAL -> {
                 binary.getLeft().bevisited(this);
                 binary.getRight().bevisited(this);
                 methodvisitor.visitJumpInsn(Opcodes.IF_ICMPGT, falseLabel);
             }
-            case EQUAL_TO -> {
+            case EQUAL -> {
                 binary.getLeft().bevisited(this);
                 binary.getRight().bevisited(this);
                 if (isVICZ(binary.getLeft().getType())
@@ -205,7 +202,7 @@ public class Codegenerierung {
                     methodvisitor.visitJumpInsn(Opcodes.IF_ACMPNE, falseLabel);
                 }
             }
-            case NOT_EQUAL_TO -> {
+            case NOTEQUAL -> {
                 binary.getLeft().bevisited(this);
                 binary.getRight().bevisited(this);
                 if (isVICZ(binary.getLeft().getType())
@@ -284,13 +281,13 @@ public class Codegenerierung {
         Label forlabel = new Label();
         Label end = new Label();
 
-        forvar.getInitStmt().bevisited(this);
+        forvar.getInit().bevisited(this);
         methodvisitor.visitLabel(forlabel);
         forvar.getCondition().bevisited(this);
         methodvisitor.visitJumpInsn(Opcodes.IFEQ, end);
 
-        forvar.getBody().bevisited(this);
-        forvar.getUpdateStmt().bevisited(this);
+        forvar.getStatement().bevisited(this);
+        forvar.getUpdate().bevisited(this);
         methodvisitor.visitJumpInsn(Opcodes.GOTO, forlabel);
         methodvisitor.visitLabel(end);
     }
@@ -302,12 +299,12 @@ public class Codegenerierung {
         ifvar.getCondition().bevisited(this);
         methodvisitor.visitJumpInsn(Opcodes.IFEQ, falseLabel); //0 means the condition is false
 
-        ifvar.getIfBlock().bevisited(this);
+        ifvar.getBlockIf().bevisited(this);
         methodvisitor.visitJumpInsn(Opcodes.GOTO, end);
 
         methodvisitor.visitLabel(falseLabel);
-        if (ifvar.getElseBlock() != null) {
-            ifvar.getElseBlock().bevisited(this);
+        if (ifvar.getBlockElse() != null) {
+            ifvar.getBlockElse().bevisited(this);
         }
         methodvisitor.visitLabel(end);
     }
@@ -335,7 +332,7 @@ public class Codegenerierung {
         Label end = new Label();
 
         methodvisitor.visitLabel(whilelabel);
-        whilevar.getCondition().bevisited(this);
+        whilevar.getExpression().bevisited(this);
         methodvisitor.visitJumpInsn(Opcodes.IFEQ, end);
 
         whilevar.getBlock().bevisited(this);
@@ -346,8 +343,8 @@ public class Codegenerierung {
     //StatementExpressions
 
     public void visit(AssignStmt assignStmt) {
-        Expression variable = assignStmt.getVariable();
-        Expression assignExpression = assignStmt.getExpr();
+        Expression variable = assignStmt.getlExpr();
+        Expression assignExpression = assignStmt.getrExpr();
 
         int index = localVars.indexOf(((LocalOrFieldVar) variable).getId());
         if (index >= 0) {
@@ -360,15 +357,38 @@ public class Codegenerierung {
         }
     }
 
-    public void visit(DecrementExpr decrementExpr) {
-        int index = localVars.indexOf(decrementExpr.getId());
+    public void visit(CrementStmtExpr Crement){
+        switch (Crement.getOperator()){
+            case INCPRE -> {
+                visitIncrement(Crement);
+                Crement.getExpression().bevisited(this);
+            }
+            case INCSUF -> {
+                Crement.getExpression().bevisited(this);
+                visitIncrement(Crement);
+            }
+            case DECPRE -> {
+                visitDecrement(Crement);
+                Crement.getExpression().bevisited(this);
+            }
+            case DECSUF -> {
+                Crement.getExpression().bevisited(this);
+                visitDecrement(Crement);
+            }
+        }
+
+    }
+    public void visitDecrement(CrementStmtExpr decrementExpr) {
+        LocalOrFieldVar Variable = (LocalOrFieldVar) decrementExpr.getExpression();
+        int index = localVars.indexOf(Variable.getId());
         if (index >= 0) {
             methodvisitor.visitIincInsn(index, -1);
         } else System.out.println("Field increment not implemented");
     }
 
-    public void visit(IncrementExpr incrementExpr) {
-        int index = localVars.indexOf(incrementExpr.getId());
+    public void visitIncrement(CrementStmtExpr incrementExpr) {
+        LocalOrFieldVar Variable = (LocalOrFieldVar) incrementExpr.getExpression();
+        int index = localVars.indexOf(Variable.getId());
         if (index >= 0) {
             methodvisitor.visitIincInsn(index, 1);
         } else System.out.println("Field increment not implemented");
@@ -405,9 +425,9 @@ public class Codegenerierung {
     }
 
     public void visit(MethodCall methodCall) {
-        methodCall.getExprList().forEach(expression -> expression.bevisited(this));
+        methodCall.getArguments().forEach(expression -> expression.bevisited(this));
         methodvisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, this.currentClass,
-                methodCall.getId(), makeMethodcallDescriptor(methodCall.getExprList()),
+                methodCall.getId(), makeMethodcallDescriptor(methodCall.getArguments()),
                 false);
     }
 
