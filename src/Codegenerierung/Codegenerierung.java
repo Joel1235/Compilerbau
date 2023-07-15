@@ -37,23 +37,21 @@ public class Codegenerierung {
                         "()V",           //Typ (Descriptor)
                         null,            //Signatur
                         null);           //Exceptions
-        //Konstruktor erstellen Start
-        constructor.visitCode();               //Start-Initialisierung
-        // aload_0
-        constructor.visitVarInsn(Opcodes.ALOAD, 0);
+
+        //Konstruktor erstellen
+        constructor.visitCode();
+        constructor.visitVarInsn(Opcodes.ALOAD, 0); // aload_0
+
         // invokespecial
         constructor.visitMethodInsn(Opcodes.INVOKESPECIAL,  //invoke-Befehl
                 "java/lang/Object",     //Owner-Klasse
                 "<init>",               //Name
                 "()V",                  //Typ (Descriptor)
                 false);                 //is interface?
-        // return
-        constructor.visitInsn(Opcodes.RETURN);
 
-        constructor.visitMaxs(0, 0);          //maximale Anzahl des Stacks bzw. der lokalen Veriablen
-
-        constructor.visitEnd();               //Ende-Initialisierung
-        //Konstruktor erstellen Ende
+        constructor.visitInsn(Opcodes.RETURN);  // return
+        constructor.visitMaxs(0, 0);            //maximale Anzahl des Stacks bzw. der lokalen Veriablen
+        constructor.visitEnd();
 
         for (Method method : clazz.getMethods()) {
             method.bevisited(this);
@@ -67,7 +65,7 @@ public class Codegenerierung {
         currentClass = "Testcode";
         cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
 
-        cw.visit(Opcodes.V1_8,                  //Version
+        cw.visit(Opcodes.V1_8,                 //Version
                 Opcodes.ACC_PUBLIC,            //Access
                 "Testcode",                    //Name
                 null,                          //Signatur
@@ -82,26 +80,22 @@ public class Codegenerierung {
                         null);           //Exceptions
 
 
-        //Konstruktor erstellen Start
-        constructor.visitCode();               //Start-Initialisierung
-        // aload_0
-        constructor.visitVarInsn(Opcodes.ALOAD, 0);
+        //Konstruktor erstellen
+        constructor.visitCode();
+        constructor.visitVarInsn(Opcodes.ALOAD, 0); // aload_0
+
         // invokespecial
         constructor.visitMethodInsn(Opcodes.INVOKESPECIAL,  //invoke-Befehl
                 "java/lang/Object",     //Owner-Klasse
                 "<init>",               //Name
                 "()V",                  //Typ (Descriptor)
                 false);                 //is interface?
-        // return
-        constructor.visitInsn(Opcodes.RETURN);
 
-        constructor.visitMaxs(0, 0);          //maximale Anzahl des Stacks bzw. der lokalen Veriablen
-
-        constructor.visitEnd();               //Ende-Initialisierung
-        //Konstruktor erstellen Ende
+        constructor.visitInsn(Opcodes.RETURN);  // return
+        constructor.visitMaxs(0, 0);            //maximale Anzahl des Stacks bzw. der lokalen Veriablen
+        constructor.visitEnd();
 
         method.bevisited(this);
-        //Methode m erstellen Ende
 
         cw.visitEnd();
         writeClassfile(cw);
